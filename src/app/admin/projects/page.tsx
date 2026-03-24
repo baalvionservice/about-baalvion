@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, Calendar, Search, Filter, SortAsc, SortDesc, X, Save } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, Calendar, Search, Filter, X, Save, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,8 @@ export default function AdminProjects() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<"newest" | "name">("newest");
+  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [sortBy, setSortBy] = useState<"newest" | "name" | "priority">("priority");
 
   useEffect(() => {
     fetch('/api/projects').then(res => res.json()).then(data => {
@@ -47,7 +49,6 @@ export default function AdminProjects() {
     e.preventDefault();
     if (!editing) return;
     
-    // Basic Validation
     if (!editing.name || !editing.description || !editing.category || !editing.status) {
       toast({ title: "Validation Error", description: "Please fill in all required operational fields.", variant: "destructive" });
       return;
@@ -104,17 +105,18 @@ export default function AdminProjects() {
     return projects
       .filter(p => {
         const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                             p.type.toLowerCase().includes(searchQuery.toLowerCase());
+                             p.category.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === "all" || p.status === statusFilter;
         const matchesCategory = categoryFilter === "all" || p.category === categoryFilter;
-        return matchesSearch && matchesStatus && matchesCategory;
+        const matchesFeatured = !featuredOnly || p.isFeatured;
+        return matchesSearch && matchesStatus && matchesCategory && matchesFeatured;
       })
       .sort((a, b) => {
         if (sortBy === "name") return a.name.localeCompare(b.name);
+        if (sortBy === "priority") return (a.priority || 10) - (b.priority || 10);
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
-  }, [projects, searchQuery, statusFilter, categoryFilter, sortBy]);
+  }, [projects, searchQuery, statusFilter, categoryFilter, featuredOnly, sortBy]);
 
   const getStatusIcon = (status: string) => {
     switch(status) {
@@ -129,7 +131,8 @@ export default function AdminProjects() {
     setSearchQuery("");
     setStatusFilter("all");
     setCategoryFilter("all");
-    setSortBy("newest");
+    setFeaturedOnly(false);
+    setSortBy("priority");
   };
 
   return (
@@ -139,7 +142,7 @@ export default function AdminProjects() {
           <h2 className="text-2xl font-bold text-white tracking-tight">Strategic Initiatives</h2>
           <p className="text-sm text-muted-foreground">Manage the foundational infrastructure portfolio.</p>
         </div>
-        <Button onClick={() => setEditing({ name: '', description: '', category: categories[0], type: '', status: 'Active' })} className="btn-primary rounded-xl h-12 px-6">
+        <Button onClick={() => setEditing({ name: '', description: '', category: categories[0], type: '', status: 'Active', isFeatured: false, priority: 10 })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Initiative
         </Button>
       </div>
@@ -155,6 +158,10 @@ export default function AdminProjects() {
           />
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          <div className="flex items-center gap-2 bg-white/5 border border-white/10 h-11 px-4 rounded-md">
+            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Featured</span>
+            <Switch checked={featuredOnly} onCheckedChange={setFeaturedOnly} />
+          </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="h-11 w-[140px] bg-white/5 border-white/10">
               <div className="flex items-center gap-2">
@@ -167,16 +174,17 @@ export default function AdminProjects() {
               {statuses.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
             </SelectContent>
           </Select>
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="h-11 w-[160px] bg-white/5 border-white/10">
-              <SelectValue placeholder="Category" />
+          <Select value={sortBy} onValueChange={(val: any) => setSortBy(val)}>
+            <SelectTrigger className="h-11 w-[140px] bg-white/5 border-white/10">
+              <SelectValue placeholder="Sort By" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
-              {categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              <SelectItem value="priority">Priority</SelectItem>
+              <SelectItem value="newest">Newest</SelectItem>
+              <SelectItem value="name">Name</SelectItem>
             </SelectContent>
           </Select>
-          {(searchQuery || statusFilter !== "all" || categoryFilter !== "all") && (
+          {(searchQuery || statusFilter !== "all" || categoryFilter !== "all" || featuredOnly) && (
             <Button variant="ghost" onClick={resetFilters} className="h-11 px-4 text-xs font-bold text-muted-foreground hover:text-white uppercase tracking-widest">
               <X className="w-3.5 h-3.5 mr-2" /> Clear
             </Button>
@@ -199,13 +207,14 @@ export default function AdminProjects() {
             </div>
           ) : filteredProjects.map(project => (
             <Card key={project.id} className="glass-card border-white/5 hover:border-primary/20 transition-all group overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors" />
+              <div className={cn("absolute top-0 left-0 w-1 h-full transition-colors", project.isFeatured ? "bg-primary" : "bg-white/5")} />
               <CardHeader className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                     <LayoutGrid className="w-5 h-5 text-accent" />
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 items-center">
+                    {project.isFeatured && <Star className="w-4 h-4 text-primary fill-primary mr-2" />}
                     <Button size="icon" variant="ghost" onClick={() => setEditing(project)} className="w-8 h-8 hover:bg-white/10 rounded-lg">
                       <Pencil className="w-3.5 h-3.5" />
                     </Button>
@@ -218,7 +227,7 @@ export default function AdminProjects() {
                 <div className="flex items-center gap-2 mt-2">
                   <span className="text-[10px] font-bold text-accent uppercase tracking-widest">{project.category}</span>
                   <span className="text-muted-foreground text-xs">•</span>
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{project.type}</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Priority {project.priority}</span>
                 </div>
               </CardHeader>
               <CardContent className="p-6 pt-0 space-y-4">
@@ -278,7 +287,7 @@ export default function AdminProjects() {
                 required
                 value={editing?.description || ''} 
                 onChange={(e) => setEditing({ ...editing!, description: e.target.value })} 
-                className="bg-white/5 border-white/10 min-h-[120px] py-4 resize-none"
+                className="bg-white/5 border-white/10 min-h-[100px] py-4 resize-none"
                 placeholder="Detailed objectives and scope of the strategic link..."
               />
             </div>
@@ -308,26 +317,24 @@ export default function AdminProjects() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Primary Domain</label>
-                <div className="relative">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input 
-                    value={editing?.domain || ''} 
-                    onChange={(e) => setEditing({ ...editing!, domain: e.target.value })} 
-                    className="bg-white/5 border-white/10 h-12 pl-10"
-                    placeholder="baalvion.nexus"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Subdomain</label>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="space-y-2 col-span-1">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Priority (1-100)</label>
                 <Input 
-                  value={editing?.subdomain || ''} 
-                  onChange={(e) => setEditing({ ...editing!, subdomain: e.target.value })} 
+                  type="number"
+                  value={editing?.priority || 10} 
+                  onChange={(e) => setEditing({ ...editing!, priority: parseInt(e.target.value) })} 
                   className="bg-white/5 border-white/10 h-12"
-                  placeholder="e.g. core"
+                />
+              </div>
+              <div className="space-y-2 col-span-2 flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 mt-auto">
+                <div className="space-y-0.5">
+                  <label className="text-[10px] font-bold text-white uppercase tracking-widest">Featured Initiative</label>
+                  <p className="text-[9px] text-muted-foreground">Highlight on homepage nexus.</p>
+                </div>
+                <Switch 
+                  checked={editing?.isFeatured || false} 
+                  onCheckedChange={(val) => setEditing({ ...editing!, isFeatured: val })}
                 />
               </div>
             </div>

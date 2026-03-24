@@ -9,6 +9,8 @@ export interface Project {
   status: ProjectStatus;
   domain?: string;
   subdomain?: string;
+  isFeatured: boolean;
+  priority: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -53,6 +55,8 @@ let projects: Project[] = [
     type: 'Execution Platform',
     description: 'High-performance proprietary trade execution and settlement infrastructure designed for ultra-low latency global logistics and financial clearing.', 
     status: 'Active',
+    isFeatured: true,
+    priority: 1,
     domain: 'baalvion.nexus',
     subdomain: 'trade',
     createdAt: new Date().toISOString(),
@@ -65,6 +69,8 @@ let projects: Project[] = [
     type: 'Compliance AI',
     description: 'Advanced predictive analytics engine utilizing multi-layer neural networks to assess global supply chain volatility and regulatory shifts in real-time.', 
     status: 'In Development',
+    isFeatured: true,
+    priority: 2,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
@@ -75,6 +81,8 @@ let projects: Project[] = [
     type: 'Legal Infrastructure',
     description: 'Automated legal compliance mapping protocol providing immutable audit trails and regulatory alignment across 180+ international jurisdictions.', 
     status: 'Planned',
+    isFeatured: false,
+    priority: 3,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
@@ -85,6 +93,8 @@ let projects: Project[] = [
     type: 'Finance Protocol',
     description: 'Multi-currency digital settlement layer architected for seamless cross-border value transfer and automated trade finance liquidity.', 
     status: 'Active',
+    isFeatured: true,
+    priority: 1,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -197,7 +207,14 @@ export const db = {
   projects: {
     getAll: () => projects,
     add: (p: any) => {
-      const newP = { ...p, id: `p-${Math.random().toString(36).substring(2, 7)}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+      const newP = { 
+        ...p, 
+        id: `p-${Math.random().toString(36).substring(2, 7)}`, 
+        isFeatured: p.isFeatured || false,
+        priority: p.priority || 10,
+        createdAt: new Date().toISOString(), 
+        updatedAt: new Date().toISOString() 
+      };
       projects.push(newP);
       return newP;
     },

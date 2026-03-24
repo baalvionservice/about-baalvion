@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Shield, Globe, Zap, Database, Workflow, CheckCircle2, Loader2, ArrowUpRight, Target, ShieldCheck, Activity } from "lucide-react";
+import { ArrowRight, Globe, Zap, Database, Workflow, CheckCircle2, Loader2, Target, ShieldCheck, Activity, Star } from "lucide-react";
 import Link from "next/link";
 import { Project, EcosystemItem, Page } from "@/lib/db";
 import { cn } from "@/lib/utils";
@@ -39,7 +39,12 @@ export default function Home() {
         ]);
 
         setPage(pg);
-        setProjects(p);
+        // Sort projects by featured first, then priority
+        const sortedProjects = [...p].sort((a, b) => {
+          if (a.isFeatured !== b.isFeatured) return a.isFeatured ? -1 : 1;
+          return (a.priority || 10) - (b.priority || 10);
+        });
+        setProjects(sortedProjects);
         setEcoItems(e);
       } catch (err) {
         console.error(err);
@@ -73,7 +78,6 @@ export default function Home() {
       <Navbar />
       
       <main className="flex-1">
-        {/* Hero Section */}
         {heroSection && (
           <section className="relative pt-64 pb-48 overflow-hidden hero-glow">
             <div className="section-container text-center relative z-10 animate-fade-in">
@@ -93,13 +97,11 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            {/* Ambient Background Elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] bg-primary/5 blur-[120px] rounded-full -z-10" />
           </section>
         )}
 
         <div className="layout-stack">
-          {/* Problem Section */}
           {problemSection && (
             <section className="section-vertical-padding bg-white/[0.01] border-y border-white/5">
               <div className="section-container">
@@ -126,7 +128,6 @@ export default function Home() {
             </section>
           )}
 
-          {/* Solution Section */}
           {solutionSection && (
             <section className="section-vertical-padding">
               <div className="section-container">
@@ -167,7 +168,6 @@ export default function Home() {
             </section>
           )}
 
-          {/* Ecosystem Preview */}
           <section className="section-vertical-padding bg-white/[0.01] border-y border-white/5">
             <div className="section-container">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-16">
@@ -204,7 +204,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Projects Preview */}
           <section className="section-vertical-padding">
             <div className="section-container">
               <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16">
@@ -221,21 +220,24 @@ export default function Home() {
                 {projects.slice(0, 3).map((project, i) => (
                   <Card key={project.id} className={cn(
                     "glass-card card-hover group border-white/5 opacity-0 animate-fade-in fill-mode-forwards",
-                    i === 0 ? "stagger-1" : i === 1 ? "stagger-2" : "stagger-3"
+                    i === 0 ? "stagger-1" : i === 1 ? "stagger-2" : i === 2 ? "stagger-3" : "stagger-4"
                   )}>
                     <CardContent className="p-10 space-y-12">
                       <div className="flex justify-between items-start">
                         <div className="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-accent group-hover:bg-primary transition-all duration-500 border border-white/5">
                           <Target className="w-6 h-6" />
                         </div>
-                        <Badge className={cn(
-                          "py-1 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border",
-                          project.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
-                          project.status === 'In Development' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 
-                          'bg-white/10 text-muted-foreground border-white/10'
-                        )}>
-                          {project.status}
-                        </Badge>
+                        <div className="flex flex-col items-end gap-2">
+                          {project.isFeatured && <Star className="w-4 h-4 text-primary fill-primary" />}
+                          <Badge className={cn(
+                            "py-1 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border",
+                            project.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
+                            project.status === 'In Development' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 
+                            'bg-white/10 text-muted-foreground border-white/10'
+                          )}>
+                            {project.status}
+                          </Badge>
+                        </div>
                       </div>
                       <div className="space-y-4">
                         <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{project.name}</h3>
@@ -252,7 +254,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Trust Section */}
           {trustSection && (
             <section className="section-vertical-padding bg-white/[0.01] border-y border-white/5">
               <div className="section-container">
@@ -279,7 +280,6 @@ export default function Home() {
             </section>
           )}
 
-          {/* Final CTA */}
           {ctaSection && (
             <section className="section-vertical-padding pb-48">
               <div className="section-container">

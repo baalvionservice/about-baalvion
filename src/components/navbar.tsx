@@ -32,14 +32,14 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      "fixed top-0 w-full z-50 transition-all duration-700",
+      "fixed top-0 w-full z-50 transition-all duration-700 ease-in-out",
       scrolled 
         ? "bg-background/80 backdrop-blur-3xl border-b border-white/5 h-20" 
         : "bg-transparent h-28"
     )}>
       <div className="section-container h-full flex items-center justify-between">
         <Link href="/" className="flex items-center gap-4 group">
-          <div className="w-12 h-12 bg-primary flex items-center justify-center rounded-[1rem] shadow-xl shadow-primary/20 group-hover:rotate-12 transition-all duration-500">
+          <div className="w-12 h-12 bg-primary flex items-center justify-center rounded-[1rem] shadow-xl shadow-primary/20 group-hover:rotate-12 transition-all duration-500 ease-out">
             <Globe className="text-white w-7 h-7" />
           </div>
           <div className="flex flex-col">
@@ -55,23 +55,26 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "px-6 py-2.5 text-sm font-medium transition-all rounded-full tracking-wide",
+                "px-6 py-2.5 text-sm font-medium transition-all duration-300 rounded-full tracking-wide relative group",
                 pathname === link.href 
                   ? "text-primary bg-primary/10 font-bold" 
                   : "text-muted-foreground hover:text-white hover:bg-white/5"
               )}
             >
               {link.name}
+              {pathname !== link.href && (
+                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-4" />
+              )}
             </Link>
           ))}
-          <Button asChild className="ml-8 btn-primary h-12 px-8 font-bold text-sm tracking-wide">
+          <Button asChild className="ml-8 h-12 px-8 font-bold text-sm tracking-wide">
             <Link href="/contact">Initiate Nexus</Link>
           </Button>
         </div>
 
         {/* Mobile Toggle */}
         <button 
-          className="lg:hidden text-white p-3 rounded-2xl bg-white/5 border border-white/5 transition-colors hover:bg-white/10" 
+          className="lg:hidden text-white p-3 rounded-2xl bg-white/5 border border-white/5 transition-all active:scale-95 hover:bg-white/10" 
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -81,7 +84,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div className={cn(
-        "lg:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-background/98 backdrop-blur-3xl z-[60] py-32 px-8 flex flex-col gap-8 transition-all duration-700 ease-in-out",
+        "lg:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-background/98 backdrop-blur-3xl z-[60] py-32 px-8 flex flex-col gap-8 transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1)",
         isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
       )}>
         <button 
@@ -97,7 +100,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-4xl font-bold p-6 rounded-3xl border border-transparent flex justify-between items-center group transition-all",
+                "text-4xl font-bold p-6 rounded-3xl border border-transparent flex justify-between items-center group transition-all duration-500",
                 pathname === link.href 
                   ? "text-primary bg-primary/10 border-primary/20" 
                   : "text-white hover:bg-white/5"
@@ -108,7 +111,7 @@ export function Navbar() {
             </Link>
           ))}
         </div>
-        <Button asChild className="mt-auto btn-primary h-20 text-xl font-bold rounded-[2rem] shadow-2xl" onClick={() => setIsOpen(false)}>
+        <Button asChild className="mt-auto h-20 text-xl font-bold rounded-[2rem] shadow-2xl" onClick={() => setIsOpen(false)}>
           <Link href="/contact">Initiate Nexus Link</Link>
         </Button>
       </div>

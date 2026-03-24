@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, MapPin, ShieldCheck, Send, Users, Globe, Lock, ArrowRight } from "lucide-react";
+import { Mail, MapPin, ShieldCheck, Send, Users, Globe, Lock, ArrowRight, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
@@ -68,7 +69,10 @@ export default function ContactPage() {
                   { icon: MapPin, value: "New Delhi, NCR, IN", label: "Physical Node" },
                   { icon: ShieldCheck, value: "PGP: BAAL-2024-NX", label: "Encryption Key" },
                 ].map((item, i) => (
-                  <div key={i} className="flex gap-6 items-center p-8 glass-card border-white/5 hover:border-primary/20 group">
+                  <div key={i} className={cn(
+                    "flex gap-6 items-center p-8 glass-card border-white/5 card-hover group opacity-0 animate-fade-in fill-mode-forwards",
+                    i === 0 ? "stagger-1" : i === 1 ? "stagger-2" : "stagger-3"
+                  )}>
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-all duration-500 text-primary group-hover:text-white border border-primary/10">
                       <item.icon className="w-6 h-6" />
                     </div>
@@ -80,10 +84,11 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <div className="p-10 rounded-[2rem] bg-primary/[0.02] border border-primary/10 relative overflow-hidden">
+              <div className="p-10 rounded-[2rem] bg-primary/[0.02] border border-primary/10 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="relative z-10 space-y-4">
                   <div className="flex items-center gap-3">
-                    <Users className="w-5 h-5 text-accent" />
+                    <Users className="w-5 h-5 text-accent animate-pulse" />
                     <h4 className="text-white font-bold uppercase tracking-widest text-[10px]">Response Protocol</h4>
                   </div>
                   <p className="text-lg text-muted-foreground leading-relaxed italic font-light">
@@ -93,37 +98,37 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="glass-card p-10 md:p-16 border-primary/20 shadow-2xl relative">
+            <div className="glass-card p-10 md:p-16 border-primary/20 shadow-2xl relative animate-fade-in stagger-2">
               <div className="absolute -top-4 left-10">
                 <Badge className="bg-primary text-white py-1.5 px-6 rounded-full font-bold shadow-xl text-[10px] tracking-widest uppercase">Secure Link Terminal</Badge>
               </div>
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Identity Designation</label>
-                    <Input name="name" required placeholder="Full Name" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-accent text-base" />
+                  <div className="space-y-2 group">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Identity Designation</label>
+                    <Input name="name" required placeholder="Full Name" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-primary focus:ring-1 focus:ring-primary/20 text-base transition-all" />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Secure Email</label>
-                    <Input name="email" type="email" required placeholder="Secure Address" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-accent text-base" />
+                  <div className="space-y-2 group">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Secure Email</label>
+                    <Input name="email" type="email" required placeholder="Secure Address" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-primary focus:ring-1 focus:ring-primary/20 text-base transition-all" />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Strategic Objective</label>
-                  <Input name="subject" required placeholder="e.g. Infrastructure Integration" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-accent text-base" />
+                <div className="space-y-2 group">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Strategic Objective</label>
+                  <Input name="subject" required placeholder="e.g. Infrastructure Integration" className="bg-white/5 border-white/10 h-14 rounded-xl px-6 focus:border-primary focus:ring-1 focus:ring-primary/20 text-base transition-all" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Operational Brief</label>
-                  <Textarea name="message" required placeholder="How can we architect the future together?" className="bg-white/5 border-white/10 min-h-[180px] rounded-2xl p-6 focus:border-accent resize-none text-base leading-relaxed" />
+                <div className="space-y-2 group">
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors">Operational Brief</label>
+                  <Textarea name="message" required placeholder="How can we architect the future together?" className="bg-white/5 border-white/10 min-h-[180px] rounded-2xl p-6 focus:border-primary focus:ring-1 focus:ring-primary/20 resize-none text-base leading-relaxed transition-all" />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full btn-primary h-16 text-lg font-bold">
+                <Button type="submit" disabled={loading} className="w-full h-16 text-lg font-bold group">
                   {loading ? (
                     <span className="flex items-center gap-3">
                       <Loader2 className="w-5 h-5 animate-spin" /> Establishing Link...
                     </span>
                   ) : (
                     <span className="flex items-center gap-3">
-                      Establish Nexus Link <Send className="w-5 h-5" />
+                      Establish Nexus Link <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </span>
                   )}
                 </Button>

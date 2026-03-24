@@ -61,37 +61,37 @@ export const projectCategories: ProjectCategory[] = [
   { 
     id: 'cat-core', 
     name: 'Core Platform', 
-    description: 'Projects related to Baalvion’s core technology infrastructure and SaaS platforms.', 
+    description: 'Foundation systems powering global trade infrastructure.', 
     priority: 1 
   },
   { 
     id: 'cat-industrial', 
     name: 'Industrial', 
-    description: 'Projects in mining, manufacturing, and industrial applications.', 
+    description: 'Mining, manufacturing, and high-scale industrial projects.', 
     priority: 2 
   },
   { 
     id: 'cat-internal', 
     name: 'Internal Systems', 
-    description: 'Projects for internal tools, employee monitoring, dashboards, and administration.', 
+    description: 'Internal tools and operational management dashboards.', 
     priority: 3 
   },
   { 
     id: 'cat-intel', 
     name: 'Intelligence', 
-    description: 'Research, data, analytics, insights, and learning modules.', 
+    description: 'AI-driven research, analytics, and market insights.', 
     priority: 4 
   },
   { 
     id: 'cat-gov', 
     name: 'Governance', 
-    description: 'Legal, compliance, policies, startup & enterprise governance tools.', 
+    description: 'Compliance, legal frameworks, and corporate policy tools.', 
     priority: 5 
   },
   { 
     id: 'cat-comm', 
     name: 'Commerce', 
-    description: 'Premium brands, lifestyle products, e-commerce, and business operations.', 
+    description: 'Verified luxury brands and high-end trade operations.', 
     priority: 6 
   }
 ];
@@ -103,7 +103,7 @@ let projects: Project[] = [
     category: 'Core Platform', 
     type: 'SaaS',
     description: 'Global trade infrastructure connecting businesses, finance, and compliance.', 
-    status: 'Active',
+    status: 'In Development',
     isFeatured: true,
     priority: 1,
     domain: 'baalvionstack.com',
@@ -114,9 +114,9 @@ let projects: Project[] = [
     id: 'p2', 
     name: 'Mining Operations Dashboard', 
     category: 'Industrial', 
-    type: 'Mining Project',
-    description: 'Monitoring and management system for high-scale industrial mining operations.', 
-    status: 'In Development',
+    type: 'Industrial Tool',
+    description: 'Real-time monitoring and management for high-scale mining initiatives.', 
+    status: 'Active',
     isFeatured: true,
     priority: 2,
     domain: 'mining.baalvion.com',
@@ -128,11 +128,102 @@ let projects: Project[] = [
     name: 'Employee Monitoring App', 
     category: 'Internal Systems', 
     type: 'Internal Tool',
-    description: 'Track and manage internal employee productivity and performance.', 
+    description: 'Track and optimize internal team productivity and node performance.', 
     status: 'Active',
     isFeatured: true,
     priority: 3,
     domain: 'app.baalvionstack.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p4', 
+    name: 'Intelligence Hub', 
+    category: 'Intelligence', 
+    type: 'Research Portal',
+    description: 'Unified portal for research, data analytics, and market sentiment insights.', 
+    status: 'Active',
+    isFeatured: false,
+    priority: 4,
+    domain: 'imperialpedia.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p5', 
+    name: 'Legal Compliance System', 
+    category: 'Governance', 
+    type: 'Policy System',
+    description: 'Centralized compliance and governance protocols for global trade nodes.', 
+    status: 'Active',
+    isFeatured: false,
+    priority: 5,
+    domain: 'lawelitenetwork.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p6', 
+    name: 'Market Exposure Reports', 
+    category: 'Intelligence', 
+    type: 'Insights Tool',
+    description: 'In-depth analytical reports revealing hidden market structures and trends.', 
+    status: 'Planned',
+    isFeatured: false,
+    priority: 6,
+    domain: 'marketunderworld.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p7', 
+    name: 'Strategy Education Platform', 
+    category: 'Governance', 
+    type: 'Education',
+    description: 'Curated guides and tutorials for navigating and controlling complex global markets.', 
+    status: 'In Development',
+    isFeatured: false,
+    priority: 7,
+    domain: 'controlthemarket.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p8', 
+    name: 'Amarise Maison Avenue Catalog', 
+    category: 'Commerce', 
+    type: 'Luxury Catalog',
+    description: 'Premium product catalog and lifestyle offerings for verified trade partners.', 
+    status: 'Active',
+    isFeatured: true,
+    priority: 8,
+    domain: 'amarisemaisonavenue.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p9', 
+    name: 'Investor Relations Portal', 
+    category: 'Core Platform', 
+    type: 'IR Portal',
+    description: 'Direct nexus for quarterly updates, financial disclosures, and stakeholder briefings.', 
+    status: 'Active',
+    isFeatured: false,
+    priority: 9,
+    domain: 'ir.baalvion.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p10', 
+    name: 'Global Hiring Portal', 
+    category: 'Internal Systems', 
+    type: 'Recruitment',
+    description: 'End-to-end recruitment and candidate management for the global nexus network.', 
+    status: 'Active',
+    isFeatured: false,
+    priority: 10,
+    domain: 'jobs.baalvion.com',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -147,7 +238,7 @@ let sections: Section[] = [
     data: { 
       ctaPrimary: 'Explore Our Platform', 
       ctaSecondary: 'Partner With Us', 
-      label: 'Nexus OS',
+      label: 'NEXUS OPERATING SYSTEM',
       stats: [
         { label: "Markets", value: "198" },
         { label: "Active Partners", value: "125+" },

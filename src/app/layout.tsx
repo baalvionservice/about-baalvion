@@ -1,4 +1,4 @@
-import type {Metadata, Viewport} from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
@@ -14,8 +14,12 @@ export const metadata: Metadata = {
     template: '%s | Baalvion Industries'
   },
   description: 'Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single nexus.',
-  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion'],
+  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'nexus'],
   authors: [{ name: 'Baalvion Industries' }],
+  metadataBase: new URL('https://baalvion.nexus'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -31,6 +35,12 @@ export const metadata: Metadata = {
         alt: 'Baalvion Nexus Global Infrastructure',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Baalvion Nexus | Unified Global Trade',
+    description: 'The foundational layer for the next century of international commerce.',
+    images: ['https://picsum.photos/seed/baalvion-og/1200/630'],
   },
 };
 

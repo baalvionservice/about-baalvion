@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Globe, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+const SECURE_KEY = "secure-admin-key";
+
 export default function LoginPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -15,8 +17,7 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple mock auth: the password itself acts as the session token
-    if (password === "admin123") {
+    if (password === SECURE_KEY) {
       localStorage.setItem('admin_token', password);
       router.push('/admin');
       toast({ title: "Access Granted", description: "Welcome to Baalvion Nexus Control." });
@@ -37,17 +38,17 @@ export default function LoginPage() {
             <Globe className="text-white w-6 h-6" />
           </div>
           <CardTitle className="text-2xl font-bold text-white">Nexus Admin</CardTitle>
-          <CardDescription>Enter credentials to access Baalvion CMS</CardDescription>
+          <CardDescription>Enter secure key to access Baalvion CMS</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Admin Password</label>
+              <label className="text-sm font-medium text-muted-foreground">Admin Key</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
-                <Input 
+                <input 
                   type="password" 
-                  className="pl-10 bg-white/5 border-white/10"
+                  className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 pl-10 text-sm focus:outline-none focus:border-primary transition-colors text-white"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"

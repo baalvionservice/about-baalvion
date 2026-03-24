@@ -29,7 +29,7 @@ export default function EcosystemAdmin() {
     const token = localStorage.getItem('admin_token');
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'x-admin-key': token || ''
     };
   };
 

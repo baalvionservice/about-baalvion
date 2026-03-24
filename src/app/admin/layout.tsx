@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
-    if (token === 'admin123' || pathname === '/admin/login') {
+    if (token === 'secure-admin-key' || pathname === '/admin/login') {
       setIsAuthenticated(true);
     } else {
       router.push('/admin/login');

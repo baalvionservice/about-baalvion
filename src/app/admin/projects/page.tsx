@@ -32,7 +32,7 @@ export default function AdminProjects() {
     const token = localStorage.getItem('admin_token');
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'x-admin-key': token || ''
     };
   };
 
@@ -97,7 +97,7 @@ export default function AdminProjects() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Project Initiatives</h2>
-          <p className="text-sm text-muted-foreground">Manage the Baalvion Nexus strategic portfolio.</p>
+          <p className="text-sm text-muted-foreground">Manage the Baalvion Nexus strategic portfolio portfolio.</p>
         </div>
         <Button onClick={() => setEditing({ name: '', description: '', category: categories[0], type: 'Platform', status: 'Active' })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Initiative

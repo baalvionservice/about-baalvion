@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-const ADMIN_KEY = "admin123";
+const ADMIN_KEY = "secure-admin-key";
 
 function isAuthorized(req: Request) {
-  const authHeader = req.headers.get('Authorization');
-  return authHeader === `Bearer ${ADMIN_KEY}`;
+  const key = req.headers.get('x-admin-key');
+  return key === ADMIN_KEY;
 }
 
 export async function GET(req: Request) {
@@ -23,7 +23,7 @@ export async function GET(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  if (!isAuthorized(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!isAuthorized(req)) return NextResponse.json({ error: 'Access denied' }, { status: 403 });
   try {
     const data = await req.json();
     if (!data.id) return NextResponse.json({ error: 'ID required' }, { status: 400 });

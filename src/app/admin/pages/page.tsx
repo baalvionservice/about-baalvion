@@ -5,7 +5,7 @@ import { Page, Section } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Pencil, Layout, ArrowRight, Save, FileText, Settings, Sparkles, Search, X } from "lucide-react";
+import { Loader2, ArrowRight, Save, FileText, Settings, Sparkles, Search, X, Edit3 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +15,8 @@ export default function PagesAdmin() {
   const [pages, setPages] = useState<Page[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
   const [loading, setLoading] = useState(true);
+  const [savingPage, setSavingPage] = useState(false);
+  const [savingSection, setSavingSection] = useState(false);
   const [editingPage, setEditingPage] = useState<Page | null>(null);
   const [editingSection, setEditingSection] = useState<Section | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,6 +42,7 @@ export default function PagesAdmin() {
   };
 
   const handleUpdatePage = async (page: Page) => {
+    setSavingPage(true);
     try {
       const res = await fetch('/api/pages', {
         method: 'PUT',
@@ -48,14 +51,16 @@ export default function PagesAdmin() {
       });
       if (!res.ok) throw new Error('Unauthorized');
       setPages(pages.map(p => p.id === page.id ? page : p));
-      setEditingPage(null);
       toast({ title: "Page Updated", description: "Metadata saved successfully." });
     } catch (err) {
-      toast({ title: "Error", description: "Action denied. Check credentials.", variant: "destructive" });
+      toast({ title: "Authorization Denied", description: "Strategic update failed.", variant: "destructive" });
+    } finally {
+      setSavingPage(false);
     }
   };
 
   const handleUpdateSection = async (section: Section) => {
+    setSavingSection(true);
     try {
       const res = await fetch('/api/sections', {
         method: 'PUT',
@@ -66,9 +71,11 @@ export default function PagesAdmin() {
       const updated = await res.json();
       setSections(sections.map(s => s.id === updated.id ? updated : s));
       setEditingSection(null);
-      toast({ title: "Section Updated", description: "Content has been architected." });
+      toast({ title: "Section Updated", description: "Infrastructure content architected." });
     } catch (err) {
-      toast({ title: "Error", description: "Action denied. Check credentials.", variant: "destructive" });
+      toast({ title: "Authorization Denied", description: "Deployment failed.", variant: "destructive" });
+    } finally {
+      setSavingSection(false);
     }
   };
 
@@ -91,12 +98,12 @@ export default function PagesAdmin() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Nexus Architecture</h2>
-          <p className="text-sm text-muted-foreground">Manage pages, sections, and structural content.</p>
+          <p className="text-sm text-muted-foreground">Manage pages, sections, and structural content protocols.</p>
         </div>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-12">
-        <Card className="glass-card lg:col-span-4 border-white/5 p-0 flex flex-col">
+        <Card className="glass-card lg:col-span-4 border-white/5 p-0 flex flex-col h-fit">
           <CardHeader className="p-6 border-b border-white/5 flex flex-col gap-4">
             <CardTitle className="text-white text-md flex items-center gap-2">
               <FileText className="w-4 h-4 text-primary" /> Active Pages
@@ -119,7 +126,7 @@ export default function PagesAdmin() {
           <div className="divide-y divide-white/5 overflow-y-auto max-h-[600px] no-scrollbar">
             {filteredPages.length === 0 ? (
               <div className="p-12 text-center">
-                <p className="text-xs text-muted-foreground italic">No matching pages.</p>
+                <p className="text-xs text-muted-foreground italic">No matching pages found.</p>
               </div>
             ) : filteredPages.map(page => (
               <div 
@@ -147,38 +154,40 @@ export default function PagesAdmin() {
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div>
                     <CardTitle className="text-white text-lg">Page Configuration</CardTitle>
-                    <p className="text-[10px] text-accent font-bold uppercase tracking-widest mt-1">ID: {editingPage.id}</p>
+                    <p className="text-[10px] text-accent font-bold uppercase tracking-widest mt-1">Designation ID: {editingPage.id}</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => setEditingPage(null)} className="h-8 rounded-lg hover:bg-white/10">Deselect</Button>
+                  <Button variant="ghost" size="sm" onClick={() => setEditingPage(null)} className="h-8 rounded-lg hover:bg-white/10">Close Editor</Button>
                 </CardHeader>
-                <CardContent className="space-y-4 pt-0">
-                  <div className="grid grid-cols-2 gap-4">
+                <CardContent className="space-y-6 pt-0">
+                  <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold text-muted-foreground uppercase">Page Title</label>
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Page Title</label>
                       <Input 
                         value={editingPage.title} 
                         onChange={(e) => setEditingPage({...editingPage, title: e.target.value})}
-                        className="bg-white/5 border-white/10"
+                        className="bg-white/5 border-white/10 h-11"
+                        placeholder="Nexus Entry"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold text-muted-foreground uppercase">URL Slug</label>
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">URL Slug (Locked)</label>
                       <Input 
                         value={editingPage.slug} 
                         disabled
-                        className="bg-white/5 border-white/10 opacity-50 cursor-not-allowed"
+                        className="bg-white/5 border-white/10 opacity-50 cursor-not-allowed h-11"
                       />
                     </div>
                   </div>
-                  <Button className="btn-primary w-full h-11 rounded-xl font-bold" onClick={() => handleUpdatePage(editingPage)}>
-                    <Save className="w-4 h-4 mr-2" /> Save Metadata
+                  <Button disabled={savingPage} className="btn-primary w-full h-12 rounded-xl font-bold" onClick={() => handleUpdatePage(editingPage)}>
+                    {savingPage ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                    Synchronize Metadata
                   </Button>
                 </CardContent>
               </Card>
 
               <div className="space-y-4">
-                <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
-                  <Layout className="w-4 h-4 text-primary" /> Structural Sections
+                <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2 mb-6">
+                  <Settings className="w-4 h-4 text-primary" /> Structural Sections Registry
                 </h3>
                 <div className="grid gap-4">
                   {editingPage.sections.map((sid, idx) => {
@@ -187,15 +196,15 @@ export default function PagesAdmin() {
                     return (
                       <Card key={sid} className="glass-card border-white/5 hover:border-white/10 transition-all overflow-hidden">
                         <div className="flex items-center p-6">
-                          <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mr-4 text-xs font-bold text-muted-foreground">
+                          <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mr-6 text-xs font-bold text-muted-foreground border border-white/5">
                             {idx + 1}
                           </div>
                           <div className="flex-1">
                             <p className="font-bold text-white text-sm">{section.title}</p>
-                            <p className="text-[10px] text-primary uppercase font-bold tracking-widest">{section.type}</p>
+                            <p className="text-[10px] text-primary uppercase font-bold tracking-widest mt-0.5">{section.type} protocol</p>
                           </div>
-                          <Button size="sm" variant="secondary" onClick={() => setEditingSection(section)} className="h-10 px-5 rounded-lg font-bold">
-                            Edit Content <Settings className="ml-2 w-3.5 h-3.5" />
+                          <Button size="sm" variant="outline" onClick={() => setEditingSection(section)} className="h-10 px-5 rounded-lg font-bold border-white/10 hover:bg-white/5">
+                            Modify Content <Edit3 className="ml-2 w-3.5 h-3.5" />
                           </Button>
                         </div>
                       </Card>
@@ -207,9 +216,9 @@ export default function PagesAdmin() {
           ) : (
             <Card className="glass-card h-full flex items-center justify-center border-dashed border-white/10 min-h-[400px]">
               <div className="text-center p-12 max-w-xs space-y-4">
-                <Layout className="w-12 h-12 text-muted-foreground mx-auto opacity-20" />
-                <h3 className="text-white font-bold">No Page Selected</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">Select an active page from the nexus list to architect its layout and dynamic sections.</p>
+                <FileText className="w-12 h-12 text-muted-foreground mx-auto opacity-20" />
+                <h3 className="text-white font-bold">No Architecture Selected</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">Select an active page from the nexus registry to architect its layout and dynamic sections.</p>
               </div>
             </Card>
           )}
@@ -222,7 +231,7 @@ export default function PagesAdmin() {
             <div className="flex justify-between items-center">
               <div>
                 <DialogTitle className="text-xl font-bold text-white">{editingSection?.title}</DialogTitle>
-                <p className="text-[10px] text-primary font-bold uppercase tracking-[0.2em] mt-1">{editingSection?.type} Layer</p>
+                <p className="text-[10px] text-primary font-bold uppercase tracking-[0.2em] mt-1">{editingSection?.type} LAYER ARCHITECT</p>
               </div>
               <Sparkles className="w-6 h-6 text-accent animate-pulse" />
             </div>
@@ -230,25 +239,28 @@ export default function PagesAdmin() {
           {editingSection && (
             <div className="p-8 space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Section Heading</label>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Section Protocol Heading</label>
                 <Input 
                   value={editingSection.title} 
                   onChange={(e) => setEditingSection({...editingSection, title: e.target.value})}
                   className="bg-white/5 border-white/10 h-12"
+                  placeholder="Infrastructure Core"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Core Content / Description</label>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Operational Brief / Description</label>
                 <Textarea 
                   value={editingSection.description} 
                   onChange={(e) => setEditingSection({...editingSection, description: e.target.value})}
-                  className="bg-white/5 border-white/10 min-h-[200px] py-4"
+                  className="bg-white/5 border-white/10 min-h-[220px] py-4 resize-none"
+                  placeholder="Architect the core strategic messaging for this section..."
                 />
               </div>
               <DialogFooter className="pt-4">
                 <Button variant="ghost" onClick={() => setEditingSection(null)} className="h-12 rounded-xl">Cancel</Button>
-                <Button className="btn-primary h-12 px-8 rounded-xl font-bold" onClick={() => handleUpdateSection(editingSection)}>
-                  Deploy Content
+                <Button disabled={savingSection} className="btn-primary h-12 px-10 rounded-xl font-bold" onClick={() => handleUpdateSection(editingSection)}>
+                  {savingSection ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                  Deploy Architecture
                 </Button>
               </DialogFooter>
             </div>

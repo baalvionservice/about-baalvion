@@ -7,14 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2, Pencil, Trash2, Plus, Database, Globe, Layers, ArrowRight, Search, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2, Pencil, Trash2, Plus, Database, Globe, Layers, Search, X, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
+const layers = ["Infrastructure", "Intelligence", "Governance", "Commerce", "Finance"];
+
 export default function EcosystemAdmin() {
   const [items, setItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState<Partial<EcosystemItem> | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
@@ -37,6 +41,13 @@ export default function EcosystemAdmin() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editing) return;
+
+    if (!editing.name || !editing.description || !editing.layer) {
+      toast({ title: "Validation Error", description: "Required registry data missing.", variant: "destructive" });
+      return;
+    }
+
+    setSaving(true);
     const isNew = !editing.id;
     const method = isNew ? 'POST' : 'PUT';
     
@@ -49,16 +60,18 @@ export default function EcosystemAdmin() {
 
       if (!res.ok) throw new Error('Unauthorized');
 
-      toast({ title: "Success", description: `Layer ${isNew ? 'added' : 'updated'} successfully.` });
+      toast({ title: "Registry Synchronized", description: `Layer "${editing.name}" ${isNew ? 'added' : 'updated'} successfully.` });
       setEditing(null);
       fetch('/api/ecosystem').then(res => res.json()).then(setItems);
     } catch (err) {
-      toast({ title: "Error", description: "Action protocol denied.", variant: "destructive" });
+      toast({ title: "Authorization Failure", description: "Strategic registry update protocol denied.", variant: "destructive" });
+    } finally {
+      setSaving(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Dismantle this ecosystem layer?')) return;
+    if (!confirm('Are you sure you want to dismantle this ecosystem layer? This will remove all registry links.')) return;
     try {
       const res = await fetch(`/api/ecosystem?id=${id}`, { 
         method: 'DELETE',
@@ -66,7 +79,7 @@ export default function EcosystemAdmin() {
       });
       if (!res.ok) throw new Error('Unauthorized');
       setItems(items.filter(i => i.id !== id));
-      toast({ title: "Layer Dismantled", description: "Node removed from the nexus ecosystem." });
+      toast({ title: "Layer Dismantled", description: "Node removed from the global trade nexus." });
     } catch (err) {
       toast({ title: "Error", description: "Dismantle protocol failure.", variant: "destructive" });
     }
@@ -82,7 +95,7 @@ export default function EcosystemAdmin() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
-      <p className="text-muted-foreground text-sm font-medium">Syncing Ecosystem Layers...</p>
+      <p className="text-muted-foreground text-sm font-medium">Syncing Ecosystem Registry...</p>
     </div>
   );
 
@@ -102,7 +115,7 @@ export default function EcosystemAdmin() {
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input 
-            placeholder="Search nodes by name or layer protocol..." 
+            placeholder="Search registry nodes..." 
             className="pl-12 h-12 bg-white/5 border-white/10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -122,7 +135,7 @@ export default function EcosystemAdmin() {
               <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-8">Layer Protocol</TableHead>
               <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Item Designation</TableHead>
               <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Nexus Domain</TableHead>
-              <TableHead className="text-right pr-8 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Protocol Actions</TableHead>
+              <TableHead className="text-right pr-8 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -131,7 +144,7 @@ export default function EcosystemAdmin() {
                 <TableCell colSpan={4} className="py-24 text-center">
                   <div className="flex flex-col items-center gap-2 opacity-20">
                     <Database className="w-10 h-10 text-muted-foreground" />
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">No nodes found in this registry</p>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">No matching nodes found</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -171,44 +184,45 @@ export default function EcosystemAdmin() {
           <DialogHeader className="p-8 border-b border-white/5">
             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
               <Database className="w-5 h-5 text-primary" />
-              {editing?.id ? 'Modify Registry' : 'New Ecosystem Node'}
+              {editing?.id ? 'Edit Registry Node' : 'New Ecosystem Node'}
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSave} className="p-8 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Layer Protocol</label>
-                <Input 
-                  required
-                  value={editing?.layer || ''} 
-                  onChange={(e) => setEditing({ ...editing!, layer: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12"
-                  placeholder="Infrastructure"
-                />
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Layer Protocol *</label>
+                <Select value={editing?.layer} onValueChange={(val) => setEditing({ ...editing!, layer: val as any })}>
+                  <SelectTrigger className="bg-white/5 border-white/10 h-12">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {layers.map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Item Name</label>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Item Designation *</label>
                 <Input 
                   required
                   value={editing?.name || ''} 
                   onChange={(e) => setEditing({ ...editing!, name: e.target.value })} 
                   className="bg-white/5 border-white/10 h-12"
-                  placeholder="Nexus Bedrock"
+                  placeholder="e.g. Nexus Settlement"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Operational Brief</label>
+              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Operational Brief *</label>
               <Textarea 
                 required
                 value={editing?.description || ''} 
                 onChange={(e) => setEditing({ ...editing!, description: e.target.value })} 
-                className="bg-white/5 border-white/10 min-h-[120px] py-4"
-                placeholder="Core functionality and purpose..."
+                className="bg-white/5 border-white/10 min-h-[120px] py-4 resize-none"
+                placeholder="Core functionality and purpose in the nexus..."
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Primary Domain</label>
+              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Primary Domain</label>
               <div className="relative">
                 <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input 
@@ -221,8 +235,16 @@ export default function EcosystemAdmin() {
             </div>
             <DialogFooter className="pt-4">
               <Button type="button" variant="ghost" onClick={() => setEditing(null)} className="h-12 rounded-xl">Cancel</Button>
-              <Button type="submit" className="btn-primary h-12 px-8 rounded-xl font-bold">
-                Deploy Node
+              <Button type="submit" disabled={saving} className="btn-primary h-12 px-8 rounded-xl font-bold min-w-[140px]">
+                {saving ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" /> Syncing...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Save className="w-4 h-4" /> Deploy Node
+                  </span>
+                )}
               </Button>
             </DialogFooter>
           </form>

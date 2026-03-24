@@ -6,19 +6,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Globe, Lock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple mock auth for demonstration
+    // Simple mock auth: the password itself acts as the session token
     if (password === "admin123") {
-      localStorage.setItem('admin_auth', 'true');
+      localStorage.setItem('admin_token', password);
       router.push('/admin');
+      toast({ title: "Access Granted", description: "Welcome to Baalvion Nexus Control." });
     } else {
-      alert("Invalid password (try admin123)");
+      toast({ 
+        title: "Access Denied", 
+        description: "Invalid credentials. Strategic link rejected.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -44,6 +51,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
+                  required
                 />
               </div>
             </div>

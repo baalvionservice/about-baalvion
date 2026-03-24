@@ -30,27 +30,45 @@ export default function PagesAdmin() {
     });
   }, []);
 
+  const getAdminHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  };
+
   const handleUpdatePage = async (page: Page) => {
-    await fetch('/api/pages', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(page),
-    });
-    setPages(pages.map(p => p.id === page.id ? page : p));
-    setEditingPage(null);
-    toast({ title: "Page Updated", description: "The page metadata has been saved." });
+    try {
+      const res = await fetch('/api/pages', {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify(page),
+      });
+      if (!res.ok) throw new Error('Unauthorized');
+      setPages(pages.map(p => p.id === page.id ? page : p));
+      setEditingPage(null);
+      toast({ title: "Page Updated", description: "The page metadata has been saved." });
+    } catch (err) {
+      toast({ title: "Error", description: "Action denied. Check credentials.", variant: "destructive" });
+    }
   };
 
   const handleUpdateSection = async (section: Section) => {
-    const res = await fetch('/api/sections', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(section),
-    });
-    const updated = await res.json();
-    setSections(sections.map(s => s.id === updated.id ? updated : s));
-    setEditingSection(null);
-    toast({ title: "Section Updated", description: "The section content has been saved." });
+    try {
+      const res = await fetch('/api/sections', {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify(section),
+      });
+      if (!res.ok) throw new Error('Unauthorized');
+      const updated = await res.json();
+      setSections(sections.map(s => s.id === updated.id ? updated : s));
+      setEditingSection(null);
+      toast({ title: "Section Updated", description: "The section content has been saved." });
+    } catch (err) {
+      toast({ title: "Error", description: "Action denied. Check credentials.", variant: "destructive" });
+    }
   };
 
   if (loading) return <Loader2 className="animate-spin mx-auto mt-20" />;

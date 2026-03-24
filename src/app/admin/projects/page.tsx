@@ -14,7 +14,6 @@ import { useToast } from "@/hooks/use-toast";
 const categories = [
   "Core Platform Projects",
   "Industrial Projects",
-  "Internal Systems",
   "Intelligence Platforms",
   "Governance",
   "Commerce",
@@ -34,6 +33,14 @@ export default function AdminProjects() {
     });
   }, []);
 
+  const getAdminHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     const isNew = !editing?.id;
@@ -42,9 +49,12 @@ export default function AdminProjects() {
     try {
       const res = await fetch('/api/projects', {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAdminHeaders(),
         body: JSON.stringify(editing),
       });
+      
+      if (!res.ok) throw new Error('Authorization failed');
+      
       const updated = await res.json();
       
       if (isNew) {
@@ -56,18 +66,24 @@ export default function AdminProjects() {
       setEditing(null);
       toast({ title: "Success", description: "Project saved successfully." });
     } catch (err) {
-      toast({ title: "Error", description: "Failed to save project.", variant: "destructive" });
+      toast({ title: "Error", description: "Operation denied. Check credentials.", variant: "destructive" });
     }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure?')) return;
     try {
-      await fetch(`/api/projects?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/projects?id=${id}`, { 
+        method: 'DELETE',
+        headers: getAdminHeaders()
+      });
+      
+      if (!res.ok) throw new Error('Authorization failed');
+      
       setProjects(projects.filter(p => p.id !== id));
       toast({ title: "Deleted", description: "Project removed." });
     } catch (err) {
-      toast({ title: "Error", description: "Failed to delete project.", variant: "destructive" });
+      toast({ title: "Error", description: "Operation denied.", variant: "destructive" });
     }
   };
 

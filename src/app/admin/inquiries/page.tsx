@@ -6,10 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Mail, CheckCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminInquiries() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetch('/api/inquiry').then(res => res.json()).then(data => {
@@ -18,13 +20,27 @@ export default function AdminInquiries() {
     });
   }, []);
 
+  const getAdminHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  };
+
   const updateStatus = async (id: string, status: Inquiry['status']) => {
-    await fetch('/api/inquiry', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, status }),
-    });
-    setInquiries(inquiries.map(i => i.id === id ? { ...i, status } : i));
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'PATCH',
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ id, status }),
+      });
+      if (!res.ok) throw new Error('Unauthorized');
+      setInquiries(inquiries.map(i => i.id === id ? { ...i, status } : i));
+      toast({ title: "Success", description: `Status updated to ${status}.` });
+    } catch (err) {
+      toast({ title: "Error", description: "Operation denied.", variant: "destructive" });
+    }
   };
 
   if (loading) return <Loader2 className="animate-spin mx-auto mt-20" />;

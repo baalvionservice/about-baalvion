@@ -24,24 +24,32 @@ export default function EcosystemAdmin() {
     });
   }, []);
 
+  const getAdminHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editing) return;
     
-    const isNew = !editing.id;
-    const method = isNew ? 'POST' : 'PUT'; // Need to update API if POST is not handled, but usually POST/PUT is fine
-    
-    // For simplicity, using PUT if ID exists, or mock handle POST
-    const res = await fetch('/api/ecosystem', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editing),
-    });
+    try {
+      const res = await fetch('/api/ecosystem', {
+        method: 'PUT',
+        headers: getAdminHeaders(),
+        body: JSON.stringify(editing),
+      });
 
-    if (res.ok) {
+      if (!res.ok) throw new Error('Unauthorized');
+
       toast({ title: "Success", description: "Ecosystem layer saved." });
       setEditing(null);
       fetch('/api/ecosystem').then(res => res.json()).then(setLayers);
+    } catch (err) {
+      toast({ title: "Error", description: "Action denied. Check credentials.", variant: "destructive" });
     }
   };
 
@@ -75,7 +83,8 @@ export default function EcosystemAdmin() {
                     <Button variant="ghost" size="icon" onClick={() => setEditing(layer)}>
                       <Pencil className="w-4 h-4" />
                     </Button>
-                  </TableRow>
+                  </TableCell>
+                </TableRow>
                 ))}
             </TableBody>
           </Table>

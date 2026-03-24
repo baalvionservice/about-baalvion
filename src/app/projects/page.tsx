@@ -35,28 +35,28 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main className="pt-48 pb-40">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mb-32">
+      <main className="flex-1 pt-48 pb-40">
+        <div className="section-container">
+          <div className="max-w-4xl mb-32 space-y-10 animate-fade-in">
             <span className="section-label">Strategic Portfolio</span>
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-10 leading-[0.95] gradient-text">Nexus <br/>Initiatives</h1>
+            <h1 className="text-6xl md:text-8xl font-bold text-white leading-[0.95] tracking-tight gradient-text">Nexus <br/>Initiatives</h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
-              A managed portfolio of high-impact strategic projects architected to resolve fragmentation in global commerce.
+              A managed portfolio of high-impact strategic projects architected to resolve terminal fragmentation in global commerce.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4 mb-20 pb-8 border-b border-white/5">
+          <div className="flex flex-wrap gap-4 mb-24 pb-8 border-b border-white/5 overflow-x-auto no-scrollbar">
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveTab(cat)}
                 className={cn(
-                  "px-8 py-3 rounded-full text-sm font-bold transition-all",
+                  "px-10 py-4 rounded-full text-sm font-bold transition-all whitespace-nowrap",
                   activeTab === cat 
-                    ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                    ? "bg-primary text-white shadow-2xl shadow-primary/30" 
                     : "text-muted-foreground hover:text-white hover:bg-white/5"
                 )}
               >
@@ -66,46 +66,50 @@ export default function ProjectsPage() {
           </div>
 
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-40 gap-4">
-              <Loader2 className="w-12 h-12 animate-spin text-primary" />
-              <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs">Syncing Portfolio...</p>
+            <div className="flex flex-col items-center justify-center py-48 gap-8">
+              <Loader2 className="w-16 h-16 animate-spin text-primary" />
+              <p className="text-muted-foreground font-bold uppercase tracking-[0.5em] text-xs">Syncing Strategic Portfolio...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {projects.filter(p => p.category === activeTab).map(project => (
-                <Card key={project.id} className="glass-card card-hover flex flex-col h-full group">
-                  <CardHeader className="p-10 pb-6">
-                    <div className="flex justify-between items-start mb-10">
-                      <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-primary transition-all">
-                        <Target className="w-7 h-7 text-accent group-hover:text-white" />
+                <Card key={project.id} className="glass-card card-hover flex flex-col h-full group border-white/5 hover:border-primary/40 bg-white/[0.01]">
+                  <CardHeader className="p-12 pb-8 space-y-10">
+                    <div className="flex justify-between items-start">
+                      <div className="w-16 h-16 bg-white/5 rounded-3xl flex items-center justify-center group-hover:bg-primary transition-all duration-500 border border-white/10 shadow-inner">
+                        <Target className="w-8 h-8 text-accent group-hover:text-white" />
                       </div>
-                      <Badge className={cn("py-1 px-4 text-[10px] font-bold uppercase tracking-widest rounded-full", getStatusColor(project.status))} variant="outline">
+                      <Badge className={cn("py-2 px-5 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg", getStatusColor(project.status))} variant="outline">
                         {project.status}
                       </Badge>
                     </div>
-                    <CardTitle className="text-3xl font-bold text-white mb-4">{project.name}</CardTitle>
-                    <div className="flex items-center gap-2 text-[10px] font-bold text-primary tracking-[0.2em] uppercase">
-                      <span>{project.type}</span>
+                    <div className="space-y-4">
+                      <CardTitle className="text-4xl font-bold text-white group-hover:text-primary transition-colors duration-500">{project.name}</CardTitle>
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-primary tracking-[0.3em] uppercase">
+                        <span>{project.type}</span>
+                      </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="px-10 pb-10 flex-1 flex flex-col justify-between">
-                    <CardDescription className="text-muted-foreground leading-relaxed text-base mb-12 font-light">
+                  <CardContent className="px-12 pb-12 flex-1 flex flex-col justify-between">
+                    <CardDescription className="text-muted-foreground leading-relaxed text-lg mb-16 font-light">
                       {project.description}
                     </CardDescription>
                     
-                    <div className="space-y-6 pt-8 border-t border-white/5">
+                    <div className="space-y-8 pt-10 border-t border-white/5">
                       {project.domain && (
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground font-mono">
-                          <Globe className="w-4 h-4 text-primary" />
-                          {project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono group/domain">
+                          <Globe className="w-5 h-5 text-primary group-hover/domain:rotate-12 transition-transform" />
+                          <span className="group-hover:text-white transition-colors">
+                            {project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}
+                          </span>
                         </div>
                       )}
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                          Updated • {new Date(project.updatedAt).toLocaleDateString()}
+                        <span className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                          Last Updated • {new Date(project.updatedAt).toLocaleDateString()}
                         </span>
-                        <button className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
-                          <ExternalLink className="w-4 h-4" />
+                        <button className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-500">
+                          <ExternalLink className="w-5 h-5" />
                         </button>
                       </div>
                     </div>
@@ -113,10 +117,16 @@ export default function ProjectsPage() {
                 </Card>
               ))}
               {projects.filter(p => p.category === activeTab).length === 0 && (
-                <div className="col-span-full py-40 text-center glass-card rounded-[3rem] border-dashed border-white/10">
-                  <Target className="w-16 h-16 text-muted-foreground mx-auto mb-6 opacity-20" />
-                  <h3 className="text-white font-bold text-2xl">No Active Initiatives</h3>
-                  <p className="text-muted-foreground mt-2 font-light">The category "{activeTab}" currently has no publicly registered projects.</p>
+                <div className="col-span-full py-64 text-center glass-card border-dashed border-white/10 flex flex-col items-center justify-center space-y-8">
+                  <div className="w-24 h-24 rounded-full bg-white/5 flex items-center justify-center">
+                    <Target className="w-12 h-12 text-muted-foreground opacity-20" />
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="text-white font-bold text-3xl">Registry Empty</h3>
+                    <p className="text-muted-foreground max-w-sm mx-auto font-light leading-relaxed">
+                      The category <span className="text-primary font-bold">"{activeTab}"</span> currently has no publicly registered strategic initiatives.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

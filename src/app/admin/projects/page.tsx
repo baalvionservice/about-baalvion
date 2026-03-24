@@ -13,7 +13,7 @@ import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, 
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const categories = ["Core", "Industrial", "Internal", "Governance", "Commerce"];
+const categories = ["Core Platform", "Industrial", "Internal Systems", "Intelligence", "Governance", "Commerce"];
 const statuses: ProjectStatus[] = ["Active", "In Development", "Planned"];
 
 export default function AdminProjects() {
@@ -23,7 +23,6 @@ export default function AdminProjects() {
   const [editing, setEditing] = useState<Partial<Project> | null>(null);
   const { toast } = useToast();
 
-  // Search and Filter States
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");

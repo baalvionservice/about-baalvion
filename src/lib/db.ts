@@ -51,7 +51,7 @@ let projects: Project[] = [
   { 
     id: 'p1', 
     name: 'Nexus Trade Engine', 
-    category: 'Core', 
+    category: 'Core Platform', 
     type: 'Execution Platform',
     description: 'High-performance proprietary trade execution and settlement infrastructure designed for ultra-low latency global logistics and financial clearing.', 
     status: 'Active',
@@ -65,7 +65,7 @@ let projects: Project[] = [
   { 
     id: 'p2', 
     name: 'Intel-V3 Risk Matrix', 
-    category: 'Industrial', 
+    category: 'Intelligence', 
     type: 'Compliance AI',
     description: 'Advanced predictive analytics engine utilizing multi-layer neural networks to assess global supply chain volatility and regulatory shifts in real-time.', 
     status: 'In Development',
@@ -89,12 +89,24 @@ let projects: Project[] = [
   { 
     id: 'p4', 
     name: 'Settlement Node 01', 
-    category: 'Core', 
+    category: 'Core Platform', 
     type: 'Finance Protocol',
     description: 'Multi-currency digital settlement layer architected for seamless cross-border value transfer and automated trade finance liquidity.', 
     status: 'Active',
     isFeatured: true,
     priority: 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p5', 
+    name: 'Imperial ERP Nexus', 
+    category: 'Internal Systems', 
+    type: 'Enterprise Resource',
+    description: 'Proprietary internal resource management system linking global administrative nodes with real-time operational oversight.', 
+    status: 'Active',
+    isFeatured: false,
+    priority: 10,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -115,9 +127,9 @@ let sections: Section[] = [
     description: 'The current global trade landscape is a patchwork of legacy systems, creating friction that hinders growth and increases systemic risk.',
     data: {
       points: [
-        { title: "Manual Fragmentation", desc: "Disconnected systems lead to data silos and execution delays." },
-        { title: "Compliance Opacity", desc: "Complex jurisdictional laws create high regulatory friction." },
-        { title: "Financial Inefficiency", desc: "Legacy clearing systems slow down global value transfer." }
+        { title: "Manual Fragmentation", desc: "Disconnected systems lead to data silos and execution delays." }
+        ,{ title: "Compliance Opacity", desc: "Complex jurisdictional laws create high regulatory friction." }
+        ,{ title: "Financial Inefficiency", desc: "Legacy clearing systems slow down global value transfer." }
       ]
     }
   },
@@ -128,9 +140,9 @@ let sections: Section[] = [
     description: 'Baalvion Nexus resolves fragmentation by architecting a single, interoperable layer where trade, finance, and law converge.',
     data: {
       features: [
-        { title: "Standardized Protocols", desc: "Unified data formats for seamless cross-border interoperability." },
-        { title: "Autonomous Compliance", desc: "AI-driven legal mapping integrated directly into the trade flow." },
-        { title: "Instant Settlement", desc: "Real-time financial clearing using high-speed digital nodes." }
+        { title: "Standardized Protocols", desc: "Unified data formats for seamless cross-border interoperability." }
+        ,{ title: "Autonomous Compliance", desc: "AI-driven legal mapping integrated directly into the trade flow." }
+        ,{ title: "Instant Settlement", desc: "Real-time financial clearing using high-speed digital nodes." }
       ]
     }
   },
@@ -141,9 +153,9 @@ let sections: Section[] = [
     description: 'Our architecture is built on the highest global standards of security and transparency.',
     data: {
       metrics: [
-        { label: "Global Reach", value: "180+ Jurisdictions" },
-        { label: "Security Standard", value: "AES-256 / Zero-Knowledge" },
-        { label: "Compliance", value: "Real-Time AI Mapping" }
+        { label: "Global Reach", value: "180+ Jurisdictions" }
+        ,{ label: "Security Standard", value: "AES-256 / Zero-Knowledge" }
+        ,{ label: "Compliance", value: "Real-Time AI Mapping" }
       ]
     }
   },
@@ -153,44 +165,11 @@ let sections: Section[] = [
     title: 'Join the Future of Global Trade',
     description: 'Establish your Nexus link today and integrate with the foundational layer of international commerce.',
     data: { ctaPrimary: 'Establish Nexus Link', ctaSecondary: 'Governance Specs' }
-  },
-  {
-    id: 'sec-hero-company',
-    type: 'hero-simple',
-    title: 'Unified Global Trade',
-    description: 'Baalvion Industries is architecting the foundational layer for the next century of international commerce, bridging the gap between legacy systems and future automation.',
-    data: { label: 'The Vision' }
-  },
-  {
-    id: 'sec-hero-platform',
-    type: 'hero-simple',
-    title: 'Nexus Core',
-    description: 'The high-speed execution layer for global enterprise logistics and financial settlement.',
-    data: { label: 'Technology', features: [
-      { title: 'Unified Ledger', desc: 'A cryptographically signed single source of truth for all global trade events and transactions.' },
-      { title: 'Autonomous AI', desc: 'Real-time regulatory mapping and compliance monitoring across 180+ jurisdictions.' },
-      { title: 'Digital Settlement', desc: 'Instant multi-currency financial clearing with automated liquidity and risk management.' }
-    ]}
-  },
-  {
-    id: 'sec-hero-trust',
-    type: 'hero-simple',
-    title: 'Governance & Compliance',
-    description: 'Security, transparency, and international law are not just features—they are the core of the Baalvion Nexus infrastructure.',
-    data: { label: 'Trust Architecture' }
   }
 ];
 
 let pages: Page[] = [
-  { 
-    id: 'pg-home', 
-    slug: 'home', 
-    title: 'Baalvion Nexus | Global Trade Infrastructure', 
-    sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-trust-home', 'sec-cta-home'] 
-  },
-  { id: 'pg-company', slug: 'company', title: 'Strategic Vision | Baalvion Industries', sections: ['sec-hero-company'] },
-  { id: 'pg-platform', slug: 'platform', title: 'Nexus Core Platform | Technology', sections: ['sec-hero-platform'] },
-  { id: 'pg-trust', slug: 'trust', title: 'Trust & Governance Architecture | Baalvion', sections: ['sec-hero-trust'] }
+  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-trust-home', 'sec-cta-home'] }
 ];
 
 let ecosystem: EcosystemItem[] = [

@@ -1,20 +1,26 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Project, ProjectStatus } from "@/lib/db";
-import { LayoutGrid, Loader2, ExternalLink, Target, Globe, ArrowRight } from "lucide-react";
+import { Target, Globe, Loader2, Star, LayoutGrid, CheckCircle2, Clock, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const categories = ["Core", "Industrial", "Internal", "Governance", "Commerce"];
+const categories = [
+  { name: "Core Platform", desc: "Foundation systems powering global trade infrastructure." },
+  { name: "Industrial", desc: "Deep-layer logistics and industrial connectivity nodes." },
+  { name: "Internal Systems", desc: "Proprietary governance and resource orchestration." },
+  { name: "Intelligence", desc: "Neural risk assessment and compliance monitoring." },
+  { name: "Governance", desc: "Regulatory mapping and legal protocol alignment." },
+  { name: "Commerce", desc: "High-speed marketplace and settlement execution." }
+];
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState(categories[0]);
 
   useEffect(() => {
     fetch('/api/projects')
@@ -25,6 +31,19 @@ export default function ProjectsPage() {
       });
   }, []);
 
+  const featuredProjects = useMemo(() => {
+    return projects.filter(p => p.isFeatured).sort((a, b) => (a.priority || 10) - (b.priority || 10));
+  }, [projects]);
+
+  const getStatusIcon = (status: ProjectStatus) => {
+    switch (status) {
+      case 'Active': return <CheckCircle2 className="w-3.5 h-3.5" />;
+      case 'In Development': return <Clock className="w-3.5 h-3.5" />;
+      case 'Planned': return <Calendar className="w-3.5 h-3.5" />;
+      default: return null;
+    }
+  };
+
   const getStatusColor = (status: ProjectStatus) => {
     switch (status) {
       case 'Active': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
@@ -34,105 +53,120 @@ export default function ProjectsPage() {
     }
   };
 
+  if (loading) return (
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-8">
+      <Loader2 className="w-16 h-16 animate-spin text-primary" />
+      <p className="text-[11px] font-bold uppercase tracking-[0.5em] text-muted-foreground">Syncing Strategic Portfolio...</p>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main className="flex-1 pt-48 pb-32">
+      <main className="flex-1 pt-56 pb-48">
         <div className="section-container">
-          <div className="max-w-4xl mb-24 space-y-8 animate-fade-in">
-            <span className="section-label">Strategic Portfolio</span>
-            <h1 className="gradient-text mb-6">Nexus <br/>Initiatives</h1>
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              A managed portfolio of high-impact strategic projects architected to resolve terminal fragmentation in global commerce.
+          {/* Hero */}
+          <div className="max-w-4xl mb-32 space-y-8 animate-fade-in">
+            <span className="section-label">Operational Portfolio</span>
+            <h1 className="gradient-text mb-8">Strategic <br/>Nexus Initiatives</h1>
+            <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl font-light">
+              A curated landscape of high-impact infrastructure projects architected to resolve terminal fragmentation in global commerce and financial clearing.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4 mb-20 pb-8 border-b border-white/5 overflow-x-auto no-scrollbar">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveTab(cat)}
-                className={cn(
-                  "px-8 py-4 rounded-2xl text-[11px] uppercase tracking-widest font-bold transition-all whitespace-nowrap",
-                  activeTab === cat 
-                    ? "bg-primary text-white shadow-xl shadow-primary/20" 
-                    : "text-muted-foreground hover:text-white hover:bg-white/5"
-                )}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {loading ? (
-            <div className="flex flex-col items-center justify-center py-48 gap-8">
-              <Loader2 className="w-12 h-12 animate-spin text-primary" />
-              <p className="text-muted-foreground font-bold uppercase tracking-widest text-[10px]">Syncing Strategic Portfolio...</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.filter(p => p.category === activeTab).map(project => (
-                <Card key={project.id} className="glass-card card-hover flex flex-col h-full group border-white/5">
-                  <CardHeader className="p-10 pb-6 space-y-10">
-                    <div className="flex justify-between items-start">
-                      <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-primary transition-all duration-500 border border-white/5">
-                        <Target className="w-6 h-6 text-accent group-hover:text-white" />
-                      </div>
-                      <Badge className={cn("py-1.5 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-xl", getStatusColor(project.status))} variant="outline">
-                        {project.status}
-                      </Badge>
-                    </div>
-                    <div className="space-y-4">
-                      <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{project.name}</h3>
-                      <div className="flex items-center gap-4 text-[10px] font-bold text-primary tracking-widest uppercase">
-                        <span>{project.type}</span>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="px-10 pb-10 flex-1 flex flex-col justify-between">
-                    <p className="mb-12 text-base text-muted-foreground leading-relaxed">
-                      {project.description}
-                    </p>
-                    
-                    <div className="space-y-8 pt-8 border-t border-white/5">
-                      {project.domain && (
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground font-mono">
-                          <Globe className="w-4 h-4 text-primary" />
-                          <span className="hover:text-white transition-colors">
-                            {project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}
-                          </span>
-                        </div>
-                      )}
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest">
-                          Updated • {new Date(project.updatedAt).toLocaleDateString()}
-                        </span>
-                        <button className="w-10 h-10 rounded-xl border border-white/5 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-500">
-                          <ExternalLink className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {projects.filter(p => p.category === activeTab).length === 0 && (
-                <div className="col-span-full py-48 text-center glass-card border-dashed border-white/10 flex flex-col items-center justify-center space-y-6">
-                  <Target className="w-12 h-12 text-muted-foreground opacity-20" />
-                  <div className="space-y-4">
-                    <h3 className="text-2xl font-bold">No Initiatives Found</h3>
-                    <p className="max-w-md mx-auto text-muted-foreground">
-                      The category <span className="text-primary font-bold">"{activeTab}"</span> currently has no publicly registered strategic initiatives.
-                    </p>
-                  </div>
-                </div>
-              )}
+          {/* Featured Section */}
+          {featuredProjects.length > 0 && (
+            <div className="mb-48 space-y-16 animate-fade-in stagger-1">
+              <div className="flex items-center gap-6">
+                <div className="w-1.5 h-12 bg-primary rounded-full shadow-[0_0_20px_rgba(var(--primary),0.5)]" />
+                <h2 className="text-3xl font-bold text-white mb-0 tracking-tight flex items-center gap-3">
+                  <Star className="w-6 h-6 text-primary fill-primary" /> Featured Initiatives
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {featuredProjects.map(project => (
+                  <ProjectCard key={project.id} project={project} statusIcon={getStatusIcon(project.status)} statusColor={getStatusColor(project.status)} />
+                ))}
+              </div>
             </div>
           )}
+
+          {/* Categories Sections */}
+          <div className="space-y-48">
+            {categories.map((cat, i) => {
+              const catProjects = projects.filter(p => p.category === cat.name);
+              return (
+                <section key={cat.name} className={cn("space-y-16 animate-fade-in", `stagger-${(i % 3) + 1}`)}>
+                  <div className="max-w-3xl space-y-4">
+                    <h2 className="text-3xl font-bold text-white mb-0">{cat.name}</h2>
+                    <p className="text-lg text-muted-foreground font-light">{cat.desc}</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {catProjects.length === 0 ? (
+                      <Card className="col-span-full glass-card border-dashed border-white/5 py-24 flex flex-col items-center justify-center gap-6 opacity-30">
+                        <Target className="w-12 h-12 text-muted-foreground" />
+                        <p className="text-xs font-bold uppercase tracking-widest">No active nodes in this registry</p>
+                      </Card>
+                    ) : (
+                      catProjects.map(project => (
+                        <ProjectCard key={project.id} project={project} statusIcon={getStatusIcon(project.status)} statusColor={getStatusColor(project.status)} />
+                      ))
+                    )}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
         </div>
       </main>
 
       <Footer />
     </div>
+  );
+}
+
+function ProjectCard({ project, statusIcon, statusColor }: { project: Project, statusIcon: React.ReactNode, statusColor: string }) {
+  return (
+    <Card className="glass-card card-hover group h-full border-white/5 flex flex-col">
+      <CardHeader className="p-10 pb-6 space-y-10">
+        <div className="flex justify-between items-start">
+          <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-primary transition-all duration-500 border border-white/5">
+            <Target className="w-6 h-6 text-accent group-hover:text-white" />
+          </div>
+          <Badge className={cn("py-1.5 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-lg flex items-center gap-2", statusColor)} variant="outline">
+            {statusIcon}
+            {project.status}
+          </Badge>
+        </div>
+        <div className="space-y-3">
+          <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors leading-tight">{project.name}</h3>
+          <p className="text-[10px] font-bold text-primary tracking-[0.2em] uppercase">{project.type}</p>
+        </div>
+      </CardHeader>
+      <CardContent className="px-10 pb-10 flex-1 flex flex-col justify-between space-y-12">
+        <p className="text-muted-foreground leading-relaxed font-light text-base line-clamp-3">
+          {project.description}
+        </p>
+        
+        <div className="space-y-6 pt-8 border-t border-white/5">
+          {project.domain && (
+            <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground group-hover:text-white transition-colors">
+              <Globe className="w-4 h-4 text-primary" />
+              <span>{project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}</span>
+            </div>
+          )}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+              <LayoutGrid className="w-3 h-3" />
+              PRIORITY {project.priority}
+            </div>
+            <span className="text-[9px] font-mono text-muted-foreground/30 uppercase tracking-tighter">
+              REF: {project.id}
+            </span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -6,7 +6,8 @@ import { Footer } from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Project, ProjectStatus } from "@/lib/db";
-import { Target, Globe, Loader2, Star, LayoutGrid, CheckCircle2, Clock, Calendar } from "lucide-react";
+import { Target, Globe, Loader2, Star, LayoutGrid, CheckCircle2, Clock, Calendar, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const categories = [
@@ -129,44 +130,38 @@ export default function ProjectsPage() {
 function ProjectCard({ project, statusIcon, statusColor }: { project: Project, statusIcon: React.ReactNode, statusColor: string }) {
   return (
     <Card className="glass-card card-hover group h-full border-white/5 flex flex-col">
-      <CardHeader className="p-10 pb-6 space-y-10">
-        <div className="flex justify-between items-start">
-          <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-primary transition-all duration-500 border border-white/5">
-            <Target className="w-6 h-6 text-accent group-hover:text-white" />
-          </div>
-          <Badge className={cn("py-1.5 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-lg flex items-center gap-2", statusColor)} variant="outline">
-            {statusIcon}
-            {project.status}
-          </Badge>
-        </div>
-        <div className="space-y-3">
-          <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors leading-tight">{project.name}</h3>
-          <p className="text-[10px] font-bold text-primary tracking-[0.2em] uppercase">{project.type}</p>
-        </div>
-      </CardHeader>
-      <CardContent className="px-10 pb-10 flex-1 flex flex-col justify-between space-y-12">
-        <p className="text-muted-foreground leading-relaxed font-light text-base line-clamp-3">
-          {project.description}
-        </p>
-        
-        <div className="space-y-6 pt-8 border-t border-white/5">
-          {project.domain && (
-            <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground group-hover:text-white transition-colors">
-              <Globe className="w-4 h-4 text-primary" />
-              <span>{project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}</span>
+      <Link href={`/projects/${project.id}`} className="flex flex-col h-full">
+        <CardHeader className="p-10 pb-6 space-y-10">
+          <div className="flex justify-between items-start">
+            <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-primary transition-all duration-500 border border-white/5">
+              <Target className="w-6 h-6 text-accent group-hover:text-white" />
             </div>
-          )}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
-              <LayoutGrid className="w-3 h-3" />
-              PRIORITY {project.priority}
-            </div>
-            <span className="text-[9px] font-mono text-muted-foreground/30 uppercase tracking-tighter">
-              REF: {project.id}
-            </span>
+            <Badge className={cn("py-1.5 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-lg flex items-center gap-2", statusColor)} variant="outline">
+              {statusIcon}
+              {project.status}
+            </Badge>
           </div>
-        </div>
-      </CardContent>
+          <div className="space-y-3">
+            <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors leading-tight">{project.name}</h3>
+            <p className="text-[10px] font-bold text-primary tracking-[0.2em] uppercase">{project.type}</p>
+          </div>
+        </CardHeader>
+        <CardContent className="px-10 pb-10 flex-1 flex flex-col justify-between space-y-12">
+          <p className="text-muted-foreground leading-relaxed font-light text-base line-clamp-3">
+            {project.description}
+          </p>
+          
+          <div className="space-y-6 pt-8 border-t border-white/5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                <LayoutGrid className="w-3 h-3" />
+                EXPLORE NODE
+              </div>
+              <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-2 transition-all" />
+            </div>
+          </div>
+        </CardContent>
+      </Link>
     </Card>
   );
 }

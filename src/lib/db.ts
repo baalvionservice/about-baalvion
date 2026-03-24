@@ -6,6 +6,9 @@ export interface Project {
   category: string;
   type: string;
   description: string;
+  longDescription?: string;
+  ecosystemRole?: string;
+  futureScope?: string;
   status: ProjectStatus;
   domain?: string;
   subdomain?: string;
@@ -53,7 +56,10 @@ let projects: Project[] = [
     name: 'Nexus Trade Engine', 
     category: 'Core Platform', 
     type: 'Execution Platform',
-    description: 'High-performance proprietary trade execution and settlement infrastructure designed for ultra-low latency global logistics and financial clearing.', 
+    description: 'High-performance proprietary trade execution and settlement infrastructure designed for ultra-low latency global logistics.', 
+    longDescription: 'The Nexus Trade Engine is the heartbeat of the Baalvion infrastructure. It facilitates the high-speed execution of trade orders across diverse asset classes and jurisdictions. Built with a focus on ultra-low latency, it ensures that global commerce moves at the speed of light, bypassing traditional clearing house delays.',
+    ecosystemRole: 'Acts as the primary execution layer connecting commerce platforms with financial settlement nodes.',
+    futureScope: 'Integration of autonomous agent-based trading protocols and cross-chain liquidity bridging for decentralized finance nodes.',
     status: 'Active',
     isFeatured: true,
     priority: 1,
@@ -67,7 +73,10 @@ let projects: Project[] = [
     name: 'Intel-V3 Risk Matrix', 
     category: 'Intelligence', 
     type: 'Compliance AI',
-    description: 'Advanced predictive analytics engine utilizing multi-layer neural networks to assess global supply chain volatility and regulatory shifts in real-time.', 
+    description: 'Advanced predictive analytics engine utilizing multi-layer neural networks to assess global supply chain volatility.', 
+    longDescription: 'Intel-V3 is a sophisticated risk assessment framework that processes trillions of data points across global supply chains. By analyzing geopolitical shifts, weather patterns, and market fluctuations, it provides strategic foresight to businesses and governments, turning uncertainty into actionable intelligence.',
+    ecosystemRole: 'Provides the critical intelligence layer for risk mitigation and strategic decision-making within the nexus.',
+    futureScope: 'Deployment of localized "edge" intelligence nodes for real-time risk assessment in remote industrial corridors.',
     status: 'In Development',
     isFeatured: true,
     priority: 2,
@@ -79,7 +88,10 @@ let projects: Project[] = [
     name: 'Lex Ledger', 
     category: 'Governance', 
     type: 'Legal Infrastructure',
-    description: 'Automated legal compliance mapping protocol providing immutable audit trails and regulatory alignment across 180+ international jurisdictions.', 
+    description: 'Automated legal compliance mapping protocol providing immutable audit trails and regulatory alignment.', 
+    longDescription: 'Lex Ledger solves the terminal complexity of international trade law. By digitizing jurisdictional regulations into executable code, it ensures that every transaction is compliant by design. It creates a "Global Legal Bridge" that allows businesses to operate seamlessly across 180+ countries.',
+    ecosystemRole: 'Ensures absolute compliance and trust across all commerce and finance operations within the nexus.',
+    futureScope: 'Autonomous arbitration protocols for cross-border dispute resolution without traditional court delays.',
     status: 'Planned',
     isFeatured: false,
     priority: 3,
@@ -91,7 +103,10 @@ let projects: Project[] = [
     name: 'Settlement Node 01', 
     category: 'Core Platform', 
     type: 'Finance Protocol',
-    description: 'Multi-currency digital settlement layer architected for seamless cross-border value transfer and automated trade finance liquidity.', 
+    description: 'Multi-currency digital settlement layer architected for seamless cross-border value transfer.', 
+    longDescription: 'Settlement Node 01 is a high-security financial clearing terminal. It enables the instant transfer of value between global accounts, eliminating the 3-5 day delay typical of legacy banking systems. It supports major fiat currencies and a curated list of digital assets.',
+    ecosystemRole: 'Provides the financial clearing foundation for the entire trade engine.',
+    futureScope: 'Expansion into 50+ localized currency clearing pools and direct integration with central bank digital currencies.',
     status: 'Active',
     isFeatured: true,
     priority: 1,
@@ -103,7 +118,10 @@ let projects: Project[] = [
     name: 'Imperial ERP Nexus', 
     category: 'Internal Systems', 
     type: 'Enterprise Resource',
-    description: 'Proprietary internal resource management system linking global administrative nodes with real-time operational oversight.', 
+    description: 'Proprietary internal resource management system linking global administrative nodes.', 
+    longDescription: 'The Imperial ERP is the administrative nervous system of Baalvion Industries. It synchronizes resource allocation, human capital, and strategic objectives across our global hubs in real-time, ensuring maximum operational efficiency.',
+    ecosystemRole: 'Internal governance and resource orchestration node.',
+    futureScope: 'AI-driven resource optimization and automated strategic planning modules.',
     status: 'Active',
     isFeatured: false,
     priority: 10,
@@ -185,6 +203,7 @@ let inquiries: Inquiry[] = [];
 export const db = {
   projects: {
     getAll: () => projects,
+    getById: (id: string) => projects.find(p => p.id === id),
     add: (p: any) => {
       const newP = { 
         ...p, 

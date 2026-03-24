@@ -222,32 +222,36 @@ export default function Home() {
                     "glass-card card-hover group border-white/5 opacity-0 animate-fade-in fill-mode-forwards",
                     i === 0 ? "stagger-1" : i === 1 ? "stagger-2" : i === 2 ? "stagger-3" : "stagger-4"
                   )}>
-                    <CardContent className="p-10 space-y-12">
-                      <div className="flex justify-between items-start">
-                        <div className="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-accent group-hover:bg-primary transition-all duration-500 border border-white/5">
-                          <Target className="w-6 h-6" />
+                    <Link href={`/projects/${project.id}`} className="block h-full">
+                      <CardContent className="p-10 space-y-12 h-full flex flex-col justify-between">
+                        <div>
+                          <div className="flex justify-between items-start mb-10">
+                            <div className="w-14 h-14 bg-white/5 rounded-xl flex items-center justify-center text-accent group-hover:bg-primary transition-all duration-500 border border-white/5">
+                              <Target className="w-6 h-6" />
+                            </div>
+                            <div className="flex flex-col items-end gap-2">
+                              {project.isFeatured && <Star className="w-4 h-4 text-primary fill-primary" />}
+                              <Badge className={cn(
+                                "py-1 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border",
+                                project.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
+                                project.status === 'In Development' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 
+                                'bg-white/10 text-muted-foreground border-white/10'
+                              )}>
+                                {project.status}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="space-y-4">
+                            <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{project.name}</h3>
+                            <p className="line-clamp-2 text-base text-muted-foreground">{project.description}</p>
+                          </div>
                         </div>
-                        <div className="flex flex-col items-end gap-2">
-                          {project.isFeatured && <Star className="w-4 h-4 text-primary fill-primary" />}
-                          <Badge className={cn(
-                            "py-1 px-4 text-[9px] font-bold uppercase tracking-widest rounded-full border",
-                            project.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
-                            project.status === 'In Development' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 
-                            'bg-white/10 text-muted-foreground border-white/10'
-                          )}>
-                            {project.status}
-                          </Badge>
+                        <div className="flex items-center justify-between gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest pt-8 border-t border-white/5">
+                          <span className="text-primary">{project.category}</span>
+                          <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-all" />
                         </div>
-                      </div>
-                      <div className="space-y-4">
-                        <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">{project.name}</h3>
-                        <p className="line-clamp-2 text-base text-muted-foreground">{project.description}</p>
-                      </div>
-                      <div className="flex items-center gap-4 text-[10px] font-bold text-muted-foreground uppercase tracking-widest pt-8 border-t border-white/5">
-                        <span className="text-primary">{project.category}</span>
-                        <span>{project.type}</span>
-                      </div>
-                    </CardContent>
+                      </CardContent>
+                    </Link>
                   </Card>
                 ))}
               </div>

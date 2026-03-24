@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from "next/link";
@@ -137,7 +138,7 @@ export function Navbar() {
             </Link>
           ))}
           
-          {/* Amazon-style Subscribe and Search */}
+          {/* Subscribe and Search */}
           <div className="flex items-center gap-6 ml-4 mr-4">
             <Link href="#" className="flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-primary group transition-colors">
               Subscribe <Mail className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
@@ -196,7 +197,7 @@ export function Navbar() {
           
           <div className="space-y-1">
             <p className="px-4 py-2 text-xs font-bold text-primary uppercase tracking-widest">News & Insights</p>
-            {newsItems.slice(0, 4).map(item => (
+            {newsItems.map(item => (
               <Link key={item.href} href={item.href} className="flex items-center justify-between p-4 text-gray-900 font-bold hover:bg-gray-50 rounded-lg">
                 {item.name} <ChevronRight className="w-4 h-4 text-primary" />
               </Link>
@@ -231,10 +232,6 @@ export function Navbar() {
               <ChevronRight className="w-5 h-5 text-primary" />
             </Link>
           ))}
-          
-          <Link href="#" className="flex items-center justify-between p-4 text-gray-900 font-bold hover:bg-gray-50 rounded-lg">
-            Subscribe to News <Mail className="w-5 h-5 text-primary" />
-          </Link>
         </div>
         <Button asChild className="mt-auto h-14 btn-primary rounded-sm text-lg font-bold" onClick={() => setIsOpen(false)}>
           <Link href="/contact">Initiate Nexus Link</Link>

@@ -68,10 +68,7 @@ export function Navbar() {
           <div className="w-9 h-9 bg-primary flex items-center justify-center rounded-sm transition-transform group-hover:scale-105">
             <Globe className="text-white w-5 h-5" />
           </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold tracking-tight text-gray-900 leading-none">BAALVION</span>
-            <span className="text-[8px] font-bold text-primary tracking-widest uppercase mt-0.5">Nexus Industries</span>
-          </div>
+          <span className="text-xl font-bold tracking-tight text-gray-900 leading-none">BAALVION</span>
         </Link>
 
         {/* Desktop Nav */}

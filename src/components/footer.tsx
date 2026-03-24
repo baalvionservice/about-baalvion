@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import { Globe, Github, Linkedin, Twitter, Mail, Shield } from "lucide-react";
 
@@ -13,10 +14,7 @@ export function Footer() {
               <div className="w-9 h-9 bg-primary flex items-center justify-center rounded-sm shadow-sm transition-transform">
                 <Globe className="text-white w-5 h-5" />
               </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-bold tracking-tight text-gray-900 leading-none">BAALVION</span>
-                <span className="text-[8px] font-bold text-primary tracking-widest uppercase mt-0.5">Nexus Industries</span>
-              </div>
+              <span className="text-xl font-bold tracking-tight text-gray-900 leading-none">BAALVION</span>
             </Link>
             <p className="text-gray-600 text-lg leading-relaxed max-w-sm font-medium">
               Architecting the foundational layer for the next century of international commerce through unified global trade infrastructure.

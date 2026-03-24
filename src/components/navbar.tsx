@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Globe, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, ChevronRight, Mail, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
   DropdownMenu,
@@ -137,7 +137,22 @@ export function Navbar() {
             </Link>
           ))}
           
-          <Button asChild className="ml-4 h-10 px-6 btn-primary rounded-sm font-bold">
+          {/* Amazon-style Subscribe and Search */}
+          <div className="flex items-center gap-6 ml-4 mr-4">
+            <Link href="#" className="flex items-center gap-1.5 text-sm font-semibold text-gray-900 hover:text-primary group transition-colors">
+              Subscribe <Mail className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
+            </Link>
+            <div className="relative group">
+              <input 
+                type="text" 
+                placeholder="Search Baalvion News" 
+                className="h-9 w-48 xl:w-56 pl-5 pr-10 rounded-full border border-gray-300 bg-gray-50/50 text-[13px] focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white transition-all placeholder:text-gray-500"
+              />
+              <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-900 cursor-pointer hover:text-primary transition-colors" />
+            </div>
+          </div>
+
+          <Button asChild className="h-10 px-6 btn-primary rounded-sm font-bold">
             <Link href="/contact">Initiate Nexus</Link>
           </Button>
         </div>
@@ -165,6 +180,18 @@ export function Navbar() {
         </button>
         
         <div className="flex flex-col gap-2 overflow-y-auto pb-12">
+          {/* Mobile Search */}
+          <div className="px-4 mb-6">
+            <div className="relative">
+              <input 
+                type="text" 
+                placeholder="Search News" 
+                className="h-12 w-full pl-5 pr-12 rounded-full border border-gray-200 bg-gray-50 text-sm focus:outline-none"
+              />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            </div>
+          </div>
+
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] px-4 mb-2">Navigation</p>
           
           <div className="space-y-1">
@@ -204,6 +231,10 @@ export function Navbar() {
               <ChevronRight className="w-5 h-5 text-primary" />
             </Link>
           ))}
+          
+          <Link href="#" className="flex items-center justify-between p-4 text-gray-900 font-bold hover:bg-gray-50 rounded-lg">
+            Subscribe to News <Mail className="w-5 h-5 text-primary" />
+          </Link>
         </div>
         <Button asChild className="mt-auto h-14 btn-primary rounded-sm text-lg font-bold" onClick={() => setIsOpen(false)}>
           <Link href="/contact">Initiate Nexus Link</Link>

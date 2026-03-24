@@ -50,8 +50,8 @@ let projects: Project[] = [
     id: 'p1', 
     name: 'Nexus Trade Engine', 
     category: 'Core', 
-    type: 'Platform',
-    description: 'High-performance trade execution and settlement infrastructure for global logistics.', 
+    type: 'Execution Platform',
+    description: 'High-performance proprietary trade execution and settlement infrastructure designed for ultra-low latency global logistics and financial clearing.', 
     status: 'Active',
     domain: 'baalvion.nexus',
     subdomain: 'trade',
@@ -62,8 +62,8 @@ let projects: Project[] = [
     id: 'p2', 
     name: 'Intel-V3 Risk Matrix', 
     category: 'Industrial', 
-    type: 'AI',
-    description: 'Advanced predictive analytics engine for assessing global supply chain volatility.', 
+    type: 'Compliance AI',
+    description: 'Advanced predictive analytics engine utilizing multi-layer neural networks to assess global supply chain volatility and regulatory shifts in real-time.', 
     status: 'In Development',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
@@ -72,18 +72,18 @@ let projects: Project[] = [
     id: 'p3', 
     name: 'Lex Ledger', 
     category: 'Governance', 
-    type: 'Compliance',
-    description: 'Automated legal compliance mapping for 180+ international jurisdictions.', 
+    type: 'Legal Infrastructure',
+    description: 'Automated legal compliance mapping protocol providing immutable audit trails and regulatory alignment across 180+ international jurisdictions.', 
     status: 'Planned',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   { 
     id: 'p4', 
-    name: 'Nexus Settlement', 
+    name: 'Settlement Node 01', 
     category: 'Core', 
-    type: 'Finance',
-    description: 'Multi-currency digital settlement layer for seamless cross-border payments.', 
+    type: 'Finance Protocol',
+    description: 'Multi-currency digital settlement layer architected for seamless cross-border value transfer and automated trade finance liquidity.', 
     status: 'Active',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
@@ -95,19 +95,19 @@ let sections: Section[] = [
     id: 'sec-hero-home', 
     type: 'hero', 
     title: 'Building the Infrastructure Layer for Global Trade', 
-    description: 'Baalvion Nexus connects businesses, finance, compliance, and intelligence systems into a unified global execution engine.',
+    description: 'Baalvion Nexus integrates businesses, finance, compliance, and intelligence systems into a unified global execution engine for the next century of commerce.',
     data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Schedule Briefing', label: 'Infrastructure 2.0' }
   },
   {
     id: 'sec-problem-home',
     type: 'problem',
-    title: 'Solving the inefficiencies of siloed trade systems.',
-    description: 'The current global trade landscape is fragmented, reliant on legacy protocols that hinder speed and transparency.',
+    title: 'Solving the terminal inefficiencies of siloed trade.',
+    description: 'The current global trade landscape is fragmented, reliant on legacy protocols that hinder speed, create opacity, and increase operational risk.',
     data: {
       points: [
-        { title: "Legacy Protocols", desc: "Outdated paperwork slows down global execution." },
-        { title: "Regulatory Friction", desc: "Complex laws create high entry barriers." },
-        { title: "Disconnected Data", desc: "Siloed intel leads to high-risk logistics gaps." }
+        { title: "Legacy Protocols", desc: "Outdated manual workflows and paperwork slow global execution by up to 60%." },
+        { title: "Regulatory Friction", desc: "Fragmented jurisdictional laws create high entry barriers and hidden compliance costs." },
+        { title: "Siloed Intelligence", desc: "Disconnected data leads to high-risk logistics gaps and invisible supply chain nodes." }
       ]
     }
   },
@@ -115,7 +115,7 @@ let sections: Section[] = [
     id: 'sec-hero-company',
     type: 'hero-simple',
     title: 'Unified Global Trade',
-    description: 'We are architecting the foundational layer for the next century of international commerce.',
+    description: 'Baalvion Industries is architecting the foundational layer for the next century of international commerce, bridging the gap between legacy systems and future automation.',
     data: { label: 'The Vision' }
   },
   {
@@ -124,33 +124,33 @@ let sections: Section[] = [
     title: 'Nexus Core',
     description: 'The high-speed execution layer for global enterprise logistics and financial settlement.',
     data: { label: 'Technology', features: [
-      { title: 'Unified Ledger', desc: 'Single source of truth for all trade events.' },
-      { title: 'Autonomous AI', desc: 'Real-time compliance and risk assessment.' },
-      { title: 'Digital Settlement', desc: 'Instant multi-currency financial clearing.' }
+      { title: 'Unified Ledger', desc: 'A cryptographically signed single source of truth for all global trade events and transactions.' },
+      { title: 'Autonomous AI', desc: 'Real-time regulatory mapping and compliance monitoring across 180+ jurisdictions.' },
+      { title: 'Digital Settlement', desc: 'Instant multi-currency financial clearing with automated liquidity and risk management.' }
     ]}
   },
   {
     id: 'sec-hero-trust',
     type: 'hero-simple',
-    title: 'Built on Unwavering Trust',
-    description: 'Security, transparency, and international law are at the core of the Baalvion Nexus infrastructure.',
-    data: { label: 'Governance & Compliance' }
+    title: 'Governance & Compliance',
+    description: 'Security, transparency, and international law are not just features—they are the core of the Baalvion Nexus infrastructure.',
+    data: { label: 'Trust Architecture' }
   }
 ];
 
 let pages: Page[] = [
   { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home', 'sec-problem-home'] },
-  { id: 'pg-company', slug: 'company', title: 'Company | Baalvion', sections: ['sec-hero-company'] },
-  { id: 'pg-platform', slug: 'platform', title: 'Platform | Nexus Core', sections: ['sec-hero-platform'] },
-  { id: 'pg-trust', slug: 'trust', title: 'Trust & Compliance | Baalvion', sections: ['sec-hero-trust'] }
+  { id: 'pg-company', slug: 'company', title: 'Strategic Vision | Baalvion Industries', sections: ['sec-hero-company'] },
+  { id: 'pg-platform', slug: 'platform', title: 'Nexus Core Platform | Technology', sections: ['sec-hero-platform'] },
+  { id: 'pg-trust', slug: 'trust', title: 'Trust & Governance Architecture | Baalvion', sections: ['sec-hero-trust'] }
 ];
 
 let ecosystem: EcosystemItem[] = [
-  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental connectivity layer for global commerce networks.', domain: 'infra.baalvion.nexus' },
-  { id: 'eco-2', layer: 'Intelligence', name: 'Baalvion Insight', description: 'Real-time global trade intelligence and predictive analytics.', domain: 'intel.baalvion.nexus' },
-  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Unified legal and compliance protocol across borders.', domain: 'legal.baalvion.nexus' },
-  { id: 'eco-4', layer: 'Commerce', name: 'TradeFlow', description: 'Standardized operational execution for enterprise logistics.', domain: 'flow.baalvion.nexus' },
-  { id: 'eco-5', layer: 'Finance', name: 'Settlement Core', description: 'Next-gen settlement infrastructure for trade finance.', domain: 'finance.baalvion.nexus' }
+  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental high-availability connectivity layer for global commerce networks.', domain: 'infra.baalvion.nexus' },
+  { id: 'eco-2', layer: 'Intelligence', name: 'Baalvion Insight', description: 'Real-time global trade intelligence utilizes neural networks for predictive risk modeling.', domain: 'intel.baalvion.nexus' },
+  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Unified legal and compliance protocol providing automated jurisdictional mapping.', domain: 'legal.baalvion.nexus' },
+  { id: 'eco-4', layer: 'Commerce', name: 'TradeFlow', description: 'Standardized operational execution engine for global enterprise logistics.', domain: 'flow.baalvion.nexus' },
+  { id: 'eco-5', layer: 'Finance', name: 'Settlement Core', description: 'Next-generation settlement infrastructure for institutional trade finance.', domain: 'finance.baalvion.nexus' }
 ];
 
 let inquiries: Inquiry[] = [];

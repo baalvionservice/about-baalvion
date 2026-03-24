@@ -56,3 +56,7 @@
 .btn-accent {
   @apply bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg shadow-accent/20 transition-all;
 }
+
+.hero-gradient {
+  background: radial-gradient(circle at 50% -20%, hsl(var(--primary) / 0.15), transparent 70%);
+}

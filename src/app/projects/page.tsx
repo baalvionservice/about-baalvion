@@ -6,12 +6,12 @@ import { Footer } from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Project } from "@/lib/db";
-import { LayoutGrid, Loader2 } from "lucide-react";
+import { LayoutGrid, Loader2, ExternalLink, Activity, Target, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const categories = [
   "Core Platform Projects",
   "Industrial Projects",
-  "Internal Systems",
   "Intelligence Platforms",
   "Governance",
   "Commerce",
@@ -21,6 +21,7 @@ const categories = [
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState(categories[0]);
 
   useEffect(() => {
     fetch('/api/projects')
@@ -30,6 +31,15 @@ export default function ProjectsPage() {
         setLoading(false);
       });
   }, []);
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'Active': return <Activity className="w-3.5 h-3.5" />;
+      case 'In Development': return <Activity className="w-3.5 h-3.5 animate-pulse" />;
+      case 'Planned': return <Target className="w-3.5 h-3.5" />;
+      default: return null;
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -41,59 +51,80 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navbar />
       
       <main className="pt-40 pb-32">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Strategic Initiatives</h1>
-            <p className="text-xl text-muted-foreground">
-              Our diverse portfolio of projects driving global trade infrastructure across multiple sectors and layers.
+          <div className="max-w-4xl mb-24">
+            <Badge className="mb-6 py-1 px-4 text-[10px] tracking-[0.2em] uppercase font-bold bg-primary/20 text-accent border-primary/20">Portfolio</Badge>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">Strategic <br/><span className="gradient-text">Initiatives</span></h1>
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
+              Our diverse portfolio of initiatives driving global trade infrastructure across multiple sectors, jurisdictions, and industrial layers.
             </p>
           </div>
 
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2 mb-16 pb-4 border-b border-white/5 overflow-x-auto">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveTab(cat)}
+                className={cn(
+                  "px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all",
+                  activeTab === cat 
+                    ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                    : "text-muted-foreground hover:text-white hover:bg-white/5"
+                )}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
           {loading ? (
-            <div className="flex justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="flex flex-col items-center justify-center py-32 gap-4">
+              <Loader2 className="w-10 h-10 animate-spin text-primary" />
+              <p className="text-muted-foreground font-medium animate-pulse">Syncing with Nexus Data...</p>
             </div>
           ) : (
-            <div className="space-y-24">
-              {categories.map(category => {
-                const categoryProjects = projects.filter(p => p.category === category);
-                if (categoryProjects.length === 0) return null;
-
-                return (
-                  <section key={category} className="space-y-8">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <LayoutGrid className="w-5 h-5 text-accent" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.filter(p => p.category === activeTab).map(project => (
+                <Card key={project.id} className="glass-card group hover:border-primary/50 transition-all duration-500 flex flex-col h-full">
+                  <CardHeader className="p-8">
+                    <div className="flex justify-between items-start mb-8">
+                      <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                        <LayoutGrid className="w-6 h-6 text-accent" />
                       </div>
-                      <h2 className="text-2xl font-bold text-white tracking-tight">{category}</h2>
+                      <Badge className={cn("py-1 px-3 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2", getStatusColor(project.status))} variant="outline">
+                        {getStatusIcon(project.status)}
+                        {project.status}
+                      </Badge>
                     </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {categoryProjects.map(project => (
-                        <Card key={project.id} className="glass-card hover:border-accent/50 transition-all group">
-                          <CardHeader>
-                            <div className="flex justify-between items-start mb-4">
-                              <Badge className={getStatusColor(project.status)} variant="outline">
-                                {project.status}
-                              </Badge>
-                            </div>
-                            <CardTitle className="text-white group-hover:text-accent transition-colors">
-                              {project.name}
-                            </CardTitle>
-                            <CardDescription className="text-muted-foreground pt-2">
-                              {project.description}
-                            </CardDescription>
-                          </CardHeader>
-                        </Card>
-                      ))}
+                    <CardTitle className="text-2xl font-bold text-white group-hover:text-accent transition-colors leading-tight">
+                      {project.name}
+                    </CardTitle>
+                    <div className="h-px w-12 bg-primary/30 mt-4 group-hover:w-full transition-all duration-500" />
+                  </CardHeader>
+                  <CardContent className="px-8 pb-8 pt-0 flex-1 flex flex-col justify-between">
+                    <CardDescription className="text-muted-foreground leading-relaxed text-base mb-8 font-light">
+                      {project.description}
+                    </CardDescription>
+                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{project.category}</span>
+                      <button className="text-white hover:text-accent transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                      </button>
                     </div>
-                  </section>
-                );
-              })}
+                  </CardContent>
+                </Card>
+              ))}
+              {projects.filter(p => p.category === activeTab).length === 0 && (
+                <div className="col-span-full py-32 text-center glass-card rounded-[2rem]">
+                  <Search className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
+                  <p className="text-muted-foreground italic">No active projects in this sector at the moment.</p>
+                </div>
+              )}
             </div>
           )}
         </div>

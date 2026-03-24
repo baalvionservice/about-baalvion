@@ -3,31 +3,30 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { EcosystemLayer } from "@/lib/db";
+import { EcosystemItem } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, ArrowRight, Database, ShieldCheck, BrainCircuit, ShoppingCart } from "lucide-react";
+import { Loader2, ArrowRight, Database, ShieldCheck, BrainCircuit, Globe } from "lucide-react";
 
 export default function EcosystemPage() {
-  const [layers, setLayers] = useState<EcosystemLayer[]>([]);
+  const [items, setItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/ecosystem')
       .then(res => res.json())
       .then(data => {
-        setLayers(data);
+        setItems(data);
         setLoading(false);
       });
   }, []);
 
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Layers': return <Database className="w-7 h-7" />;
-      case 'BrainCircuit': return <BrainCircuit className="w-7 h-7" />;
-      case 'ShieldCheck': return <ShieldCheck className="w-7 h-7" />;
-      case 'ShoppingCart': return <ShoppingCart className="w-7 h-7" />;
-      default: return <Database className="w-7 h-7" />;
+  const getIcon = (layer: string) => {
+    switch (layer) {
+      case 'Infrastructure': return <Database className="w-7 h-7" />;
+      case 'Intelligence': return <BrainCircuit className="w-7 h-7" />;
+      case 'Governance': return <ShieldCheck className="w-7 h-7" />;
+      default: return <Globe className="w-7 h-7" />;
     }
   };
 
@@ -48,28 +47,31 @@ export default function EcosystemPage() {
               Operational <span className="gradient-text">Layers</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light mt-8 leading-relaxed max-w-2xl">
-              A comprehensive blueprint of the Baalvion trade network, architected for transparency, speed, and global compliance.
+              A standardized blueprint of the Baalvion Nexus, architected for transparency, modularity, and global scale.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {layers.map((layer, idx) => (
-              <Card key={layer.id} className="glass-card group hover:border-primary/50 transition-all duration-500 overflow-hidden">
+            {items.map((item, idx) => (
+              <Card key={item.id} className="glass-card group hover:border-primary/50 transition-all duration-500">
                 <CardContent className="p-12 flex flex-col md:flex-row gap-8 items-start">
                   <div className="w-16 h-16 bg-primary/10 rounded-2xl flex-shrink-0 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <span className="text-accent">{getIcon(layer.icon)}</span>
+                    <span className="text-accent">{getIcon(item.layer)}</span>
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-3xl font-bold text-white">{layer.title}</h3>
-                      <span className="text-[10px] font-bold text-primary tracking-widest uppercase">Layer 0{idx + 1}</span>
+                      <h3 className="text-3xl font-bold text-white">{item.name}</h3>
+                      <span className="text-[10px] font-bold text-primary tracking-widest uppercase">{item.layer}</span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed text-lg font-light">{layer.description}</p>
-                    <div className="pt-4">
-                      <button className="flex items-center text-xs font-bold text-accent uppercase tracking-widest hover:gap-4 transition-all">
-                        Technical Specs <ArrowRight className="ml-2 w-4 h-4" />
-                      </button>
-                    </div>
+                    <p className="text-muted-foreground leading-relaxed text-lg font-light">{item.description}</p>
+                    {item.domain && (
+                      <div className="pt-4 flex items-center justify-between border-t border-white/5">
+                        <span className="text-xs text-muted-foreground font-mono">{item.domain}</span>
+                        <button className="flex items-center text-xs font-bold text-accent uppercase tracking-widest hover:gap-4 transition-all">
+                          Protocol Specs <ArrowRight className="ml-2 w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>

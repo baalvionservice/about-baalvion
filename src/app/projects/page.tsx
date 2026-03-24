@@ -6,17 +6,10 @@ import { Footer } from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Project } from "@/lib/db";
-import { LayoutGrid, Loader2, ExternalLink, Activity, Target, Search } from "lucide-react";
+import { LayoutGrid, Loader2, ExternalLink, Activity, Target, Search, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const categories = [
-  "Core Platform Projects",
-  "Industrial Projects",
-  "Intelligence Platforms",
-  "Governance",
-  "Commerce",
-  "Future Projects"
-];
+const categories = ["Core", "Industrial", "Internal", "Governance", "Commerce"];
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -31,15 +24,6 @@ export default function ProjectsPage() {
         setLoading(false);
       });
   }, []);
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Active': return <Activity className="w-3.5 h-3.5" />;
-      case 'In Development': return <Activity className="w-3.5 h-3.5 animate-pulse" />;
-      case 'Planned': return <Target className="w-3.5 h-3.5" />;
-      default: return null;
-    }
-  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -57,14 +41,13 @@ export default function ProjectsPage() {
       <main className="pt-40 pb-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mb-24">
-            <Badge className="mb-6 py-1 px-4 text-[10px] tracking-[0.2em] uppercase font-bold bg-primary/20 text-accent border-primary/20">Portfolio</Badge>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">Strategic <br/><span className="gradient-text">Initiatives</span></h1>
+            <Badge className="mb-6 py-1 px-4 text-[10px] tracking-[0.2em] uppercase font-bold bg-primary/20 text-accent border-primary/20">Strategic Portfolio</Badge>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">Nexus <br/><span className="gradient-text">Initiatives</span></h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
-              Our diverse portfolio of initiatives driving global trade infrastructure across multiple sectors, jurisdictions, and industrial layers.
+              Managed portfolio of high-impact strategic projects driving global trade integration.
             </p>
           </div>
 
-          {/* Category Filter */}
           <div className="flex flex-wrap gap-2 mb-16 pb-4 border-b border-white/5 overflow-x-auto">
             {categories.map(cat => (
               <button
@@ -73,7 +56,7 @@ export default function ProjectsPage() {
                 className={cn(
                   "px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all",
                   activeTab === cat 
-                    ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                    ? "bg-primary text-white" 
                     : "text-muted-foreground hover:text-white hover:bg-white/5"
                 )}
               >
@@ -85,7 +68,7 @@ export default function ProjectsPage() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-32 gap-4">
               <Loader2 className="w-10 h-10 animate-spin text-primary" />
-              <p className="text-muted-foreground font-medium animate-pulse">Syncing with Nexus Data...</p>
+              <p className="text-muted-foreground font-medium">Syncing Portfolio Data...</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -96,35 +79,39 @@ export default function ProjectsPage() {
                       <div className="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                         <LayoutGrid className="w-6 h-6 text-accent" />
                       </div>
-                      <Badge className={cn("py-1 px-3 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2", getStatusColor(project.status))} variant="outline">
-                        {getStatusIcon(project.status)}
+                      <Badge className={cn("py-1 px-3 text-[10px] font-bold uppercase tracking-widest", getStatusColor(project.status))} variant="outline">
                         {project.status}
                       </Badge>
                     </div>
-                    <CardTitle className="text-2xl font-bold text-white group-hover:text-accent transition-colors leading-tight">
+                    <CardTitle className="text-2xl font-bold text-white group-hover:text-accent transition-colors">
                       {project.name}
                     </CardTitle>
-                    <div className="h-px w-12 bg-primary/30 mt-4 group-hover:w-full transition-all duration-500" />
+                    <p className="text-[10px] font-bold text-primary tracking-[0.2em] uppercase mt-2">{project.type}</p>
                   </CardHeader>
                   <CardContent className="px-8 pb-8 pt-0 flex-1 flex flex-col justify-between">
                     <CardDescription className="text-muted-foreground leading-relaxed text-base mb-8 font-light">
                       {project.description}
                     </CardDescription>
-                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                      <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{project.category}</span>
-                      <button className="text-white hover:text-accent transition-colors">
-                        <ExternalLink className="w-4 h-4" />
-                      </button>
+                    
+                    <div className="space-y-4 pt-6 border-t border-white/5">
+                      {project.domain && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Globe className="w-3.5 h-3.5" />
+                          {project.subdomain ? `${project.subdomain}.${project.domain}` : project.domain}
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                          Updated: {new Date(project.updatedAt).toLocaleDateString()}
+                        </span>
+                        <button className="text-white hover:text-accent transition-colors">
+                          <ExternalLink className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
-              {projects.filter(p => p.category === activeTab).length === 0 && (
-                <div className="col-span-full py-32 text-center glass-card rounded-[2rem]">
-                  <Search className="w-12 h-12 text-muted-foreground/20 mx-auto mb-4" />
-                  <p className="text-muted-foreground italic">No active projects in this sector at the moment.</p>
-                </div>
-              )}
             </div>
           )}
         </div>

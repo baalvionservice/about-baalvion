@@ -103,7 +103,6 @@ let projects: Project[] = [
     category: 'Core Platform', 
     type: 'SaaS',
     description: 'Global trade infrastructure connecting businesses, finance, and compliance.', 
-    longDescription: 'The flagship Baalvion Trade Platform is a comprehensive SaaS solution designed to unify the fragmented landscape of international commerce.',
     status: 'Active',
     isFeatured: true,
     priority: 1,
@@ -121,6 +120,19 @@ let projects: Project[] = [
     isFeatured: true,
     priority: 2,
     domain: 'mining.baalvion.com',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p3', 
+    name: 'Employee Monitoring App', 
+    category: 'Internal Systems', 
+    type: 'Internal Tool',
+    description: 'Track and manage internal employee productivity and performance.', 
+    status: 'Active',
+    isFeatured: true,
+    priority: 3,
+    domain: 'app.baalvionstack.com',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -183,10 +195,10 @@ let pages: Page[] = [
 ];
 
 let ecosystem: EcosystemItem[] = [
-  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental high-availability connectivity layer for global business operations.' },
-  { id: 'eco-2', layer: 'Intelligence', name: 'ImperialPedia', description: 'AI-driven insights and market intelligence for smarter global decisions.' },
-  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Compliance, contracts, and risk management at enterprise scale.' },
-  { id: 'eco-4', layer: 'Commerce', name: 'Maison Avenue', description: 'Luxury, premium, and verified global trade commerce.' }
+  { id: 'eco-1', layer: 'Infrastructure', name: 'Infrastructure Layer', description: 'The backbone for global business operations.', domain: 'baalvionstack.com' },
+  { id: 'eco-2', layer: 'Intelligence', name: 'Intelligence Layer', description: 'AI-driven insights for smarter decisions.', domain: 'imperialpedia.com' },
+  { id: 'eco-3', layer: 'Governance', name: 'Governance Layer', description: 'Compliance, contracts, and risk management at enterprise scale.', domain: 'lawelitenetwork.com' },
+  { id: 'eco-4', layer: 'Commerce', name: 'Commerce Layer', description: 'Luxury, premium, and verified trade commerce.', domain: 'amarisemaisonavenue.com' }
 ];
 
 let inquiries: Inquiry[] = [];

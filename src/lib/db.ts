@@ -15,7 +15,7 @@ export interface Project {
 
 export interface EcosystemItem {
   id: string;
-  layer: string; // e.g. "Infrastructure", "Intelligence"
+  layer: 'Infrastructure' | 'Intelligence' | 'Governance' | 'Commerce' | 'Finance';
   name: string;
   description: string;
   domain?: string;
@@ -23,7 +23,7 @@ export interface EcosystemItem {
 
 export interface Section {
   id: string;
-  type: string; // "hero", "content", "cards", "cta", "split"
+  type: string;
   title: string;
   description: string;
   data: Record<string, any>;
@@ -33,13 +33,7 @@ export interface Page {
   id: string;
   slug: string;
   title: string;
-  sections: string[]; // Array of Section IDs
-}
-
-export interface User {
-  id: string;
-  email: string;
-  role: 'admin' | 'viewer';
+  sections: string[];
 }
 
 export interface Inquiry {
@@ -51,14 +45,13 @@ export interface Inquiry {
   status: 'New' | 'Read' | 'Archived';
 }
 
-// Internal State
 let projects: Project[] = [
   { 
     id: 'p1', 
-    name: 'Global Trade Platform', 
+    name: 'Nexus Trade Engine', 
     category: 'Core', 
     type: 'Platform',
-    description: 'Next-gen cross-border commerce execution engine for enterprise logistics.', 
+    description: 'High-performance trade execution and settlement infrastructure for global logistics.', 
     status: 'Active',
     domain: 'baalvion.nexus',
     subdomain: 'trade',
@@ -67,21 +60,31 @@ let projects: Project[] = [
   },
   { 
     id: 'p2', 
-    name: 'Vendor Intel AI', 
-    category: 'Intelligence', 
+    name: 'Intel-V3 Risk Matrix', 
+    category: 'Industrial', 
     type: 'AI',
-    description: 'AI-driven supplier risk and compliance assessment system.', 
+    description: 'Advanced predictive analytics engine for assessing global supply chain volatility.', 
     status: 'In Development',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   },
   { 
     id: 'p3', 
-    name: 'Nexus Finance', 
-    category: 'Internal', 
-    type: 'Tool',
-    description: 'Embedded trade finance and multi-currency settlement layer.', 
+    name: 'Lex Ledger', 
+    category: 'Governance', 
+    type: 'Compliance',
+    description: 'Automated legal compliance mapping for 180+ international jurisdictions.', 
     status: 'Planned',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  { 
+    id: 'p4', 
+    name: 'Nexus Settlement', 
+    category: 'Core', 
+    type: 'Finance',
+    description: 'Multi-currency digital settlement layer for seamless cross-border payments.', 
+    status: 'Active',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -91,54 +94,38 @@ let sections: Section[] = [
   { 
     id: 'sec-hero-home', 
     type: 'hero', 
-    title: 'The Digital Nexus for Global Commerce', 
-    description: 'Connecting businesses, finance, compliance, and intelligence systems into a unified global infrastructure.',
-    data: { accent: 'Infrastructure 2.0', ctaPrimary: 'Explore Platform', ctaSecondary: 'Contact Us' }
-  },
-  { 
-    id: 'sec-problem-home', 
-    type: 'split', 
-    title: 'Solving Fragmented Trade', 
-    description: 'Siloed systems create operational bottlenecks. We provide a unified layer for global connectivity.',
-    data: { 
-      problems: [
-        { title: 'Isolated Networks', desc: 'Fragmented supply chains lack real-time visibility.' },
-        { title: 'Complex Compliance', desc: 'Divergent international standards delay execution.' }
-      ],
-      solution: 'One integration, global reach. Unified Execution Engine.'
-    }
+    title: 'Building the Infrastructure Layer for Global Trade', 
+    description: 'Baalvion Nexus connects businesses, finance, compliance, and intelligence systems into a unified global execution engine.',
+    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Schedule Briefing' }
   }
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Home', sections: ['sec-hero-home', 'sec-problem-home'] },
+  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home'] },
   { id: 'pg-company', slug: 'company', title: 'Company | Baalvion', sections: [] },
-  { id: 'pg-platform', slug: 'platform', title: 'Platform | Nexus Core', sections: [] }
+  { id: 'pg-platform', slug: 'platform', title: 'Platform | Nexus Core', sections: [] },
+  { id: 'pg-trust', slug: 'trust', title: 'Trust & Compliance | Baalvion', sections: [] }
 ];
 
 let ecosystem: EcosystemItem[] = [
-  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental layer of global connectivity.', domain: 'infra.baalvion.nexus' },
-  { id: 'eco-2', layer: 'Intelligence', name: 'Baalvion Insight', description: 'Data-driven decision making at scale.', domain: 'intel.baalvion.nexus' },
-  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Unified compliance across 150+ jurisdictions.', domain: 'legal.baalvion.nexus' }
+  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental connectivity layer for global commerce networks.', domain: 'infra.baalvion.nexus' },
+  { id: 'eco-2', layer: 'Intelligence', name: 'Baalvion Insight', description: 'Real-time global trade intelligence and predictive analytics.', domain: 'intel.baalvion.nexus' },
+  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Unified legal and compliance protocol across borders.', domain: 'legal.baalvion.nexus' },
+  { id: 'eco-4', layer: 'Commerce', name: 'TradeFlow', description: 'Standardized operational execution for enterprise logistics.', domain: 'flow.baalvion.nexus' },
+  { id: 'eco-5', layer: 'Finance', name: 'Settlement Core', description: 'Next-gen settlement infrastructure for trade finance.', domain: 'finance.baalvion.nexus' }
 ];
 
 let inquiries: Inquiry[] = [];
 
-// Reusable Database Interface
 export const db = {
   projects: {
     getAll: () => projects,
-    add: (p: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>) => {
-      const newP: Project = { 
-        ...p, 
-        id: `p-${Math.random().toString(36).substring(2, 7)}`,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
+    add: (p: any) => {
+      const newP = { ...p, id: `p-${Math.random().toString(36).substring(2, 7)}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
       projects.push(newP);
       return newP;
     },
-    update: (id: string, p: Partial<Project>) => {
+    update: (id: string, p: any) => {
       projects = projects.map(item => item.id === id ? { ...item, ...p, updatedAt: new Date().toISOString() } : item);
       return projects.find(item => item.id === id);
     },
@@ -170,12 +157,12 @@ export const db = {
   },
   ecosystem: {
     getAll: () => ecosystem,
-    add: (e: Omit<EcosystemItem, 'id'>) => {
+    add: (e: any) => {
       const newE = { ...e, id: `eco-${Math.random().toString(36).substring(2, 7)}` };
       ecosystem.push(newE);
       return newE;
     },
-    update: (id: string, e: Partial<EcosystemItem>) => {
+    update: (id: string, e: any) => {
       ecosystem = ecosystem.map(item => item.id === id ? { ...item, ...e } : item);
       return ecosystem.find(item => item.id === id);
     },
@@ -183,13 +170,8 @@ export const db = {
   },
   inquiries: {
     getAll: () => inquiries,
-    add: (i: Omit<Inquiry, 'id' | 'createdAt' | 'status'>) => {
-      const newI: Inquiry = {
-        ...i,
-        id: `inq-${Math.random().toString(36).substring(2, 7)}`,
-        createdAt: new Date().toISOString(),
-        status: 'New'
-      };
+    add: (i: any) => {
+      const newI: Inquiry = { ...i, id: `inq-${Math.random().toString(36).substring(2, 7)}`, createdAt: new Date().toISOString(), status: 'New' };
       inquiries.push(newI);
       return newI;
     },

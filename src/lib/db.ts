@@ -278,11 +278,25 @@ let sections: Section[] = [
     title: 'Join the Future of Global Trade',
     description: 'Whether you are a partner, investor, or supplier, Baalvion provides a secure, scalable platform to connect and grow globally.',
     data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Contact Us' }
+  },
+  {
+    id: 'sec-platform-features',
+    type: 'cards',
+    title: 'Nexus Core Architecture',
+    description: 'Our proprietary trade engine is built on four core pillars of enterprise reliability and global connectivity.',
+    data: {
+      features: [
+        { title: "Distributed Ledger", desc: "Transparent, immutable tracking of every cargo and capital movement within the nexus." },
+        { title: "Compliance AI", desc: "Automated legal mapping and risk assessment across 180+ global jurisdictions." },
+        { title: "Clearing Nexus", desc: "Instant value settlement between fragmented banking corridors using automated protocols." }
+      ]
+    }
   }
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion — Global Trade Infrastructure Platform', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-cta-home'] }
+  { id: 'pg-home', slug: 'home', title: 'Baalvion — Global Trade Infrastructure Platform', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-cta-home'] },
+  { id: 'pg-platform', slug: 'platform', title: 'Baalvion Platform | How It Works', sections: ['sec-platform-features'] }
 ];
 
 let ecosystem: EcosystemItem[] = [

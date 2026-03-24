@@ -96,20 +96,53 @@ let sections: Section[] = [
     type: 'hero', 
     title: 'Building the Infrastructure Layer for Global Trade', 
     description: 'Baalvion Nexus integrates businesses, finance, compliance, and intelligence systems into a unified global execution engine for the next century of commerce.',
-    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Schedule Briefing', label: 'Infrastructure 2.0' }
+    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Partner With Us', label: 'Infrastructure 2.0' }
   },
   {
     id: 'sec-problem-home',
     type: 'problem',
-    title: 'Solving the terminal inefficiencies of siloed trade.',
-    description: 'The current global trade landscape is fragmented, reliant on legacy protocols that hinder speed, create opacity, and increase operational risk.',
+    title: 'Resolving terminal fragmentation in global commerce.',
+    description: 'The current global trade landscape is a patchwork of legacy systems, creating friction that hinders growth and increases systemic risk.',
     data: {
       points: [
-        { title: "Legacy Protocols", desc: "Outdated manual workflows and paperwork slow global execution by up to 60%." },
-        { title: "Regulatory Friction", desc: "Fragmented jurisdictional laws create high entry barriers and hidden compliance costs." },
-        { title: "Siloed Intelligence", desc: "Disconnected data leads to high-risk logistics gaps and invisible supply chain nodes." }
+        { title: "Manual Fragmentation", desc: "Disconnected systems lead to data silos and execution delays." },
+        { title: "Compliance Opacity", desc: "Complex jurisdictional laws create high regulatory friction." },
+        { title: "Financial Inefficiency", desc: "Legacy clearing systems slow down global value transfer." }
       ]
     }
+  },
+  {
+    id: 'sec-solution-home',
+    type: 'solution',
+    title: 'A Unified Operating System for Global Markets.',
+    description: 'Baalvion Nexus resolves fragmentation by architecting a single, interoperable layer where trade, finance, and law converge.',
+    data: {
+      features: [
+        { title: "Standardized Protocols", desc: "Unified data formats for seamless cross-border interoperability." },
+        { title: "Autonomous Compliance", desc: "AI-driven legal mapping integrated directly into the trade flow." },
+        { title: "Instant Settlement", desc: "Real-time financial clearing using high-speed digital nodes." }
+      ]
+    }
+  },
+  {
+    id: 'sec-trust-home',
+    type: 'trust',
+    title: 'Enterprise-Grade Governance',
+    description: 'Our architecture is built on the highest global standards of security and transparency.',
+    data: {
+      metrics: [
+        { label: "Global Reach", value: "180+ Jurisdictions" },
+        { label: "Security Standard", value: "AES-256 / Zero-Knowledge" },
+        { label: "Compliance", value: "Real-Time AI Mapping" }
+      ]
+    }
+  },
+  {
+    id: 'sec-cta-home',
+    type: 'cta-final',
+    title: 'Join the Future of Global Trade',
+    description: 'Establish your Nexus link today and integrate with the foundational layer of international commerce.',
+    data: { ctaPrimary: 'Establish Nexus Link', ctaSecondary: 'Governance Specs' }
   },
   {
     id: 'sec-hero-company',
@@ -139,7 +172,12 @@ let sections: Section[] = [
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home', 'sec-problem-home'] },
+  { 
+    id: 'pg-home', 
+    slug: 'home', 
+    title: 'Baalvion Nexus | Global Trade Infrastructure', 
+    sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-trust-home', 'sec-cta-home'] 
+  },
   { id: 'pg-company', slug: 'company', title: 'Strategic Vision | Baalvion Industries', sections: ['sec-hero-company'] },
   { id: 'pg-platform', slug: 'platform', title: 'Nexus Core Platform | Technology', sections: ['sec-hero-platform'] },
   { id: 'pg-trust', slug: 'trust', title: 'Trust & Governance Architecture | Baalvion', sections: ['sec-hero-trust'] }

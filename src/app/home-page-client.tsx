@@ -59,10 +59,10 @@ export default function HomePageClient() {
     </div>
   );
 
-  const heroSection = page.sectionData.find(s => s.type === 'hero');
-  const problemSection = page.sectionData.find(s => s.type === 'problem');
-  const solutionSection = page.sectionData.find(s => s.type === 'solution');
-  const ctaSection = page.sectionData.find(s => s.type === 'cta-final');
+  const heroSection = page.sectionData?.find(s => s.type === 'hero');
+  const problemSection = page.sectionData?.find(s => s.type === 'problem');
+  const solutionSection = page.sectionData?.find(s => s.type === 'solution');
+  const ctaSection = page.sectionData?.find(s => s.type === 'cta-final');
 
   return (
     <div className="min-h-screen bg-white flex flex-col">

@@ -8,57 +8,69 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Shield, Globe, Zap, Database, Workflow, CheckCircle2, Loader2, ArrowUpRight, Target, Activity } from "lucide-react";
 import Link from "next/link";
-import { Project, EcosystemItem } from "@/lib/db";
+import { Project, EcosystemItem, Page } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
+interface PopulatedPage extends Page {
+  sectionData: any[];
+}
+
 export default function Home() {
+  const [page, setPage] = useState<PopulatedPage | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [ecoItems, setEcoItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
+      fetch('/api/pages?slug=home').then(res => res.json()),
       fetch('/api/projects').then(res => res.json()),
       fetch('/api/ecosystem').then(res => res.json())
-    ]).then(([p, e]) => {
+    ]).then(([pg, p, e]) => {
+      setPage(pg);
       setProjects(p);
       setEcoItems(e);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
-  if (loading) return (
+  if (loading || !page) return (
     <div className="min-h-screen bg-background flex items-center justify-center">
       <Loader2 className="w-10 h-10 animate-spin text-primary" />
     </div>
   );
+
+  const heroSection = page.sectionData.find(s => s.type === 'hero');
+  const problemSection = page.sectionData.find(s => s.type === 'problem');
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative pt-64 pb-48 overflow-hidden hero-glow">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <Badge className="mb-10 py-1.5 px-5 text-[10px] tracking-[0.4em] uppercase font-bold bg-primary/10 text-primary border-primary/20 rounded-full">
-            Infrastructure 2.0
-          </Badge>
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white mb-10 max-w-6xl mx-auto leading-[1.05] gradient-text">
-            Building the Infrastructure Layer for Global Trade
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed font-light">
-            Baalvion Nexus connects businesses, finance, compliance, and intelligence systems into a unified global execution engine.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button size="lg" asChild className="btn-primary h-16 px-12 text-base font-bold rounded-full min-w-[240px]">
-              <Link href="/platform">Explore Platform <ArrowRight className="ml-2 w-5 h-5" /></Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="h-16 px-12 border-white/10 hover:bg-white/5 text-base font-bold rounded-full min-w-[240px]">
-              <Link href="/contact">Partner With Us</Link>
-            </Button>
+      {heroSection && (
+        <section className="relative pt-64 pb-48 overflow-hidden hero-glow">
+          <div className="container mx-auto px-6 text-center relative z-10">
+            <Badge className="mb-10 py-1.5 px-5 text-[10px] tracking-[0.4em] uppercase font-bold bg-primary/10 text-primary border-primary/20 rounded-full">
+              {heroSection.data.label}
+            </Badge>
+            <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white mb-10 max-w-6xl mx-auto leading-[1.05] gradient-text">
+              {heroSection.title}
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed font-light">
+              {heroSection.description}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Button size="lg" asChild className="btn-primary h-16 px-12 text-base font-bold rounded-full min-w-[240px]">
+                <Link href="/platform">{heroSection.data.ctaPrimary} <ArrowRight className="ml-2 w-5 h-5" /></Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="h-16 px-12 border-white/10 hover:bg-white/5 text-base font-bold rounded-full min-w-[240px]">
+                <Link href="/contact">{heroSection.data.ctaSecondary}</Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Metrics Bar */}
       <section className="py-20 border-y border-white/5 bg-black/20">
@@ -85,58 +97,56 @@ export default function Home() {
       </section>
 
       {/* Problem → Solution */}
-      <section className="py-40 bg-card/20 overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-32 items-center">
-            <div className="space-y-12">
-              <div className="space-y-4">
-                <span className="section-label">The Fragmentation</span>
-                <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">Solving the inefficiencies of siloed trade systems.</h2>
-              </div>
-              <div className="space-y-10">
-                {[
-                  { title: "Legacy Protocols", desc: "Outdated paperwork and manual checks slow down global execution." },
-                  { title: "Regulatory Friction", desc: "Complex jurisdictional laws create high entry barriers for emerging markets." },
-                  { title: "Disconnected Data", desc: "Siloed intelligence leads to high-risk supplier and logistics gaps." }
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-8 group">
-                    <div className="w-10 h-10 rounded-xl bg-destructive/10 border border-destructive/20 flex-shrink-0 flex items-center justify-center text-destructive group-hover:bg-destructive group-hover:text-white transition-all">
-                      <Zap className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
-                      <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="glass-card p-16 rounded-[3rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -mr-32 -mt-32" />
-              <div className="relative z-10 space-y-10">
-                <Workflow className="w-16 h-16 text-primary" />
-                <h3 className="text-4xl font-bold text-white">Baalvion Nexus: The Unified Solution</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed font-light">
-                  Our platform acts as a bridge, standardizing trade protocols into a single, high-speed execution layer. One integration, global reach.
-                </p>
-                <div className="grid gap-6">
-                  {["Unified Trade Ledger", "Autonomous Compliance AI", "Secure Financial Settlement"].map((item, i) => (
-                    <div key={i} className="flex items-center gap-4 text-white font-medium">
-                      <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+      {problemSection && (
+        <section className="py-40 bg-card/20 overflow-hidden">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-32 items-center">
+              <div className="space-y-12">
+                <div className="space-y-4">
+                  <span className="section-label">The Fragmentation</span>
+                  <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">{problemSection.title}</h2>
+                </div>
+                <div className="space-y-10">
+                  {problemSection.data.points.map((item: any, i: number) => (
+                    <div key={i} className="flex gap-8 group">
+                      <div className="w-10 h-10 rounded-xl bg-destructive/10 border border-destructive/20 flex-shrink-0 flex items-center justify-center text-destructive group-hover:bg-destructive group-hover:text-white transition-all">
+                        <Zap className="w-5 h-5" />
                       </div>
-                      {item}
+                      <div>
+                        <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
+                        <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <Button size="lg" className="w-full btn-primary h-16 rounded-2xl text-lg font-bold">
-                  Discover the Methodology
-                </Button>
+              </div>
+              <div className="glass-card p-16 rounded-[3rem] relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -mr-32 -mt-32" />
+                <div className="relative z-10 space-y-10">
+                  <Workflow className="w-16 h-16 text-primary" />
+                  <h3 className="text-4xl font-bold text-white">Baalvion Nexus: The Unified Solution</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed font-light">
+                    {problemSection.description}
+                  </p>
+                  <div className="grid gap-6">
+                    {["Unified Trade Ledger", "Autonomous Compliance AI", "Secure Financial Settlement"].map((item, i) => (
+                      <div key={i} className="flex items-center gap-4 text-white font-medium">
+                        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                          <CheckCircle2 className="w-4 h-4 text-primary" />
+                        </div>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <Button size="lg" className="w-full btn-primary h-16 rounded-2xl text-lg font-bold">
+                    Discover the Methodology
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Ecosystem Preview */}
       <section className="py-40">

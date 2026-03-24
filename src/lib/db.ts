@@ -96,15 +96,53 @@ let sections: Section[] = [
     type: 'hero', 
     title: 'Building the Infrastructure Layer for Global Trade', 
     description: 'Baalvion Nexus connects businesses, finance, compliance, and intelligence systems into a unified global execution engine.',
-    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Schedule Briefing' }
+    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Schedule Briefing', label: 'Infrastructure 2.0' }
+  },
+  {
+    id: 'sec-problem-home',
+    type: 'problem',
+    title: 'Solving the inefficiencies of siloed trade systems.',
+    description: 'The current global trade landscape is fragmented, reliant on legacy protocols that hinder speed and transparency.',
+    data: {
+      points: [
+        { title: "Legacy Protocols", desc: "Outdated paperwork slows down global execution." },
+        { title: "Regulatory Friction", desc: "Complex laws create high entry barriers." },
+        { title: "Disconnected Data", desc: "Siloed intel leads to high-risk logistics gaps." }
+      ]
+    }
+  },
+  {
+    id: 'sec-hero-company',
+    type: 'hero-simple',
+    title: 'Unified Global Trade',
+    description: 'We are architecting the foundational layer for the next century of international commerce.',
+    data: { label: 'The Vision' }
+  },
+  {
+    id: 'sec-hero-platform',
+    type: 'hero-simple',
+    title: 'Nexus Core',
+    description: 'The high-speed execution layer for global enterprise logistics and financial settlement.',
+    data: { label: 'Technology', features: [
+      { title: 'Unified Ledger', desc: 'Single source of truth for all trade events.' },
+      { title: 'Autonomous AI', desc: 'Real-time compliance and risk assessment.' },
+      { title: 'Digital Settlement', desc: 'Instant multi-currency financial clearing.' }
+    ]}
+  },
+  {
+    id: 'sec-hero-trust',
+    type: 'hero-simple',
+    title: 'Built on Unwavering Trust',
+    description: 'Security, transparency, and international law are at the core of the Baalvion Nexus infrastructure.',
+    data: { label: 'Governance & Compliance' }
   }
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home'] },
-  { id: 'pg-company', slug: 'company', title: 'Company | Baalvion', sections: [] },
-  { id: 'pg-platform', slug: 'platform', title: 'Platform | Nexus Core', sections: [] },
-  { id: 'pg-trust', slug: 'trust', title: 'Trust & Compliance | Baalvion', sections: [] }
+  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home', 'sec-problem-home'] },
+  { id: 'pg-company', slug: 'company', title: 'Company | Baalvion', sections: ['sec-hero-company'] },
+  { id: 'pg-platform', slug: 'platform', title: 'Platform | Nexus Core', sections: ['sec-hero-platform'] },
+  { id: 'pg-trust', slug: 'trust', title: 'Trust & Compliance | Baalvion', sections: ['sec-hero-trust'] }
 ];
 
 let ecosystem: EcosystemItem[] = [

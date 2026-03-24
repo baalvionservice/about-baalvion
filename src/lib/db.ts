@@ -60,22 +60,41 @@ let sections: Section[] = [
   { 
     id: 'sec-hero-home', 
     type: 'hero', 
-    title: 'The Future of Global Trade Infrastructure', 
-    description: 'Connecting businesses, finance, compliance, and intelligence systems into a unified global nexus.',
-    data: { accent: 'Nexus Industries', cta: 'Explore Platform' }
+    title: 'The Digital Nexus for Global Commerce', 
+    description: 'Connecting businesses, finance, compliance, and intelligence systems into a unified global infrastructure.',
+    data: { accent: 'Global Trade Infrastructure 2.0', ctaPrimary: 'Explore Platform', ctaSecondary: 'Partner with Us' }
   },
   { 
     id: 'sec-problem-home', 
     type: 'split', 
     title: 'Solving Fragmented Global Systems', 
-    description: 'Global trade is fragmented by archaic systems. Baalvion Nexus provides a streamlined, intelligent infrastructure for the modern enterprise.',
-    data: { points: ['Fragmented Networks', 'Compliance Headaches'] }
+    description: 'Archaic, siloed systems create information black holes. We provide a unified API and infrastructure layer that bridges the gap between commerce, finance, and legal networks.',
+    data: { 
+      problems: [
+        { title: 'Isolated Trade Networks', desc: 'Siloed systems create operational bottlenecks across the supply chain.' },
+        { title: 'Regulatory Complexity', desc: 'Navigating divergent international compliance standards is the #1 barrier to expansion.' }
+      ],
+      solution: 'One integration, global reach. Unified Execution Engine and Automated Compliance.'
+    }
   },
   {
     id: 'sec-mission-company',
-    type: 'text',
-    title: 'Our Mission',
-    description: 'To architect the infrastructure that powers the next century of global commerce through intelligence and integrity.'
+    type: 'hero',
+    title: 'Architecting Global Connectivity',
+    description: 'Baalvion Industries is committed to building the infrastructure that powers the next century of global trade through intelligence and integrity.'
+  },
+  {
+    id: 'sec-platform-core',
+    type: 'cards',
+    title: 'Platform Capabilities',
+    description: 'Our core platform provides the essential tools for modern global trade.',
+    data: {
+      features: [
+        { title: 'Nexus API', desc: 'A unified interface for global logistics and trade data.' },
+        { title: 'Execution Engine', desc: 'Real-time transaction processing and automated settlements.' },
+        { title: 'Compliance Vault', desc: 'Automated regulatory verification across 150+ jurisdictions.' }
+      ]
+    }
   }
 ];
 
@@ -89,8 +108,20 @@ let pages: Page[] = [
   {
     id: 'pg-company',
     slug: 'company',
-    title: 'About | Baalvion Industries',
+    title: 'Company | Baalvion Industries',
     sections: ['sec-mission-company']
+  },
+  {
+    id: 'pg-platform',
+    slug: 'platform',
+    title: 'Platform | Nexus Infrastructure',
+    sections: ['sec-platform-core']
+  },
+  {
+    id: 'pg-ecosystem',
+    slug: 'ecosystem',
+    title: 'Ecosystem | Global Network',
+    sections: ['sec-platform-core']
   }
 ];
 

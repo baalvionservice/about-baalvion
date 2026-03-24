@@ -5,12 +5,10 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Shield, Globe, Zap, BarChart3, Database, Workflow, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Shield, Globe, Zap, Database, Workflow, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Page, EcosystemLayer } from "@/lib/db";
-import { cn } from "@/lib/utils";
 
-// Interface for populated page data
 interface PopulatedPage extends Page {
   sectionData: any[];
 }
@@ -18,13 +16,29 @@ interface PopulatedPage extends Page {
 export default function Home() {
   const [pageData, setPageData] = useState<PopulatedPage | null>(null);
   const [ecoData, setEcoData] = useState<EcosystemLayer[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/pages?slug=home').then(res => res.json()).then(setPageData);
-    fetch('/api/ecosystem').then(res => res.json()).then(setEcoData);
+    Promise.all([
+      fetch('/api/pages?slug=home').then(res => res.json()),
+      fetch('/api/ecosystem').then(res => res.json())
+    ]).then(([page, eco]) => {
+      setPageData(page);
+      setEcoData(eco);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
+  if (loading) return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <Loader2 className="w-10 h-10 animate-spin text-primary" />
+    </div>
+  );
+
   if (!pageData) return null;
+
+  const heroSection = pageData.sectionData.find(s => s.type === 'hero');
+  const problemSection = pageData.sectionData.find(s => s.type === 'split');
 
   return (
     <div className="min-h-screen bg-background">
@@ -33,22 +47,24 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pt-48 pb-32 overflow-hidden hero-gradient">
         <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-accent mb-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-            <Zap className="w-3.5 h-3.5" />
-            <span className="tracking-widest uppercase">Global Trade Infrastructure 2.0</span>
-          </div>
+          {heroSection?.data?.accent && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-accent mb-8">
+              <Zap className="w-3.5 h-3.5" />
+              <span className="tracking-widest uppercase">{heroSection.data.accent}</span>
+            </div>
+          )}
           <h1 className="text-5xl md:text-8xl font-bold tracking-tight text-white mb-8 max-w-5xl mx-auto leading-[1.1]">
-            The Digital Nexus for <span className="gradient-text">Global Commerce</span>
+            {heroSection?.title || 'The Digital Nexus for Global Commerce'}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-            {pageData.sectionData.find(s => s.type === 'hero')?.description || 'Connecting businesses, finance, compliance, and intelligence systems into a unified global infrastructure.'}
+            {heroSection?.description}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Button size="lg" asChild className="btn-primary h-14 px-10 text-base font-semibold min-w-[220px]">
-              <Link href="/platform">Explore Platform <ArrowRight className="ml-2 w-5 h-5" /></Link>
+              <Link href="/platform">{heroSection?.data?.ctaPrimary || 'Explore Platform'} <ArrowRight className="ml-2 w-5 h-5" /></Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="h-14 px-10 border-white/10 hover:bg-white/5 text-base font-semibold min-w-[220px]">
-              <Link href="/contact">Partner with Us</Link>
+              <Link href="/contact">{heroSection?.data?.ctaSecondary || 'Partner with Us'}</Link>
             </Button>
           </div>
         </div>
@@ -113,23 +129,18 @@ export default function Home() {
             <div className="space-y-10">
               <div className="space-y-4">
                 <h2 className="text-[10px] font-bold text-destructive uppercase tracking-[0.4em]">The Fragmentation</h2>
-                <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.1]">Solving Fragmented <br/><span className="text-primary">Global Systems</span></h2>
+                <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.1]">{problemSection?.title}</h2>
               </div>
               <div className="space-y-8">
-                <div className="flex gap-6">
-                  <div className="mt-1 w-6 h-6 rounded-full border-2 border-destructive flex-shrink-0 flex items-center justify-center text-xs text-destructive font-bold">!</div>
-                  <div>
-                    <h4 className="text-xl font-bold text-white mb-2">Isolated Trade Networks</h4>
-                    <p className="text-muted-foreground leading-relaxed">Archaic, siloed systems create information black holes and operational bottlenecks across the supply chain.</p>
+                {problemSection?.data?.problems?.map((p: any, i: number) => (
+                  <div key={i} className="flex gap-6">
+                    <div className="mt-1 w-6 h-6 rounded-full border-2 border-destructive flex-shrink-0 flex items-center justify-center text-xs text-destructive font-bold">!</div>
+                    <div>
+                      <h4 className="text-xl font-bold text-white mb-2">{p.title}</h4>
+                      <p className="text-muted-foreground leading-relaxed">{p.desc}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-6">
-                  <div className="mt-1 w-6 h-6 rounded-full border-2 border-destructive flex-shrink-0 flex items-center justify-center text-xs text-destructive font-bold">!</div>
-                  <div>
-                    <h4 className="text-xl font-bold text-white mb-2">Regulatory Complexity</h4>
-                    <p className="text-muted-foreground leading-relaxed">Navigating divergent international compliance standards is the #1 barrier to global business expansion.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             <div className="glass-card p-12 md:p-16 rounded-[2.5rem] relative group border-primary/20">
@@ -137,7 +148,7 @@ export default function Home() {
               <Workflow className="w-16 h-16 text-accent mb-10" />
               <h3 className="text-3xl font-bold text-white mb-6">The Baalvion Solution</h3>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed font-light">
-                We provide a unified API and infrastructure layer that bridges the gap between commerce, finance, and legal networks. One integration, global reach.
+                {problemSection?.data?.solution || problemSection?.description}
               </p>
               <ul className="space-y-4 mb-12">
                 {['Unified Execution Engine', 'Automated Compliance', 'Real-time Intelligence'].map((item, i) => (
@@ -147,7 +158,7 @@ export default function Home() {
                 ))}
               </ul>
               <Button size="lg" asChild className="btn-accent w-full h-14 text-base font-bold">
-                <Link href="/how-it-works">Discover the Methodology</Link>
+                <Link href="/platform">Discover the Methodology</Link>
               </Button>
             </div>
           </div>

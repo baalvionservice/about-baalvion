@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react";
-import { Project, ProjectStatus } from "@/lib/db";
+import { Project, ProjectStatus, projectCategories } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,7 +13,6 @@ import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, 
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const categories = ["Core Platform", "Industrial", "Internal Systems", "Intelligence", "Governance", "Commerce"];
 const statuses: ProjectStatus[] = ["Active", "In Development", "Planned"];
 
 export default function AdminProjects() {
@@ -141,7 +140,7 @@ export default function AdminProjects() {
           <h2 className="text-2xl font-bold text-white tracking-tight">Strategic Initiatives</h2>
           <p className="text-sm text-muted-foreground">Manage the foundational infrastructure portfolio.</p>
         </div>
-        <Button onClick={() => setEditing({ name: '', description: '', category: categories[0], type: '', status: 'Active', isFeatured: false, priority: 10 })} className="btn-primary rounded-xl h-12 px-6">
+        <Button onClick={() => setEditing({ name: '', description: '', category: projectCategories[0].name, type: '', status: 'Active', isFeatured: false, priority: 10 })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Initiative
         </Button>
       </div>
@@ -161,6 +160,18 @@ export default function AdminProjects() {
             <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Featured</span>
             <Switch checked={featuredOnly} onCheckedChange={setFeaturedOnly} />
           </div>
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="h-11 w-[160px] bg-white/5 border-white/10">
+              <div className="flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 text-muted-foreground" />
+                <SelectValue placeholder="Category" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {projectCategories.map(c => <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="h-11 w-[140px] bg-white/5 border-white/10">
               <div className="flex items-center gap-2">
@@ -299,7 +310,7 @@ export default function AdminProjects() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                    {projectCategories.map(c => <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>

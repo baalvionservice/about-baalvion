@@ -18,6 +18,13 @@ export interface Project {
   updatedAt: string;
 }
 
+export interface ProjectCategory {
+  id: string;
+  name: string;
+  description: string;
+  priority: number;
+}
+
 export interface EcosystemItem {
   id: string;
   layer: 'Infrastructure' | 'Intelligence' | 'Governance' | 'Commerce' | 'Finance';
@@ -49,6 +56,45 @@ export interface Inquiry {
   createdAt: string;
   status: 'New' | 'Read' | 'Archived';
 }
+
+export const projectCategories: ProjectCategory[] = [
+  { 
+    id: 'cat-core', 
+    name: 'Core Platform', 
+    description: 'Projects related to Baalvion’s core technology infrastructure and SaaS platforms.', 
+    priority: 1 
+  },
+  { 
+    id: 'cat-industrial', 
+    name: 'Industrial', 
+    description: 'Projects in mining, manufacturing, and industrial applications.', 
+    priority: 2 
+  },
+  { 
+    id: 'cat-internal', 
+    name: 'Internal Systems', 
+    description: 'Projects for internal tools, employee monitoring, dashboards, and administration.', 
+    priority: 3 
+  },
+  { 
+    id: 'cat-intel', 
+    name: 'Intelligence', 
+    description: 'Research, data, analytics, insights, and learning modules.', 
+    priority: 4 
+  },
+  { 
+    id: 'cat-gov', 
+    name: 'Governance', 
+    description: 'Legal, compliance, policies, startup & enterprise governance tools.', 
+    priority: 5 
+  },
+  { 
+    id: 'cat-comm', 
+    name: 'Commerce', 
+    description: 'Premium brands, lifestyle products, e-commerce, and business operations.', 
+    priority: 6 
+  }
+];
 
 let projects: Project[] = [
   { 

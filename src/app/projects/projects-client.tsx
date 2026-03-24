@@ -5,19 +5,10 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Project, ProjectStatus } from "@/lib/db";
+import { Project, ProjectStatus, projectCategories } from "@/lib/db";
 import { Target, Loader2, Star, LayoutGrid, CheckCircle2, Clock, Calendar, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-const categories = [
-  { name: "Core Platform", desc: "Foundation systems powering global trade infrastructure." },
-  { name: "Industrial", desc: "Deep-layer logistics and industrial connectivity nodes." },
-  { name: "Internal Systems", desc: "Proprietary governance and resource orchestration." },
-  { name: "Intelligence", desc: "Neural risk assessment and compliance monitoring." },
-  { name: "Governance", desc: "Regulatory mapping and legal protocol alignment." },
-  { name: "Commerce", desc: "High-speed marketplace and settlement execution." }
-];
 
 export default function ProjectsClient() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -92,13 +83,13 @@ export default function ProjectsClient() {
           )}
 
           <div className="space-y-48">
-            {categories.map((cat, i) => {
+            {projectCategories.map((cat, i) => {
               const catProjects = projects.filter(p => p.category === cat.name);
               return (
-                <section key={cat.name} className={cn("space-y-16 animate-fade-in", `stagger-${(i % 3) + 1}`)}>
+                <section key={cat.id} className={cn("space-y-16 animate-fade-in", `stagger-${(i % 3) + 1}`)}>
                   <div className="max-w-3xl space-y-4">
                     <h2 className="text-3xl font-bold text-white mb-0">{cat.name}</h2>
-                    <p className="text-lg text-muted-foreground font-light">{cat.desc}</p>
+                    <p className="text-lg text-muted-foreground font-light">{cat.description}</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {catProjects.length === 0 ? (

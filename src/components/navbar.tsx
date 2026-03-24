@@ -4,11 +4,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Globe, ChevronRight } from "lucide-react";
+import { Menu, X, Globe, ChevronDown, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
-const navLinks = [
-  { name: 'Company', href: '/company' },
+const newsItems = [
+  { name: 'Company Updates', href: '/news/updates', desc: 'Press releases & official announcements' },
+  { name: 'Global Trade Insights', href: '/news/insights', desc: 'Research & industry trends' },
+  { name: 'Technology & AI', href: '/news/tech', desc: 'Platform updates & AI scoring' },
+  { name: 'Finance & Compliance', href: '/news/finance', desc: 'Trade finance & compliance news' },
+  { name: 'Sustainability & ESG', href: '/news/sustainability', desc: 'Green initiatives & ESG reports' },
+  { name: 'Community & Partnerships', href: '/news/community', desc: 'Collaborations & network updates' },
+  { name: 'International Markets', href: '/news/markets', desc: 'Global expansion & trade routes' },
+  { name: 'Featured Reports', href: '/news/reports', desc: 'Major project highlights' },
+];
+
+const aboutItems = [
+  { name: 'What We Do', href: '/company', desc: 'Baalvion ecosystem & platform layers' },
+  { name: 'Working at Baalvion', href: '/careers', desc: 'Careers, team stories, & culture' },
+  { name: 'Leadership & Founders', href: '/leadership', desc: 'Vision, timeline, & leadership' },
+  { name: 'Investor Letters', href: '/investors', desc: 'Shareholder updates & reports' },
+  { name: 'Platform Reports', href: '/reports', desc: 'Execution metrics & system updates' },
+];
+
+const mainLinks = [
   { name: 'Platform', href: '/platform' },
   { name: 'Ecosystem', href: '/ecosystem' },
   { name: 'Projects', href: '/projects' },
@@ -32,13 +57,13 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      "fixed top-0 w-full z-50 transition-all duration-200",
+      "fixed top-0 w-full z-50 transition-all duration-300",
       scrolled 
-        ? "bg-white/95 backdrop-blur-md border-b border-gray-100 h-16 shadow-sm" 
+        ? "bg-white/98 backdrop-blur-md border-b border-gray-100 h-16 shadow-sm" 
         : "bg-white h-20 border-b border-transparent"
     )}>
       <div className="section-container h-full flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group shrink-0">
           <div className="w-9 h-9 bg-primary flex items-center justify-center rounded-sm transition-transform group-hover:scale-105">
             <Globe className="text-white w-5 h-5" />
           </div>
@@ -49,13 +74,60 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-2">
-          {navLinks.map((link) => (
+        <div className="hidden lg:flex items-center gap-1">
+          {/* News Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-sm transition-all flex items-center gap-1 outline-none group">
+              News & Insights
+              <ChevronDown className="w-3.5 h-3.5 opacity-50 group-data-[state=open]:rotate-180 transition-transform" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-80 p-2 bg-white border-gray-100 shadow-xl rounded-md animate-in fade-in zoom-in-95">
+              <div className="p-3 mb-2 bg-gray-50/50 rounded-sm">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Global Intelligence</p>
+              </div>
+              <div className="grid grid-cols-1 gap-1">
+                {newsItems.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild className="p-0 focus:bg-transparent">
+                    <Link href={item.href} className="flex flex-col p-3 rounded-sm hover:bg-gray-50 group transition-colors">
+                      <span className="text-sm font-bold text-gray-900 group-hover:text-primary transition-colors">{item.name}</span>
+                      <span className="text-[10px] text-gray-500 line-clamp-1">{item.desc}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* About Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-sm transition-all flex items-center gap-1 outline-none group">
+              About & Company
+              <ChevronDown className="w-3.5 h-3.5 opacity-50 group-data-[state=open]:rotate-180 transition-transform" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-80 p-2 bg-white border-gray-100 shadow-xl rounded-md animate-in fade-in zoom-in-95">
+              <div className="p-3 mb-2 bg-gray-50/50 rounded-sm">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Corporate Nexus</p>
+              </div>
+              <div className="grid grid-cols-1 gap-1">
+                {aboutItems.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild className="p-0 focus:bg-transparent">
+                    <Link href={item.href} className="flex flex-col p-3 rounded-sm hover:bg-gray-50 group transition-colors">
+                      <span className="text-sm font-bold text-gray-900 group-hover:text-primary transition-colors">{item.name}</span>
+                      <span className="text-[10px] text-gray-500 line-clamp-1">{item.desc}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Regular Links */}
+          {mainLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "px-4 py-2 text-sm font-semibold transition-colors rounded-sm",
+                "px-4 py-2 text-sm font-semibold transition-all rounded-sm",
                 pathname === link.href 
                   ? "text-primary bg-primary/5" 
                   : "text-gray-700 hover:text-primary hover:bg-gray-50"
@@ -64,7 +136,8 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
-          <Button asChild className="ml-4 h-9 px-6 btn-primary">
+          
+          <Button asChild className="ml-4 h-10 px-6 btn-primary rounded-sm font-bold">
             <Link href="/contact">Initiate Nexus</Link>
           </Button>
         </div>
@@ -81,7 +154,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div className={cn(
-        "lg:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-white z-[60] py-24 px-6 flex flex-col gap-4 transition-transform duration-300",
+        "lg:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-white z-[60] py-24 px-6 flex flex-col gap-4 transition-transform duration-500 ease-in-out",
         isOpen ? "translate-x-0" : "translate-x-full"
       )}>
         <button 
@@ -91,13 +164,37 @@ export function Navbar() {
           <X className="w-8 h-8" />
         </button>
         
-        <div className="flex flex-col gap-1">
-          {navLinks.map((link) => (
+        <div className="flex flex-col gap-2 overflow-y-auto pb-12">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] px-4 mb-2">Navigation</p>
+          
+          <div className="space-y-1">
+            <p className="px-4 py-2 text-xs font-bold text-primary uppercase tracking-widest">News & Insights</p>
+            {newsItems.slice(0, 4).map(item => (
+              <Link key={item.href} href={item.href} className="flex items-center justify-between p-4 text-gray-900 font-bold hover:bg-gray-50 rounded-lg">
+                {item.name} <ChevronRight className="w-4 h-4 text-primary" />
+              </Link>
+            ))}
+          </div>
+
+          <DropdownMenuSeparator className="bg-gray-100 my-2 mx-4" />
+
+          <div className="space-y-1">
+            <p className="px-4 py-2 text-xs font-bold text-primary uppercase tracking-widest">About & Company</p>
+            {aboutItems.map(item => (
+              <Link key={item.href} href={item.href} className="flex items-center justify-between p-4 text-gray-900 font-bold hover:bg-gray-50 rounded-lg">
+                {item.name} <ChevronRight className="w-4 h-4 text-primary" />
+              </Link>
+            ))}
+          </div>
+
+          <DropdownMenuSeparator className="bg-gray-100 my-2 mx-4" />
+
+          {mainLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "text-xl font-bold p-4 rounded-md flex justify-between items-center transition-all",
+                "text-xl font-bold p-4 rounded-lg flex justify-between items-center transition-all",
                 pathname === link.href 
                   ? "text-primary bg-primary/5" 
                   : "text-gray-900 hover:bg-gray-50"
@@ -108,7 +205,7 @@ export function Navbar() {
             </Link>
           ))}
         </div>
-        <Button asChild className="mt-auto h-14 btn-primary rounded-md text-lg" onClick={() => setIsOpen(false)}>
+        <Button asChild className="mt-auto h-14 btn-primary rounded-sm text-lg font-bold" onClick={() => setIsOpen(false)}>
           <Link href="/contact">Initiate Nexus Link</Link>
         </Button>
       </div>

@@ -6,15 +6,23 @@ export async function GET(req: Request) {
   const slug = searchParams.get('slug');
   
   if (slug) {
-    const page = db.pages.getBySlug(slug);
-    return page ? NextResponse.json(page) : NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    // Return populated page data for easier frontend consumption
+    const page = db.pages.getBySlug(slug, true);
+    return page 
+      ? NextResponse.json(page) 
+      : NextResponse.json({ error: 'Page not found' }, { status: 404 });
   }
   
   return NextResponse.json(db.pages.getAll());
 }
 
 export async function PUT(req: Request) {
-  const data = await req.json();
-  db.pages.update(data.slug, data);
-  return NextResponse.json({ success: true });
+  try {
+    const data = await req.json();
+    if (!data.id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
+    db.pages.update(data.id, data);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+  }
 }

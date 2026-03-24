@@ -7,10 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Shield, Globe, Zap, BarChart3, Database, Workflow } from "lucide-react";
 import Link from "next/link";
-import { PageContent, EcosystemLayer } from "@/lib/db";
+import { Page, EcosystemLayer } from "@/lib/db";
+
+// Interface for populated page data
+interface PopulatedPage extends Page {
+  sectionData: any[];
+}
 
 export default function Home() {
-  const [pageData, setPageData] = useState<PageContent | null>(null);
+  const [pageData, setPageData] = useState<PopulatedPage | null>(null);
   const [ecoData, setEcoData] = useState<EcosystemLayer[]>([]);
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export default function Home() {
             The Digital Nexus for <span className="gradient-text">Global Commerce</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Connecting businesses, finance, compliance, and intelligence systems into a unified global infrastructure.
+            {pageData.sectionData.find(s => s.type === 'hero')?.description || 'Connecting businesses, finance, compliance, and intelligence systems into a unified global infrastructure.'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" asChild className="btn-primary min-w-[200px]">

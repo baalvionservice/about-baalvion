@@ -1,9 +1,26 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { Project, Inquiry, Page, EcosystemItem } from "@/lib/db";
-import { Briefcase, MessageSquare, Layout, Layers, TrendingUp, Clock } from "lucide-react";
+import { 
+  Briefcase, 
+  MessageSquare, 
+  Layout, 
+  Layers, 
+  TrendingUp, 
+  Clock, 
+  Plus, 
+  Settings, 
+  ArrowRight, 
+  Star,
+  Activity,
+  CheckCircle2,
+  AlertCircle
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function AdminDashboard() {
@@ -36,97 +53,175 @@ export default function AdminDashboard() {
     fetchData();
   }, []);
 
+  const projectStats = {
+    active: projects.filter(p => p.status === 'Active').length,
+    development: projects.filter(p => p.status === 'In Development').length,
+    planned: projects.filter(p => p.status === 'Planned').length,
+    featured: projects.filter(p => p.isFeatured).length
+  };
+
   const stats = [
-    { name: 'Total Pages', value: pages.length, icon: Layout, color: 'text-blue-500' },
-    { name: 'Active Projects', value: projects.length, icon: Briefcase, color: 'text-emerald-500' },
-    { name: 'Ecosystem Layers', value: ecosystem.length, icon: Layers, color: 'text-accent' },
-    { name: 'New Inquiries', value: inquiries.filter(i => i.status === 'New').length, icon: MessageSquare, color: 'text-amber-500' },
+    { name: 'Total Pages', value: pages.length, icon: Layout, color: 'text-blue-500', href: '/admin/pages' },
+    { name: 'Active Projects', value: projects.length, icon: Briefcase, color: 'text-emerald-500', href: '/admin/projects' },
+    { name: 'Ecosystem Layers', value: ecosystem.length, icon: Layers, color: 'text-accent', href: '/admin/ecosystem' },
+    { name: 'New Inquiries', value: inquiries.filter(i => i.status === 'New').length, icon: MessageSquare, color: 'text-amber-500', href: '/admin/inquiries' },
   ];
+
+  const recentInquiries = inquiries.slice(-3).reverse();
+  const featuredProjects = projects.filter(p => p.isFeatured).slice(0, 3);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
+      {/* Header & Quick Actions */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div>
+          <h2 className="text-2xl font-bold text-white tracking-tight">Nexus Control Center</h2>
+          <p className="text-sm text-muted-foreground">Strategic overview of the Baalvion infrastructure layer.</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Button asChild size="sm" className="btn-primary h-10 px-4 rounded-xl font-bold">
+            <Link href="/admin/projects"><Plus className="w-4 h-4 mr-2" /> Launch Initiative</Link>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="h-10 px-4 rounded-xl font-bold border-white/5 bg-white/5 hover:bg-white/10">
+            <Link href="/admin/pages"><Settings className="w-4 h-4 mr-2" /> Architecture</Link>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="h-10 px-4 rounded-xl font-bold border-white/5 bg-white/5 hover:bg-white/10">
+            <Link href="/admin/inquiries"><MessageSquare className="w-4 h-4 mr-2" /> View Intel</Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
-          <Card key={i} className="glass-card border-white/5 hover:border-primary/20 transition-all">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.name}</CardTitle>
-              <stat.icon className={cn("w-4 h-4", stat.color)} />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-white">
-                {loading ? "..." : stat.value}
-              </div>
-            </CardContent>
-          </Card>
+          <Link key={i} href={stat.href}>
+            <Card className="glass-card border-white/5 hover:border-primary/20 transition-all cursor-pointer group">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.name}</CardTitle>
+                <stat.icon className={cn("w-4 h-4 transition-transform group-hover:scale-110", stat.color)} />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-white">
+                  {loading ? "..." : stat.value}
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
-        <Card className="glass-card lg:col-span-2 border-white/5">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-white text-lg">Recent Strategic Inquiries</CardTitle>
-            <MessageSquare className="w-4 h-4 text-muted-foreground" />
+      <div className="grid lg:grid-cols-12 gap-8">
+        {/* Status Analytics */}
+        <Card className="glass-card border-white/5 lg:col-span-8">
+          <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-6">
+            <div>
+              <CardTitle className="text-white text-lg">Infrastructure Pulse</CardTitle>
+              <CardDescription className="text-xs">Deployment status across the initiative portfolio.</CardDescription>
+            </div>
+            <Activity className="w-5 h-5 text-primary animate-pulse" />
           </CardHeader>
-          <CardContent>
-            {inquiries.length === 0 ? (
-              <div className="py-12 text-center">
-                <p className="text-sm text-muted-foreground italic">No inquiries received yet.</p>
-              </div>
-            ) : (
+          <CardContent className="pt-8">
+            <div className="grid md:grid-cols-3 gap-12">
               <div className="space-y-4">
-                {inquiries.slice(-4).reverse().map((inquiry) => (
-                  <div key={inquiry.id} className="p-5 rounded-2xl bg-white/5 border border-white/5 flex justify-between items-center group hover:bg-white/10 transition-all">
-                    <div className="space-y-1">
-                      <p className="font-bold text-white text-sm">{inquiry.name}</p>
-                      <p className="text-xs text-muted-foreground truncate max-w-md">{inquiry.message}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className={cn(
-                        "text-[9px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full mb-1 inline-block",
-                        inquiry.status === 'New' ? "bg-amber-500/10 text-amber-500" : "bg-blue-500/10 text-blue-500"
-                      )}>
-                        {inquiry.status}
-                      </div>
-                      <p className="text-[10px] text-muted-foreground block">
-                        {new Date(inquiry.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
+                <div className="flex justify-between items-end">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Active Nodes</p>
+                    <p className="text-2xl font-bold text-white">{projectStats.active}</p>
+                  </div>
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 mb-1" />
+                </div>
+                <Progress value={projects.length ? (projectStats.active / projects.length) * 100 : 0} className="h-1.5 bg-white/5" />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-end">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">In Development</p>
+                    <p className="text-2xl font-bold text-white">{projectStats.development}</p>
+                  </div>
+                  <Clock className="w-5 h-5 text-amber-500 mb-1" />
+                </div>
+                <Progress value={projects.length ? (projectStats.development / projects.length) * 100 : 0} className="h-1.5 bg-white/5" />
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-end">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Planned Roadmap</p>
+                    <p className="text-2xl font-bold text-white">{projectStats.planned}</p>
+                  </div>
+                  <AlertCircle className="w-5 h-5 text-muted-foreground mb-1" />
+                </div>
+                <Progress value={projects.length ? (projectStats.planned / projects.length) * 100 : 0} className="h-1.5 bg-white/5" />
+              </div>
+            </div>
+
+            <div className="mt-12 pt-8 border-t border-white/5">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                  <Star className="w-4 h-4 text-primary fill-primary" /> Featured Initiatives
+                </h3>
+                <Link href="/admin/projects" className="text-[10px] font-bold text-primary uppercase tracking-widest hover:text-white transition-colors">Manage All</Link>
+              </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                {featuredProjects.map(p => (
+                  <div key={p.id} className="p-4 rounded-xl bg-white/5 border border-white/5 group hover:border-primary/30 transition-all">
+                    <p className="text-sm font-bold text-white truncate group-hover:text-primary transition-colors">{p.name}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-tighter mt-1">{p.status}</p>
                   </div>
                 ))}
+                {featuredProjects.length === 0 && (
+                  <div className="col-span-full py-6 text-center text-xs text-muted-foreground italic bg-white/2 rounded-xl">
+                    No strategic initiatives featured.
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="glass-card border-white/5">
-          <CardHeader>
-            <CardTitle className="text-white text-lg">System Pulse</CardTitle>
+        {/* Recent Intel */}
+        <Card className="glass-card border-white/5 lg:col-span-4">
+          <CardHeader className="border-b border-white/5 pb-6">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-white text-lg">Inbound Intel</CardTitle>
+              <MessageSquare className="w-5 h-5 text-amber-500" />
+            </div>
+            <CardDescription className="text-xs">Latest strategic connection requests.</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                <TrendingUp className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white">Infrastructure Status</p>
-                <p className="text-xs text-emerald-500 font-medium">Nominal • 99.9% Uptime</p>
-              </div>
+          <CardContent className="pt-6">
+            <div className="space-y-6">
+              {recentInquiries.length === 0 ? (
+                <div className="py-24 text-center opacity-20">
+                  <MessageSquare className="w-10 h-10 mx-auto mb-4" />
+                  <p className="text-[10px] font-bold uppercase tracking-widest">Buffer Empty</p>
+                </div>
+              ) : recentInquiries.map((inq) => (
+                <div key={inq.id} className="space-y-2 group">
+                  <div className="flex justify-between items-start">
+                    <p className="text-sm font-bold text-white group-hover:text-primary transition-colors">{inq.name}</p>
+                    <span className="text-[9px] font-mono text-muted-foreground uppercase">{new Date(inq.createdAt).toLocaleDateString()}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed italic">"{inq.message}"</p>
+                  <div className="pt-2 flex justify-end">
+                    <Link href="/admin/inquiries" className="text-[9px] font-bold text-muted-foreground hover:text-white uppercase tracking-tighter flex items-center gap-1 transition-colors">
+                      View Protocol <ArrowRight className="w-2.5 h-2.5" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
-                <Clock className="w-5 h-5" />
+            
+            <div className="mt-8 pt-8 border-t border-white/5">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Nexus Performance</p>
+                  <p className="text-xs text-emerald-500 font-bold uppercase">99.9% Operational</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-bold text-white">Last Sync</p>
-                <p className="text-xs text-muted-foreground font-medium">Just now</p>
-              </div>
-            </div>
-            <div className="pt-4 border-t border-white/5">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-4">Storage Usage</p>
-              <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                <div className="h-full bg-primary w-[12%] rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
-              </div>
-              <p className="text-[10px] text-right mt-2 text-muted-foreground">0.8GB / 10GB</p>
             </div>
           </CardContent>
         </Card>

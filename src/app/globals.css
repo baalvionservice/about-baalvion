@@ -34,8 +34,17 @@
   body {
     @apply bg-background text-foreground font-body antialiased overflow-x-hidden selection:bg-primary/30 selection:text-white;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-bold text-white;
+  h1 {
+    @apply text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white leading-[0.9] mb-8;
+  }
+  h2 {
+    @apply text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6;
+  }
+  h3 {
+    @apply text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight;
+  }
+  p {
+    @apply text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-[65ch];
   }
 }
 
@@ -45,37 +54,37 @@
   }
 
   .section-vertical-padding {
-    @apply py-24 md:py-32 lg:py-48;
+    @apply py-32 md:py-48 lg:py-64;
   }
 
   .glass-card {
-    @apply bg-card/40 backdrop-blur-2xl border border-white/5 shadow-2xl transition-all duration-500 rounded-[2rem];
+    @apply bg-card/40 backdrop-blur-3xl border border-white/5 shadow-2xl transition-all duration-700 rounded-[2.5rem];
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50;
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40;
   }
 
   .hero-glow {
-    background: radial-gradient(circle at 50% -20%, hsla(var(--primary), 0.12), transparent 70%);
+    background: radial-gradient(circle at 50% -20%, hsla(var(--primary), 0.15), transparent 75%);
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_rgba(var(--primary),0.25)] hover:shadow-[0_0_45px_rgba(var(--primary),0.35)] transition-all duration-500 active:scale-[0.98] rounded-full;
+    @apply bg-primary hover:bg-primary/90 text-white shadow-[0_0_40px_rgba(var(--primary),0.2)] hover:shadow-[0_0_60px_rgba(var(--primary),0.3)] transition-all duration-700 active:scale-[0.98] rounded-full;
   }
 
   .section-label {
-    @apply text-[11px] font-bold text-primary uppercase tracking-[0.5em] mb-8 block;
+    @apply text-[11px] font-bold text-primary uppercase tracking-[0.6em] mb-10 block;
   }
 
   .card-hover {
-    @apply hover:border-primary/40 hover:shadow-primary/10 hover:-translate-y-2;
+    @apply hover:border-primary/40 hover:shadow-primary/10 hover:-translate-y-3;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   @apply bg-background;
@@ -86,14 +95,14 @@
 
 /* Layout Flow */
 .layout-stack {
-  @apply flex flex-col gap-24 md:gap-32 lg:gap-48;
+  @apply flex flex-col gap-32 md:gap-48 lg:gap-64;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

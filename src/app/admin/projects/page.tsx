@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Project, ProjectStatus } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, Calendar } from "lucide-react";
+import { Plus, Trash2, Pencil, Loader2, Globe, LayoutGrid, CheckCircle2, Clock, Calendar, Search, Filter, SortAsc, SortDesc, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,12 @@ export default function AdminProjects() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<Partial<Project> | null>(null);
   const { toast } = useToast();
+
+  // Search and Filter States
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<"newest" | "name">("newest");
 
   useEffect(() => {
     fetch('/api/projects').then(res => res.json()).then(data => {
@@ -83,6 +89,22 @@ export default function AdminProjects() {
     }
   };
 
+  const filteredProjects = useMemo(() => {
+    return projects
+      .filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                             p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                             p.type.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesStatus = statusFilter === "all" || p.status === statusFilter;
+        const matchesCategory = categoryFilter === "all" || p.category === categoryFilter;
+        return matchesSearch && matchesStatus && matchesCategory;
+      })
+      .sort((a, b) => {
+        if (sortBy === "name") return a.name.localeCompare(b.name);
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+  }, [projects, searchQuery, statusFilter, categoryFilter, sortBy]);
+
   const getStatusIcon = (status: string) => {
     switch(status) {
       case 'Active': return <CheckCircle2 className="w-3 h-3 text-emerald-500" />;
@@ -92,17 +114,77 @@ export default function AdminProjects() {
     }
   };
 
+  const resetFilters = () => {
+    setSearchQuery("");
+    setStatusFilter("all");
+    setCategoryFilter("all");
+    setSortBy("newest");
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Project Initiatives</h2>
-          <p className="text-sm text-muted-foreground">Manage the Baalvion Nexus strategic portfolio portfolio.</p>
+          <p className="text-sm text-muted-foreground">Manage the Baalvion Nexus strategic portfolio.</p>
         </div>
         <Button onClick={() => setEditing({ name: '', description: '', category: categories[0], type: 'Platform', status: 'Active' })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Initiative
         </Button>
       </div>
+
+      {/* Toolbar */}
+      <Card className="glass-card border-white/5 p-4 flex flex-col lg:flex-row items-center gap-4">
+        <div className="relative flex-1 w-full lg:w-auto">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input 
+            placeholder="Search projects by name, category, or type..." 
+            className="pl-10 h-11 bg-white/5 border-white/10 w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="h-11 w-[140px] bg-white/5 border-white/10">
+              <div className="flex items-center gap-2">
+                <Filter className="w-3.5 h-3.5 text-muted-foreground" />
+                <SelectValue placeholder="Status" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Status</SelectItem>
+              {statuses.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="h-11 w-[160px] bg-white/5 border-white/10">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={sortBy} onValueChange={(val: any) => setSortBy(val)}>
+            <SelectTrigger className="h-11 w-[160px] bg-white/5 border-white/10">
+              <div className="flex items-center gap-2">
+                {sortBy === 'newest' ? <SortDesc className="w-3.5 h-3.5 text-muted-foreground" /> : <SortAsc className="w-3.5 h-3.5 text-muted-foreground" />}
+                <SelectValue placeholder="Sort" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="newest">Recently Added</SelectItem>
+              <SelectItem value="name">Name (A-Z)</SelectItem>
+            </SelectContent>
+          </Select>
+          {(searchQuery || statusFilter !== "all" || categoryFilter !== "all") && (
+            <Button variant="ghost" onClick={resetFilters} className="h-11 px-4 text-xs font-bold text-muted-foreground hover:text-white uppercase tracking-widest">
+              <X className="w-3.5 h-3.5 mr-2" /> Clear
+            </Button>
+          )}
+        </div>
+      </Card>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-24 gap-4">
@@ -111,7 +193,13 @@ export default function AdminProjects() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {projects.map(project => (
+          {filteredProjects.length === 0 ? (
+            <div className="col-span-full py-24 text-center glass-card border-dashed border-white/10">
+              <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-20" />
+              <h3 className="text-white font-bold">No results found</h3>
+              <p className="text-xs text-muted-foreground mt-2">Adjust your filters or search query to find matching strategic initiatives.</p>
+            </div>
+          ) : filteredProjects.map(project => (
             <Card key={project.id} className="glass-card border-white/5 hover:border-primary/20 transition-all group overflow-hidden">
               <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors" />
               <CardHeader className="p-6">

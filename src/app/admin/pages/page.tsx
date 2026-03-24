@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Page, Section } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2, Pencil, Layout, ArrowRight, Save, FileText, Settings, Sparkles } from "lucide-react";
+import { Loader2, Pencil, Layout, ArrowRight, Save, FileText, Settings, Sparkles, Search, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 export default function PagesAdmin() {
   const [pages, setPages] = useState<Page[]>([]);
@@ -17,6 +17,7 @@ export default function PagesAdmin() {
   const [loading, setLoading] = useState(true);
   const [editingPage, setEditingPage] = useState<Page | null>(null);
   const [editingSection, setEditingSection] = useState<Section | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -71,6 +72,13 @@ export default function PagesAdmin() {
     }
   };
 
+  const filteredPages = useMemo(() => {
+    return pages.filter(p => 
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      p.slug.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [pages, searchQuery]);
+
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
@@ -88,14 +96,32 @@ export default function PagesAdmin() {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-12">
-        <Card className="glass-card lg:col-span-4 border-white/5 p-0">
-          <CardHeader className="p-6 border-b border-white/5">
+        <Card className="glass-card lg:col-span-4 border-white/5 p-0 flex flex-col">
+          <CardHeader className="p-6 border-b border-white/5 flex flex-col gap-4">
             <CardTitle className="text-white text-md flex items-center gap-2">
               <FileText className="w-4 h-4 text-primary" /> Active Pages
             </CardTitle>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+              <Input 
+                placeholder="Search slug/title..." 
+                className="pl-9 h-9 bg-white/5 border-white/10 text-xs"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <X className="w-3 h-3 text-muted-foreground hover:text-white" />
+                </button>
+              )}
+            </div>
           </CardHeader>
-          <div className="divide-y divide-white/5">
-            {pages.map(page => (
+          <div className="divide-y divide-white/5 overflow-y-auto max-h-[600px] no-scrollbar">
+            {filteredPages.length === 0 ? (
+              <div className="p-12 text-center">
+                <p className="text-xs text-muted-foreground italic">No matching pages.</p>
+              </div>
+            ) : filteredPages.map(page => (
               <div 
                 key={page.id} 
                 onClick={() => setEditingPage(page)}

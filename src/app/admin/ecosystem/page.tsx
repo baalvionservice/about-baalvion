@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { EcosystemItem } from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2, Pencil, Trash2, Plus, Database, Globe, Layers, ArrowRight } from "lucide-react";
+import { Loader2, Pencil, Trash2, Plus, Database, Globe, Layers, ArrowRight, Search, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ export default function EcosystemAdmin() {
   const [items, setItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<Partial<EcosystemItem> | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -71,6 +72,13 @@ export default function EcosystemAdmin() {
     }
   };
 
+  const filteredItems = useMemo(() => {
+    return items.filter(item => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      item.layer.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [items, searchQuery]);
+
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
@@ -90,6 +98,23 @@ export default function EcosystemAdmin() {
         </Button>
       </div>
 
+      <div className="flex items-center gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input 
+            placeholder="Search nodes by name or layer protocol..." 
+            className="pl-12 h-12 bg-white/5 border-white/10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery("")} className="absolute right-4 top-1/2 -translate-y-1/2">
+              <X className="w-4 h-4 text-muted-foreground hover:text-white" />
+            </button>
+          )}
+        </div>
+      </div>
+
       <Card className="glass-card border-white/5 p-0 overflow-hidden">
         <Table>
           <TableHeader className="bg-white/5">
@@ -101,7 +126,16 @@ export default function EcosystemAdmin() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map(item => (
+            {filteredItems.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="py-24 text-center">
+                  <div className="flex flex-col items-center gap-2 opacity-20">
+                    <Database className="w-10 h-10 text-muted-foreground" />
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">No nodes found in this registry</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : filteredItems.map(item => (
               <TableRow key={item.id} className="border-white/5 hover:bg-white/5 transition-colors group">
                 <TableCell className="pl-8">
                   <div className="flex items-center gap-3">

@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 
 const adminLinks = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { name: 'Page Editor', href: '/admin/pages', icon: FileText },
+  { name: 'Pages', href: '/admin/pages', icon: FileText },
   { name: 'Projects', href: '/admin/projects', icon: Briefcase },
   { name: 'Ecosystem', href: '/admin/ecosystem', icon: Layers },
   { name: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },
@@ -51,10 +51,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <aside className="w-64 border-r border-white/5 bg-[#151B24] hidden lg:flex flex-col fixed inset-y-0">
         <div className="p-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary flex items-center justify-center rounded-lg">
+            <div className="w-8 h-8 bg-primary flex items-center justify-center rounded-lg shadow-lg shadow-primary/20">
               <Globe className="text-white w-5 h-5" />
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">Nexus CMS</span>
+            <span className="text-lg font-bold text-white tracking-tight">Baalvion CMS</span>
           </Link>
         </div>
 
@@ -91,18 +91,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
         <header className="h-20 border-b border-white/5 bg-[#151B24]/50 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-40">
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl font-bold text-white uppercase tracking-widest text-sm">
             {adminLinks.find(l => l.href === pathname)?.name || 'Admin'}
           </h1>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-medium text-white">Admin User</p>
-              <p className="text-xs text-muted-foreground">Super Administrator</p>
+              <p className="text-sm font-medium text-white">Imperial Admin</p>
+              <p className="text-[10px] text-accent font-bold uppercase tracking-wider">Super Administrator</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">A</div>
+            <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/20 flex items-center justify-center text-primary font-bold">A</div>
           </div>
         </header>
-        <div className="p-8">
+        <div className="p-8 max-w-7xl mx-auto">
           {children}
         </div>
       </main>

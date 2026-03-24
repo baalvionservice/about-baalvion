@@ -113,7 +113,7 @@ export const db = {
     getAll: () => projects,
     getById: (id: string) => projects.find(p => p.id === id),
     add: (p: Omit<Project, 'id'>) => {
-      const newP = { ...p, id: `p-${Math.random().toString(36).substr(2, 5)}` };
+      const newP = { ...p, id: `p-${Math.random().toString(36).substring(2, 7)}` };
       projects.push(newP);
       return newP;
     },
@@ -126,9 +126,16 @@ export const db = {
   sections: {
     getAll: () => sections,
     getById: (id: string) => sections.find(s => s.id === id),
+    add: (s: Omit<Section, 'id'>) => {
+      const newS = { ...s, id: `sec-${Math.random().toString(36).substring(2, 7)}` };
+      sections.push(newS);
+      return newS;
+    },
     update: (id: string, s: Partial<Section>) => {
       sections = sections.map(item => item.id === id ? { ...item, ...s } : item);
-    }
+      return sections.find(item => item.id === id);
+    },
+    delete: (id: string) => { sections = sections.filter(s => s.id !== id); }
   },
   pages: {
     getAll: () => pages,
@@ -143,22 +150,37 @@ export const db = {
       }
       return page;
     },
+    getById: (id: string) => pages.find(p => p.id === id),
+    add: (p: Omit<Page, 'id'>) => {
+      const newP = { ...p, id: `pg-${Math.random().toString(36).substring(2, 7)}` };
+      pages.push(newP);
+      return newP;
+    },
     update: (id: string, p: Partial<Page>) => {
       pages = pages.map(item => item.id === id ? { ...item, ...p } : item);
-    }
+      return pages.find(item => item.id === id);
+    },
+    delete: (id: string) => { pages = pages.filter(p => p.id !== id); }
   },
   ecosystem: {
     getAll: () => ecosystem,
+    add: (e: Omit<EcosystemLayer, 'id'>) => {
+      const newE = { ...e, id: `eco-${Math.random().toString(36).substring(2, 7)}` };
+      ecosystem.push(newE);
+      return newE;
+    },
     update: (id: string, e: Partial<EcosystemLayer>) => {
       ecosystem = ecosystem.map(item => item.id === id ? { ...item, ...e } : item);
-    }
+      return ecosystem.find(item => item.id === id);
+    },
+    delete: (id: string) => { ecosystem = ecosystem.filter(e => e.id !== id); }
   },
   inquiries: {
     getAll: () => inquiries,
     add: (i: Omit<Inquiry, 'id' | 'date' | 'status'>) => {
       const newI: Inquiry = {
         ...i,
-        id: `inq-${Math.random().toString(36).substr(2, 5)}`,
+        id: `inq-${Math.random().toString(36).substring(2, 7)}`,
         date: new Date().toISOString(),
         status: 'New'
       };

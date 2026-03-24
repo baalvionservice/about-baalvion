@@ -6,12 +6,34 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const project = db.projects.getById(id);
   
+  const title = project ? `${project.name} | Baalvion Project` : "Project Brief";
+  const description = project?.description || "Explore strategic infrastructure initiatives within the Baalvion Nexus.";
+  const url = `https://baalvion.nexus/projects/${id}`;
+
   return {
-    title: project ? `${project.name} | Baalvion Project` : "Project Brief",
-    description: project?.description || "Explore strategic infrastructure initiatives within the Baalvion Nexus.",
+    title,
+    description,
     openGraph: {
-      title: project ? `${project.name} | Baalvion Project` : "Project Brief",
-      description: project?.description || "Explore strategic infrastructure initiatives within the Baalvion Nexus.",
+      title,
+      description,
+      url,
+      siteName: 'Baalvion Nexus',
+      images: [
+        {
+          url: `https://picsum.photos/seed/${id}/1200/630`,
+          width: 1200,
+          height: 630,
+          alt: project?.name || 'Baalvion Project',
+        },
+      ],
+      locale: 'en_US',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`https://picsum.photos/seed/${id}/1200/630`],
     }
   };
 }

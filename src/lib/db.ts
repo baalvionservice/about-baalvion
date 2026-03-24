@@ -103,8 +103,7 @@ let projects: Project[] = [
     category: 'Core Platform', 
     type: 'SaaS',
     description: 'Global trade infrastructure connecting businesses, finance, and compliance.', 
-    longDescription: 'The flagship Baalvion Trade Platform is a comprehensive SaaS solution designed to unify the fragmented landscape of international commerce. It provides a single execution layer for logistics management, automated trade finance, and real-time regulatory compliance mapping.',
-    ecosystemRole: 'Acts as the primary operating system for the entire Baalvion Nexus ecosystem.',
+    longDescription: 'The flagship Baalvion Trade Platform is a comprehensive SaaS solution designed to unify the fragmented landscape of international commerce.',
     status: 'Active',
     isFeatured: true,
     priority: 1,
@@ -118,116 +117,10 @@ let projects: Project[] = [
     category: 'Industrial', 
     type: 'Mining Project',
     description: 'Monitoring and management system for high-scale industrial mining operations.', 
-    longDescription: 'A heavy-duty industrial analytics platform that provides real-time telemetry and resource management for global mining sites. It utilizes IoT integration to track machinery performance, safety protocols, and output efficiency in the most demanding environments.',
     status: 'In Development',
     isFeatured: true,
     priority: 2,
     domain: 'mining.baalvion.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p3', 
-    name: 'Employee Monitoring App', 
-    category: 'Internal Systems', 
-    type: 'Internal Tool',
-    description: 'Track and manage internal employee productivity and performance across global nodes.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 3,
-    domain: 'app.baalvionstack.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p4', 
-    name: 'Intelligence Hub', 
-    category: 'Intelligence', 
-    type: 'Research Portal',
-    description: 'Data, research, and analytics platform providing deep market insights.', 
-    longDescription: 'ImperialPedia is the central repository of Baalvion’s collective intelligence. It serves as a specialized research portal for global market trends, geopolitical risk analysis, and macro-economic forecasting, turning raw data into strategic foresight.',
-    status: 'Active',
-    isFeatured: true,
-    priority: 4,
-    domain: 'imperialpedia.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p5', 
-    name: 'Legal Compliance System', 
-    category: 'Governance', 
-    type: 'Legal/Policy Platform',
-    description: 'Centralized governance system for startups and enterprises.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 5,
-    domain: 'lawelitenetwork.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p6', 
-    name: 'Market Exposure Reports', 
-    category: 'Intelligence', 
-    type: 'Reports / Insights',
-    description: 'Analytical reports revealing market trends and hidden strategic structures.', 
-    status: 'Planned',
-    isFeatured: false,
-    priority: 6,
-    domain: 'marketunderworld.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p7', 
-    name: 'Strategy Education Platform', 
-    category: 'Governance', 
-    type: 'Educational Tools',
-    description: 'Step-by-step guides and tutorials to navigate and scale in global markets.', 
-    status: 'In Development',
-    isFeatured: false,
-    priority: 7,
-    domain: 'controlthemarket.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p8', 
-    name: 'Amarise Maison Avenue Catalog', 
-    category: 'Commerce', 
-    type: 'Luxury / Lifestyle',
-    description: 'Premium product catalog and private labels for high-end lifestyle offerings.', 
-    status: 'Active',
-    isFeatured: true,
-    priority: 8,
-    domain: 'amarisemaisonavenue.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p9', 
-    name: 'Investor Relations Portal', 
-    category: 'Core Platform', 
-    type: 'IR',
-    description: 'Financial reports and strategic updates for the Baalvion investment community.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 9,
-    domain: 'ir.baalvion.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p10', 
-    name: 'Global Hiring Portal', 
-    category: 'Internal Systems', 
-    type: 'Jobs / Recruitment',
-    description: 'End-to-end recruitment management for global talent acquisition.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 10,
-    domain: 'jobs.baalvion.com',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   }
@@ -237,46 +130,42 @@ let sections: Section[] = [
   { 
     id: 'sec-hero-home', 
     type: 'hero', 
-    title: 'Building the Infrastructure Layer for Global Trade', 
-    description: 'Baalvion Nexus integrates businesses, finance, compliance, and intelligence systems into a unified global execution engine for the next century of commerce.',
-    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Partner With Us', label: 'Infrastructure 2.0' }
+    title: 'Operating the Global Trade Infrastructure', 
+    description: 'Connecting businesses, finance, compliance, and logistics across 198 countries — all through a single unified system.',
+    data: { 
+      ctaPrimary: 'Explore Our Platform', 
+      ctaSecondary: 'Partner With Us', 
+      label: 'Nexus OS',
+      stats: [
+        { label: "Markets", value: "198" },
+        { label: "Active Partners", value: "125+" },
+        { label: "Transactions", value: "500K+" }
+      ]
+    }
   },
   {
     id: 'sec-problem-home',
     type: 'problem',
-    title: 'Resolving terminal fragmentation in global commerce.',
-    description: 'The current global trade landscape is a patchwork of legacy systems, creating friction that hinders growth and increases systemic risk.',
+    title: 'The Global Trade Challenge',
+    description: 'Fragmented supply chains, opaque financing, slow compliance, and lack of trust hinder global business expansion. Companies struggle to scale efficiently.',
     data: {
       points: [
-        { title: "Manual Fragmentation", desc: "Disconnected systems lead to data silos and execution delays." }
-        ,{ title: "Compliance Opacity", desc: "Complex jurisdictional laws create high regulatory friction." }
-        ,{ title: "Financial Inefficiency", desc: "Legacy clearing systems slow down global value transfer." }
+        { title: "Fragmented Trade", desc: "Disconnected systems lead to terminal data silos." },
+        { title: "Compliance Gaps", desc: "Complex jurisdictional laws create regulatory friction." },
+        { title: "Finance Barriers", desc: "Legacy clearing systems slow down global value transfer." }
       ]
     }
   },
   {
     id: 'sec-solution-home',
     type: 'solution',
-    title: 'A Unified Operating System for Global Markets.',
-    description: 'Baalvion Nexus resolves fragmentation by architecting a single, interoperable layer where trade, finance, and law converge.',
+    title: 'Baalvion: The Operating System for Trade',
+    description: 'Baalvion unifies trade, finance, compliance, and intelligence into a single, scalable infrastructure. Every transaction, every partner, every process — connected, secure, and efficient.',
     data: {
       features: [
-        { title: "Standardized Protocols", desc: "Unified data formats for seamless cross-border interoperability." }
-        ,{ title: "Autonomous Compliance", desc: "AI-driven legal mapping integrated directly into the trade flow." }
-        ,{ title: "Instant Settlement", desc: "Real-time financial clearing using high-speed digital nodes." }
-      ]
-    }
-  },
-  {
-    id: 'sec-trust-home',
-    type: 'trust',
-    title: 'Enterprise-Grade Governance',
-    description: 'Our architecture is built on the highest global standards of security and transparency.',
-    data: {
-      metrics: [
-        { label: "Global Reach", value: "180+ Jurisdictions" }
-        ,{ label: "Security Standard", value: "AES-256 / Zero-Knowledge" }
-        ,{ label: "Compliance", value: "Real-Time AI Mapping" }
+        { title: "Unified OS", desc: "A single execution layer for all global operations." },
+        { title: "Secure Nexus", desc: "Enterprise-grade security across all nodes." },
+        { title: "Global Scale", desc: "Architected for 180+ jurisdictions." }
       ]
     }
   },
@@ -284,21 +173,20 @@ let sections: Section[] = [
     id: 'sec-cta-home',
     type: 'cta-final',
     title: 'Join the Future of Global Trade',
-    description: 'Establish your Nexus link today and integrate with the foundational layer of international commerce.',
-    data: { ctaPrimary: 'Establish Nexus Link', ctaSecondary: 'Governance Specs' }
+    description: 'Whether you are a partner, investor, or supplier, Baalvion provides a secure, scalable platform to connect and grow globally.',
+    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Contact Us' }
   }
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion Nexus | Global Trade Infrastructure', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-trust-home', 'sec-cta-home'] }
+  { id: 'pg-home', slug: 'home', title: 'Baalvion — Global Trade Infrastructure Platform', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-cta-home'] }
 ];
 
 let ecosystem: EcosystemItem[] = [
-  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental high-availability connectivity layer for global commerce networks.', domain: 'infra.baalvion.nexus' },
-  { id: 'eco-2', layer: 'Intelligence', name: 'Baalvion Insight', description: 'Real-time global trade intelligence utilizes neural networks for predictive risk modeling.', domain: 'intel.baalvion.nexus' },
-  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Unified legal and compliance protocol providing automated jurisdictional mapping.', domain: 'legal.baalvion.nexus' },
-  { id: 'eco-4', layer: 'Commerce', name: 'TradeFlow', description: 'Standardized operational execution engine for global enterprise logistics.', domain: 'flow.baalvion.nexus' },
-  { id: 'eco-5', layer: 'Finance', name: 'Settlement Core', description: 'Next-generation settlement infrastructure for institutional trade finance.', domain: 'finance.baalvion.nexus' }
+  { id: 'eco-1', layer: 'Infrastructure', name: 'Nexus Bedrock', description: 'The fundamental high-availability connectivity layer for global business operations.' },
+  { id: 'eco-2', layer: 'Intelligence', name: 'ImperialPedia', description: 'AI-driven insights and market intelligence for smarter global decisions.' },
+  { id: 'eco-3', layer: 'Governance', name: 'LexNetwork', description: 'Compliance, contracts, and risk management at enterprise scale.' },
+  { id: 'eco-4', layer: 'Commerce', name: 'Maison Avenue', description: 'Luxury, premium, and verified global trade commerce.' }
 ];
 
 let inquiries: Inquiry[] = [];
@@ -308,14 +196,7 @@ export const db = {
     getAll: () => projects,
     getById: (id: string) => projects.find(p => p.id === id),
     add: (p: any) => {
-      const newP = { 
-        ...p, 
-        id: `p-${Math.random().toString(36).substring(2, 7)}`, 
-        isFeatured: p.isFeatured || false,
-        priority: p.priority || 10,
-        createdAt: new Date().toISOString(), 
-        updatedAt: new Date().toISOString() 
-      };
+      const newP = { ...p, id: `p-${Math.random().toString(36).substring(2, 7)}`, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
       projects.push(newP);
       return newP;
     },

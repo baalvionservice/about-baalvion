@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState } from "react";
@@ -30,7 +29,7 @@ interface PopulatedPage extends Page {
 }
 
 export default function HomePageClient() {
-  const [page, setPage] = useState<PopulatedPage | null>(null);
+  const [homePageData, setHomePageData] = useState<PopulatedPage | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [ecoItems, setEcoItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,7 +51,7 @@ export default function HomePageClient() {
           eRes.json()
         ]);
 
-        setPage(pg);
+        setHomePageData(pg);
         setProjects(p);
         setEcoItems(e);
       } catch (err) {
@@ -64,7 +63,7 @@ export default function HomePageClient() {
     init();
   }, []);
 
-  if (loading || !page) return (
+  if (loading || !homePageData) return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-10 h-10 animate-spin text-primary" />
@@ -73,7 +72,7 @@ export default function HomePageClient() {
     </div>
   );
 
-  const sections = page?.sectionData || [];
+  const sections = homePageData?.sectionData || [];
   const heroSection = sections.find(s => s.type === 'hero');
   const problemSection = sections.find(s => s.type === 'problem');
   const solutionSection = sections.find(s => s.type === 'solution');

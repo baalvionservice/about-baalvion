@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import HomePageClient from "./home-page-client";
 
 export const metadata: Metadata = {
@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     title: "Baalvion — Global Trade Infrastructure Platform",
     description: "Baalvion builds global trade infrastructure connecting businesses, finance, compliance, and intelligence into one unified platform.",
     url: 'https://baalvion.nexus',
-    siteName: 'Baalvion Nexus',
+    siteName: 'Baalvion Operating System (BOS)',
     images: [
       {
         url: 'https://picsum.photos/seed/baalvion-home/1200/630',
         width: 1200,
         height: 630,
-        alt: 'Baalvion Nexus Home',
+        alt: 'Baalvion Operating System (BOS) Home',
       },
     ],
     locale: 'en_US',
@@ -28,6 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default function BaalvionHomePage() {
   return <HomePageClient />;
 }

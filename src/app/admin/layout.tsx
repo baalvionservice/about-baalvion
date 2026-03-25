@@ -11,7 +11,8 @@ import {
   MessageSquare, 
   LogOut,
   Globe,
-  Settings
+  Settings,
+  Newspaper
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -20,6 +21,7 @@ const adminLinks = [
   { name: 'Pages', href: '/admin/pages', icon: FileText },
   { name: 'Projects', href: '/admin/projects', icon: Briefcase },
   { name: 'Ecosystem', href: '/admin/ecosystem', icon: Layers },
+  { name: 'News & Intel', href: '/admin/news', icon: Newspaper },
   { name: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },
 ];
 

@@ -57,6 +57,19 @@ export interface Inquiry {
   status: 'New' | 'Read' | 'Archived';
 }
 
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  date: string;
+  image: string;
+  author: string;
+  readTime: string;
+  status: 'Published' | 'Draft';
+  isTrending?: boolean;
+}
+
 export const projectCategories: ProjectCategory[] = [
   { 
     id: 'cat-core', 
@@ -161,71 +174,44 @@ let projects: Project[] = [
     domain: 'lawelitenetwork.com',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
+  }
+];
+
+let articles: Article[] = [
+  {
+    id: 'art-1',
+    title: 'What you need to know about Baalvion today: March 24, 2026',
+    slug: 'today',
+    category: 'updates',
+    date: 'March 24, 2026',
+    image: 'https://picsum.photos/seed/news1/600/400',
+    author: 'Baalvion Staff',
+    readTime: '2 min read',
+    status: 'Published',
+    isTrending: true
   },
-  { 
-    id: 'p6', 
-    name: 'Market Exposure Reports', 
-    category: 'Intelligence', 
-    type: 'Insights Tool',
-    description: 'In-depth analytical reports revealing hidden market structures and trends.', 
-    status: 'Planned',
-    isFeatured: false,
-    priority: 6,
-    domain: 'marketunderworld.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+  {
+    id: 'art-2',
+    title: "Setting the record straight on Baalvion's global logistics partnership",
+    slug: 'logistics-partnership',
+    category: 'updates',
+    date: 'March 18, 2026',
+    image: 'https://picsum.photos/seed/news2/600/400',
+    author: 'Baalvion Staff',
+    readTime: '4 min read',
+    status: 'Published'
   },
-  { 
-    id: 'p7', 
-    name: 'Strategy Education Platform', 
-    category: 'Governance', 
-    type: 'Education',
-    description: 'Curated guides and tutorials for navigating and controlling complex global markets.', 
-    status: 'In Development',
-    isFeatured: false,
-    priority: 7,
-    domain: 'controlthemarket.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p8', 
-    name: 'Amarise Maison Avenue Catalog', 
-    category: 'Commerce', 
-    type: 'Luxury Catalog',
-    description: 'Premium product catalog and lifestyle offerings for verified trade partners.', 
-    status: 'Active',
-    isFeatured: true,
-    priority: 8,
-    domain: 'amarisemaisonavenue.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p9', 
-    name: 'Investor Relations Portal', 
-    category: 'Core Platform', 
-    type: 'IR Portal',
-    description: 'Direct nexus for quarterly updates, financial disclosures, and stakeholder briefings.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 9,
-    domain: 'ir.baalvion.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p10', 
-    name: 'Global Hiring Portal', 
-    category: 'Internal Systems', 
-    type: 'Recruitment',
-    description: 'End-to-end recruitment and candidate management for the global nexus network.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 10,
-    domain: 'jobs.baalvion.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+  {
+    id: 'art-3',
+    title: "Baalvion is investing $750 million in a global trade hub in Singapore",
+    slug: 'singapore-hub',
+    category: 'updates',
+    date: 'March 10, 2026',
+    image: 'https://picsum.photos/seed/news5/600/400',
+    author: 'Baalvion Staff',
+    readTime: '3 min read',
+    status: 'Published',
+    isTrending: true
   }
 ];
 
@@ -322,6 +308,20 @@ export const db = {
       return projects.find(item => item.id === id);
     },
     delete: (id: string) => { projects = projects.filter(p => p.id !== id); }
+  },
+  articles: {
+    getAll: () => articles,
+    getBySlug: (slug: string) => articles.find(a => a.slug === slug),
+    add: (a: any) => {
+      const newA = { ...a, id: `art-${Math.random().toString(36).substring(2, 7)}` };
+      articles.push(newA);
+      return newA;
+    },
+    update: (id: string, a: any) => {
+      articles = articles.map(item => item.id === id ? { ...item, ...a } : item);
+      return articles.find(item => item.id === id);
+    },
+    delete: (id: string) => { articles = articles.filter(a => a.id !== id); }
   },
   pages: {
     getAll: () => pages,

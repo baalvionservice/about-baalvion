@@ -2,42 +2,26 @@
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Share2, Globe, ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Share2, Globe, ArrowRight, ChevronRight, ChevronLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-const moreNews = [
-  {
-    id: 3,
-    title: "Get a behind-the-scenes look at Baalvion's innovations with the 'Nexus' podcast",
-    date: 'March 17, 2026',
-    image: 'https://picsum.photos/seed/news3/600/400',
-    category: 'Company news',
-  },
-  {
-    id: 5,
-    title: 'Baalvion is investing $750 million in a global trade hub in Singapore',
-    date: 'March 10, 2026',
-    image: 'https://picsum.photos/seed/news5/600/400',
-    category: 'Company news',
-  },
-  {
-    id: 6,
-    title: 'Baalvion increases investment in Europe to expand data center infrastructure',
-    date: 'March 2, 2026',
-    image: 'https://picsum.photos/seed/news6/600/400',
-    category: 'Company news',
-  },
-  {
-    id: 7,
-    title: 'Baalvion to invest $12 billion in first strategic trade corridor in the Middle East',
-    date: 'February 23, 2026',
-    image: 'https://picsum.photos/seed/news7/600/400',
-    category: 'Company news',
-  },
-];
+import { useEffect, useState } from 'react';
+import { Article } from '@/lib/db';
 
 export default function TodayNewsPage() {
+  const [moreNews, setMoreNews] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/news?category=updates')
+      .then(res => res.json())
+      .then(data => {
+        setMoreNews(data.filter((a: Article) => a.slug !== 'today').slice(0, 4));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -177,44 +161,50 @@ export default function TodayNewsPage() {
                   <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-400 cursor-not-allowed">
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <span className="text-xs font-bold text-gray-400 px-2 uppercase tracking-widest">1 / 2</span>
-                  <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 hover:border-[#FF9900] hover:text-[#FF9900] transition-all">
+                  <span className="text-xs font-bold text-gray-400 px-2 uppercase tracking-widest">1 / 1</span>
+                  <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-400 cursor-not-allowed">
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {moreNews.map((news) => (
-                <Link key={news.id} href={`/news/updates/${news.id}`} className="group bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col h-full overflow-hidden transition-transform hover:-translate-y-1">
-                  <div className="aspect-[16/10] relative overflow-hidden bg-gray-50">
-                    <Image
-                      src={news.image}
-                      alt={news.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      data-ai-hint="news coverage"
-                    />
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-bold leading-tight text-gray-900 group-hover:text-[#007185] transition-colors line-clamp-3">
-                        {news.title}
-                      </h4>
-                      <p className="text-[11px] text-gray-400 font-medium">
-                        {news.date}
-                      </p>
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {moreNews.map((news) => (
+                  <Link key={news.id} href={`/news/${news.category}/${news.slug}`} className="group bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col h-full overflow-hidden transition-transform hover:-translate-y-1">
+                    <div className="aspect-[16/10] relative overflow-hidden bg-gray-50">
+                      <Image
+                        src={news.image}
+                        alt={news.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        data-ai-hint="news coverage"
+                      />
                     </div>
-                    <div className="mt-4">
-                      <span className="inline-block px-2.5 py-1 bg-gray-100 border border-gray-200 rounded text-[9px] font-bold text-gray-500 uppercase tracking-widest">
-                        {news.category}
-                      </span>
+                    <div className="p-5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-3">
+                        <h4 className="text-sm font-bold leading-tight text-gray-900 group-hover:text-[#007185] transition-colors line-clamp-3">
+                          {news.title}
+                        </h4>
+                        <p className="text-[11px] text-gray-400 font-medium">
+                          {news.date}
+                        </p>
+                      </div>
+                      <div className="mt-4">
+                        <span className="inline-block px-2.5 py-1 bg-gray-100 border border-gray-200 rounded text-[9px] font-bold text-gray-500 uppercase tracking-widest">
+                          {news.category}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react";
@@ -24,16 +25,27 @@ import {
   CarouselPrevious 
 } from "@/components/ui/carousel";
 
+/**
+ * @interface PopulatedPage
+ * @description Page structure with hydrated section data from the BOS Architecture Registry.
+ */
 interface PopulatedPage extends Page {
   sectionData: any[];
 }
 
+/**
+ * @component HomePageClient
+ * @description The institutional entryway for the Baalvion Operating System (BOS).
+ * Designed for high-concurrency data ingestion and future-proof modular rendering.
+ */
 export default function HomePageClient() {
   const [homePageData, setHomePageData] = useState<PopulatedPage | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [ecoItems, setEcoItems] = useState<EcosystemItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Future-proof data synchronization hook
+  // Ready for WebSocket or Server-Sent Events (SSE) integration
   useEffect(() => {
     async function init() {
       try {
@@ -43,7 +55,7 @@ export default function HomePageClient() {
           fetch('/api/ecosystem')
         ]);
         
-        if (!pgRes.ok || !pRes.ok || !eRes.ok) throw new Error('Failed to load');
+        if (!pgRes.ok || !pRes.ok || !eRes.ok) throw new Error('System link synchronization failure.');
 
         const [pg, p, e] = await Promise.all([
           pgRes.json(),
@@ -55,7 +67,7 @@ export default function HomePageClient() {
         setProjects(p);
         setEcoItems(e);
       } catch (err) {
-        console.error(err);
+        console.error("BOS Initialization Error:", err);
       } finally {
         setLoading(false);
       }
@@ -83,7 +95,7 @@ export default function HomePageClient() {
       <Navbar />
       
       <main className="flex-1" id="main-content">
-        {/* HERO SECTION */}
+        {/* HERO SECTION - Primary Value Proposition */}
         {heroSection && (
           <section className="relative pt-40 pb-20 border-b border-gray-100 bg-white overflow-hidden" aria-labelledby="hero-title">
             <div className="section-container relative z-10 animate-fade-in">
@@ -105,7 +117,7 @@ export default function HomePageClient() {
                   </Button>
                 </div>
 
-                {/* STATS TICKER */}
+                {/* STATS TICKER - Real-time Performance Indicators */}
                 <div className="flex flex-wrap gap-12 pt-10 border-t border-gray-100">
                   {heroSection.data?.stats?.map((stat: any, i: number) => (
                     <div key={i} className="space-y-1">
@@ -120,7 +132,7 @@ export default function HomePageClient() {
           </section>
         )}
 
-        {/* PROBLEM SECTION */}
+        {/* PROBLEM SECTION - Market Fragmentation */}
         {problemSection && (
           <section className="section-vertical-padding bg-gray-50 border-b border-gray-100" aria-labelledby="problem-title">
             <div className="section-container">
@@ -145,14 +157,14 @@ export default function HomePageClient() {
           </section>
         )}
 
-        {/* SOLUTION SECTION */}
+        {/* SOLUTION SECTION - Unified Architecture */}
         {solutionSection && (
           <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="solution-title">
             <div className="section-container">
               <div className="grid lg:grid-cols-2 gap-20 items-center">
                 <div className="space-y-10">
                   <div className="space-y-4">
-                    <span className="section-label">Baalvion Operating System (BOS)</span>
+                    <span className="section-label">Baalvion Operating System (BOS) Architecture</span>
                     <h2 id="solution-title" className="text-gray-900 font-bold">{solutionSection.title}</h2>
                     <p className="text-gray-600 text-lg leading-relaxed">{solutionSection.description}</p>
                   </div>
@@ -170,11 +182,11 @@ export default function HomePageClient() {
                     ))}
                   </div>
                 </div>
-                <div className="bg-gray-50 rounded-lg p-10 lg:p-16 text-center space-y-8 border border-gray-100">
-                  <Globe className="w-16 h-16 text-primary mx-auto" aria-hidden="true" />
-                  <h3 className="text-2xl font-bold text-gray-900">Unified Infrastructure Layer</h3>
+                <div className="bg-gray-50 rounded-lg p-10 lg:p-16 text-center space-y-8 border border-gray-100 relative group">
+                  <Globe className="w-16 h-16 text-primary mx-auto group-hover:scale-110 transition-transform duration-700" aria-hidden="true" />
+                  <h3 className="text-2xl font-bold text-gray-900">Unified Execution Layer</h3>
                   <p className="text-gray-600 italic font-medium">"A single protocol connecting every node of the global trade Baalvion Operating System (BOS)."</p>
-                  <Button asChild className="w-full h-12 btn-primary font-bold" aria-label="Explore the architecture of the BOS platform">
+                  <Button asChild className="w-full h-12 btn-primary font-bold shadow-xl shadow-primary/20" aria-label="Explore the architecture of the BOS platform">
                     <Link href="/platform">Explore Platform Architecture</Link>
                   </Button>
                 </div>
@@ -183,17 +195,17 @@ export default function HomePageClient() {
           </section>
         )}
 
-        {/* ECOSYSTEM PREVIEW */}
+        {/* ECOSYSTEM PREVIEW - Modular Layers */}
         <section className="section-vertical-padding bg-gray-50 border-b border-gray-100" aria-labelledby="ecosystem-title">
           <div className="section-container">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div className="max-w-2xl space-y-4">
-                <span className="section-label">Baalvion Operating System (BOS) Portfolio</span>
-                <h2 id="ecosystem-title" className="mb-0 text-gray-900 font-bold">Multi-Layered Ecosystem</h2>
-                <p className="text-gray-600 text-lg">Strategically resolving global commerce bottlenecks.</p>
+                <span className="section-label">BOS Ecosystem Portals</span>
+                <h2 id="ecosystem-title" className="mb-0 text-gray-900 font-bold">Multi-Layered Governance</h2>
+                <p className="text-gray-600 text-lg">Strategically resolving global commerce bottlenecks through modular node expansion.</p>
               </div>
-              <Button asChild variant="outline" className="btn-outline h-12 px-8" aria-label="Explore all ecosystem layers">
-                <Link href="/ecosystem">Explore All Layers <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" /></Link>
+              <Button asChild variant="outline" className="btn-outline h-12 px-8 group" aria-label="Explore all ecosystem layers">
+                <Link href="/ecosystem">Explore All Layers <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" /></Link>
               </Button>
             </div>
             
@@ -208,8 +220,9 @@ export default function HomePageClient() {
                       <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">{item.name}</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
                     </div>
-                    <div className="pt-4 border-t border-gray-50">
+                    <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
                       <span className="text-[11px] font-bold text-primary uppercase tracking-widest">{item.layer} LAYER</span>
+                      <span className="text-[9px] font-mono text-gray-300">NODE_V3</span>
                     </div>
                   </div>
                 </Card>
@@ -218,13 +231,13 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* PROJECTS PREVIEW */}
+        {/* PROJECTS PREVIEW - Active Implementation Nodes */}
         <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="projects-title">
           <div className="section-container">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              <span className="section-label">Execution Layer</span>
-              <h2 id="projects-title" className="text-gray-900 font-bold">What We're Building</h2>
-              <p className="text-gray-600 text-lg">Every initiative contributes to a unified global trade infrastructure.</p>
+              <span className="section-label">Institutional Execution</span>
+              <h2 id="projects-title" className="text-gray-900 font-bold">What We're Architecting</h2>
+              <p className="text-gray-600 text-lg">Every initiative contributes to a unified global trade infrastructure through the BOS Core.</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-6">
@@ -267,7 +280,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* AI & TECHNOLOGY HIGHLIGHTS */}
+        {/* AI & TECHNOLOGY HIGHLIGHTS - Intelligence Layer Readiness */}
         <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative overflow-hidden" aria-labelledby="ai-highlights-title">
           <div className="section-container relative z-10">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -293,17 +306,17 @@ export default function HomePageClient() {
               </div>
               <div className="space-y-10 order-1 lg:order-2">
                 <div>
-                  <span className="section-label">Intelligence Layer</span>
-                  <h2 id="ai-highlights-title" className="text-gray-900 font-bold leading-tight text-4xl md:text-5xl">Advanced AI Orchestration</h2>
+                  <span className="section-label">Intelligence Architecture</span>
+                  <h2 id="ai-highlights-title" className="text-gray-900 font-bold leading-tight text-4xl md:text-5xl">Advanced BOS Orchestration</h2>
                 </div>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   The Baalvion Operating System (BOS) leverages custom machine learning models to eliminate friction in international commerce, automating compliance and risk scoring in real-time.
                 </p>
                 <div className="grid gap-6">
                   {[
-                    "Automated KYC/AML verification protocols",
+                    "Automated KYC/AML verification protocols (ISO 20022 ready)",
                     "Dynamic multi-currency clearing engine",
-                    "Localized intelligence for 198 markets"
+                    "Localized intelligence for 198 markets via Satellite Link"
                   ].map((text, i) => (
                     <div key={i} className="flex items-center gap-4 text-sm font-bold text-gray-700 p-4 rounded-xl bg-white border border-gray-100 hover:border-primary/20 transition-all">
                       <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0" aria-hidden="true"><CheckCircle2 className="w-4 h-4" /></div>
@@ -316,13 +329,13 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* INTERACTIVE GLOBAL TRADE MAP */}
+        {/* INTERACTIVE GLOBAL TRADE MAP - Network Visualization */}
         <section className="section-vertical-padding bg-white border-b border-gray-100 overflow-hidden" aria-labelledby="global-map-title">
           <div className="section-container">
             <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-              <span className="section-label">Global Presence</span>
+              <span className="section-label">Global Presence Registry</span>
               <h2 id="global-map-title" className="text-gray-900 font-bold text-4xl md:text-5xl">One System. Infinite Connectivity.</h2>
-              <p className="text-gray-600 text-lg">Explore the connectivity of the Baalvion BOS network across international trade hubs.</p>
+              <p className="text-gray-600 text-lg">Explore the technical connectivity of the Baalvion BOS network across international trade hubs.</p>
             </div>
 
             <div className="relative aspect-[21/9] bg-[#151B24] rounded-[3rem] border border-gray-800 p-8 flex items-center justify-center group overflow-hidden shadow-2xl shadow-black/20">
@@ -340,7 +353,7 @@ export default function HomePageClient() {
                   { region: "Americas", partners: "42+", nodes: "12", status: "Nominal", volume: "$1.2B" },
                   { region: "EMEA", partners: "58+", nodes: "24", status: "Expanding", volume: "$2.4B" },
                   { region: "APAC", partners: "85+", nodes: "32", status: "Active", volume: "$4.8B" },
-                  { region: "Global Nodes", partners: "125+", nodes: "68", status: "Unified", volume: "$8.4B" }
+                  { region: "Global Hubs", partners: "125+", nodes: "68", status: "Unified", volume: "$8.4B" }
                 ].map((reg, i) => (
                   <div key={i} className="space-y-6 p-8 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-primary/20 transition-all cursor-default group/item" role="group" aria-label={`${reg.region} region metrics`}>
                     <Globe2 className="w-10 h-10 text-primary mx-auto mb-2 group-hover/item:rotate-12 transition-transform duration-500" aria-hidden="true" />
@@ -354,7 +367,7 @@ export default function HomePageClient() {
                         <span className="text-white">{reg.nodes} Nodes</span>
                       </div>
                       <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden" aria-hidden="true">
-                        <div className="h-full bg-primary" style={{ width: i === 0 ? '60%' : i === 1 ? '75%' : i === 2 ? '90%' : '100%' }} />
+                        <div className="h-full bg-primary transition-all duration-1000" style={{ width: i === 0 ? '60%' : i === 1 ? '75%' : i === 2 ? '90%' : '100%' }} />
                       </div>
                     </div>
                     <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 text-[10px] py-1 px-4 rounded-full uppercase font-bold tracking-widest">{reg.status}</Badge>
@@ -364,14 +377,14 @@ export default function HomePageClient() {
               
               <div className="absolute bottom-10 inset-x-10 flex flex-wrap items-center justify-between gap-6 border-t border-white/5 pt-8">
                 <div className="flex items-center gap-4 text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" /> Live System Health: 99.99% Operational
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" /> Live Core Health: 99.99% Operational
                 </div>
                 <div className="flex items-center gap-8">
                   <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
                     Latency: <span className="text-primary ml-2">124ms AVG</span>
                   </div>
                   <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                    Encryption: <span className="text-primary ml-2">AES-256 ACTIVE</span>
+                    Auth: <span className="text-primary ml-2">mTLS + AES-256</span>
                   </div>
                 </div>
               </div>
@@ -379,26 +392,26 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* PROJECT PIPELINE / ROADMAP */}
+        {/* PROJECT PIPELINE / ROADMAP - Future Deployment Logic */}
         <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative" aria-labelledby="roadmap-title">
           <div className="section-container">
             <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
               <div className="max-w-2xl space-y-4">
-                <span className="section-label">Execution Roadmap</span>
+                <span className="section-label">Execution Pipeline</span>
                 <h2 id="roadmap-title" className="mb-0 text-gray-900 font-bold text-4xl md:text-5xl">Strategic Milestones</h2>
-                <p className="text-gray-600 text-lg">Next-gen technical deployments scheduled for the BOS ecosystem.</p>
+                <p className="text-gray-600 text-lg">Next-gen technical deployments scheduled for the BOS ecosystem integration.</p>
               </div>
               <div className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full text-xs font-bold text-gray-500 uppercase tracking-[0.2em] shadow-sm">
-                <Milestone className="w-4 h-4 text-primary" aria-hidden="true" /> Q1 - Q4 • 2026 Registry
+                <Milestone className="w-4 h-4 text-primary" aria-hidden="true" /> Q1 - Q4 • 2026 Deployment
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { title: "BOS Mobile Terminal", status: "In Development", progress: 75, q: "Q1", desc: "Secure node management for institutional partners." },
-                { title: "Automated Customs", status: "Planned", progress: 20, q: "Q2", desc: "Direct API link to 45+ national customs databases." },
-                { title: "ESG Compliance Audit", status: "Active", progress: 90, q: "Q1", desc: "Real-time carbon footprint tracking for trade routes." },
-                { title: "Satellite Link v3", status: "Research", progress: 10, q: "Q3", desc: "Global redundant uplink for remote industrial nodes." }
+                { title: "BOS Mobile Terminal", status: "In Development", progress: 75, q: "Q1", desc: "Secure node management for institutional clearing partners." },
+                { title: "Automated Customs v2", status: "Planned", progress: 20, q: "Q2", desc: "Direct ISO API link to 45+ national customs databases." },
+                { title: "ESG Compliance Core", status: "Active", progress: 90, q: "Q1", desc: "Real-time carbon footprint tracking for multi-tier trade routes." },
+                { title: "Satellite Uplink v3", status: "Research", progress: 10, q: "Q3", desc: "Global redundant uplink for remote high-scale industrial nodes." }
               ].map((step, i) => (
                 <div key={i} className="p-10 bg-white border border-gray-100 rounded-[2.5rem] space-y-8 hover:border-primary/20 hover:shadow-2xl transition-all duration-500 group h-full flex flex-col">
                   <div className="flex justify-between items-start">
@@ -412,9 +425,9 @@ export default function HomePageClient() {
                     <h4 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">{step.title}</h4>
                     <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
                   </div>
-                  <div className="space-y-3 pt-6 border-t border-gray-50">
+                  <div className="space-y-3 pt-6 border-t border-gray-100">
                     <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                      <span>System Ready</span>
+                      <span>Integration Ready</span>
                       <span className="text-primary">{step.progress}%</span>
                     </div>
                     <div className="h-1.5 w-full bg-gray-50 rounded-full overflow-hidden" aria-hidden="true">
@@ -427,7 +440,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* SUSTAINABILITY & ESG */}
+        {/* SUSTAINABILITY & ESG - Global Accountability */}
         <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="esg-title">
           <div className="section-container">
             <div className="bg-[#151B24] rounded-[4rem] p-12 lg:p-24 overflow-hidden relative group shadow-2xl shadow-black/20">
@@ -435,11 +448,11 @@ export default function HomePageClient() {
               <div className="relative z-10 grid lg:grid-cols-2 gap-24 items-center">
                 <div className="space-y-10">
                   <div>
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.5em] mb-6 block">ESG & Global Responsibility</span>
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-[0.5em] mb-6 block">ESG & Compliance Protocols</span>
                     <h2 id="esg-title" className="text-white font-bold leading-tight text-4xl md:text-6xl mb-0">Architecting Green Trade</h2>
                   </div>
                   <p className="text-gray-400 text-xl leading-relaxed">
-                    Baalvion is committed to carbon-neutral trade routes and ethical vendor scoring. Our platform ensures every node follows global sustainability protocols.
+                    Baalvion is committed to carbon-neutral trade routes and ethical vendor scoring. Our platform ensures every BOS node follows global sustainability standards.
                   </p>
                   <div className="grid grid-cols-3 gap-8 pt-6">
                     <div className="space-y-2">
@@ -452,14 +465,14 @@ export default function HomePageClient() {
                     </div>
                     <div className="space-y-2">
                       <p className="text-4xl font-bold text-white">Net-0</p>
-                      <p className="text-[10px] font-bold text-primary uppercase tracking-widest leading-tight">By 2028 Target Hubs</p>
+                      <p className="text-[10px] font-bold text-primary uppercase tracking-widest leading-tight">By 2028 Target</p>
                     </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 gap-8">
                   {[
-                    { icon: Leaf, title: "Carbon-Free Routing", desc: "Optimizing global logistics for minimum environmental footprint via AI orchestration." },
-                    { icon: ShieldAlert, title: "Ethical Sourcing AI", desc: "Real-time monitoring of labor laws and safety compliance across all supplier tiers." }
+                    { icon: Leaf, title: "Carbon-Free Routing", desc: "Optimizing global logistics for minimum environmental footprint via BOS AI orchestration." },
+                    { icon: ShieldAlert, title: "Ethical Sourcing AI", desc: "Real-time monitoring of labor laws and safety compliance across all institutional tiers." }
                   ].map((item, i) => (
                     <div key={i} className="p-12 rounded-3xl bg-white/5 border border-white/10 flex gap-10 items-center group/card hover:bg-white hover:border-white transition-all duration-700 hover:shadow-2xl">
                       <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover/card:bg-primary group-hover/card:text-white transition-all duration-500" aria-hidden="true">
@@ -477,12 +490,12 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* FEATURED PARTNERS CAROUSEL */}
+        {/* FEATURED PARTNERS - Institutional Trust Carousel */}
         <section className="py-32 bg-white border-b border-gray-100 overflow-hidden" aria-labelledby="partners-title">
           <div className="section-container">
             <div className="text-center mb-20 space-y-4">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.6em]">Institutional Integration</span>
-              <h2 id="partners-title" className="text-gray-900 font-bold text-3xl">Trusted by Industry Nodes</h2>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.6em]">Core Integration Partners</span>
+              <h2 id="partners-title" className="text-gray-900 font-bold text-3xl">Trusted by Global Nodes</h2>
             </div>
             
             <Carousel
@@ -505,14 +518,14 @@ export default function HomePageClient() {
                 ))}
               </CarouselContent>
               <div className="flex justify-center gap-4 mt-12">
-                <CarouselPrevious className="relative inset-0 translate-y-0" aria-label="Previous partner logos" />
-                <CarouselNext className="relative inset-0 translate-y-0" aria-label="Next partner logos" />
+                <CarouselPrevious className="relative inset-0 translate-y-0 h-12 w-12" aria-label="Previous partner logos" />
+                <CarouselNext className="relative inset-0 translate-y-0 h-12 w-12" aria-label="Next partner logos" />
               </div>
             </Carousel>
           </div>
         </section>
 
-        {/* NEWSLETTER SIGNUP */}
+        {/* NEWSLETTER SIGNUP - Growth & Engagement Terminal */}
         <section className="section-vertical-padding bg-gray-50" aria-labelledby="newsletter-title">
           <div className="section-container">
             <div className="max-w-5xl mx-auto bg-white p-12 lg:p-24 rounded-[4rem] border border-gray-100 shadow-sm text-center space-y-12 relative overflow-hidden">
@@ -523,7 +536,7 @@ export default function HomePageClient() {
                 </div>
                 <h2 id="newsletter-title" className="text-gray-900 font-bold text-4xl md:text-5xl mb-0">Stay Integrated</h2>
                 <p className="text-gray-600 text-xl max-w-2xl mx-auto">
-                  Receive weekly strategic briefs, technical milestones, and BOS system logs directly to your institutional buffer.
+                  Receive weekly strategic briefs, technical milestones, and BOS system logs directly to your institutional registry.
                 </p>
               </div>
               <form className="max-w-lg mx-auto relative group" onSubmit={(e) => e.preventDefault()}>
@@ -544,13 +557,13 @@ export default function HomePageClient() {
               <div className="flex flex-wrap justify-center items-center gap-8 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
                 <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" aria-hidden="true" /> Compliance Verified</div>
                 <div className="flex items-center gap-2"><Lock className="w-4 h-4 text-primary" aria-hidden="true" /> End-to-End Encrypted</div>
-                <div className="flex items-center gap-2"><Search className="w-4 h-4 text-gray-400" aria-hidden="true" /> Global Search Enabled</div>
+                <div className="flex items-center gap-2"><Search className="w-4 h-4 text-gray-400" aria-hidden="true" /> Global Registry Enabled</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* FINAL CTA */}
+        {/* FINAL CTA - Institutional Onboarding */}
         {ctaSection && (
           <section className="section-vertical-padding bg-white relative overflow-hidden" aria-labelledby="final-cta-title">
             <div className="section-container relative z-10">
@@ -581,7 +594,7 @@ export default function HomePageClient() {
                   
                   <div className="pt-12 flex justify-center">
                     <button className="flex items-center gap-3 text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] hover:text-white transition-colors" aria-label="Download the BOS Architecture Whitepaper">
-                      <Layers className="w-4 h-4 text-primary" aria-hidden="true" /> Architecture Whitepaper
+                      <Layers className="w-4 h-4 text-primary" aria-hidden="true" /> Architecture Whitepaper v3.2
                     </button>
                   </div>
                 </div>

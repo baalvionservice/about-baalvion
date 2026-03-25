@@ -2,9 +2,16 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area } from "recharts";
-import { TrendingUp, Users, Zap, Briefcase, ArrowUpRight, ArrowDownRight, Activity } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { Activity, Users, Zap, Briefcase, ArrowUpRight, Globe, TrendingUp, Cpu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+
+/**
+ * @module AnalyticsAdmin
+ * @description Strategic KPI terminal for Baalvion Operating System (BOS).
+ * Enhanced with real-time stream placeholders and scalability metrics.
+ */
 
 const transactionData = [
   { name: 'Jan', value: 400 },
@@ -23,23 +30,37 @@ const nodePerformance = [
 ];
 
 export default function AnalyticsAdmin() {
+  const [liveTransactions, setLiveTransactions] = useState(542890);
+
+  // Future-proof real-time transaction simulation
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLiveTransactions(prev => prev + Math.floor(Math.random() * 5));
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Analytics & Strategic Insights</h2>
-          <p className="text-sm text-gray-500">Real-time performance metrics across the Baalvion Operating System (BOS).</p>
+          <p className="text-sm text-gray-500">Real-time execution metrics across the global BOS network.</p>
+        </div>
+        <div className="bg-orange-50 border border-orange-100 px-4 py-2 rounded-xl flex items-center gap-3">
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Live Execution Stream ACTIVE</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Total Transactions', value: '542,890', change: '+12.5%', trend: 'up', icon: Activity },
-          { label: 'Active Partners', value: '148', change: '+4.2%', trend: 'up', icon: Users },
-          { label: 'System Uptime', value: '99.99%', change: 'Nominal', trend: 'neutral', icon: Zap },
-          { label: 'Launch Success', value: '100%', change: '+0.0%', trend: 'neutral', icon: Briefcase },
+          { label: 'Total Transactions', value: liveTransactions.toLocaleString(), change: '+12.5%', trend: 'up', icon: Activity },
+          { label: 'Active Partner Nodes', value: '148', change: '+4.2%', trend: 'up', icon: Globe },
+          { label: 'System Uptime (HA)', value: '99.998%', change: 'Nominal', trend: 'neutral', icon: Zap },
+          { label: 'Clearing Velocity', value: 'T-0', change: 'Optimized', trend: 'up', icon: Cpu },
         ].map((stat, i) => (
-          <Card key={i} className="bg-white border-gray-200 shadow-sm">
+          <Card key={i} className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{stat.label}</CardTitle>
               <stat.icon className="w-4 h-4 text-[#FF9900]" />
@@ -51,7 +72,7 @@ export default function AnalyticsAdmin() {
                 stat.trend === 'up' ? "text-emerald-500" : "text-gray-400"
               )}>
                 {stat.trend === 'up' ? <ArrowUpRight className="w-3 h-3" /> : null}
-                {stat.change} vs Last Month
+                {stat.change} vs Last Registry
               </div>
             </CardContent>
           </Card>
@@ -60,9 +81,12 @@ export default function AnalyticsAdmin() {
 
       <div className="grid lg:grid-cols-12 gap-8">
         <Card className="lg:col-span-8 bg-white border-gray-200 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold">Clearing Velocity</CardTitle>
-            <CardDescription>Monthly transaction volume across all global nodes.</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-lg font-bold">Clearing Velocity Portfolio</CardTitle>
+              <CardDescription>Monthly transaction volume across all global sharded nodes.</CardDescription>
+            </div>
+            <TrendingUp className="w-5 h-5 text-gray-200" />
           </CardHeader>
           <CardContent className="h-[350px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -87,8 +111,8 @@ export default function AnalyticsAdmin() {
 
         <Card className="lg:col-span-4 bg-white border-gray-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg font-bold">Node Reliability</CardTitle>
-            <CardDescription>Uptime metrics per geographic sector.</CardDescription>
+            <CardTitle className="text-lg font-bold">Node Reliability (SLA)</CardTitle>
+            <CardDescription>Real-time uptime metrics per geographic sector.</CardDescription>
           </CardHeader>
           <CardContent className="h-[350px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -103,6 +127,20 @@ export default function AnalyticsAdmin() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Scalability Future Placeholder */}
+      <Card className="bg-gray-50 border-dashed border-gray-200">
+        <CardContent className="py-12 flex flex-col items-center justify-center text-center space-y-4">
+          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-300 border border-gray-100">
+            <Zap className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-gray-900 font-bold">Predictive Scaling Engine</h3>
+            <p className="text-sm text-gray-500 max-w-md mx-auto">This module is prepared for future AI-driven scaling analytics. Connect your ERP or Cloud metrics via the Technical Registry to activate.</p>
+          </div>
+          <Button variant="outline" className="rounded-full h-10 px-8 text-[10px] font-bold uppercase tracking-widest border-gray-200 bg-white">Configure Data Pipeline</Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }

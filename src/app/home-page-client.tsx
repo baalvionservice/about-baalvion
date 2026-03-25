@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState } from "react";
@@ -55,7 +54,7 @@ export default function HomePageClient() {
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-10 h-10 animate-spin text-primary" />
-        <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Syncing Baalvion Nexus...</p>
+        <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Syncing Baalvion Operating System (BOS)...</p>
       </div>
     </div>
   );
@@ -161,7 +160,7 @@ export default function HomePageClient() {
                 <div className="bg-gray-50 rounded-lg p-10 lg:p-16 text-center space-y-8 border border-gray-100">
                   <Globe className="w-16 h-16 text-primary mx-auto" />
                   <h3 className="text-2xl font-bold text-gray-900">Unified Infrastructure Layer</h3>
-                  <p className="text-gray-600 italic font-medium">"A single protocol connecting every node of the global trade nexus."</p>
+                  <p className="text-gray-600 italic font-medium">"A single protocol connecting every node of the global trade Baalvion Operating System (BOS)."</p>
                   <Button asChild className="w-full h-12 btn-primary font-bold">
                     <Link href="/platform">Explore Platform Architecture</Link>
                   </Button>
@@ -176,7 +175,7 @@ export default function HomePageClient() {
           <div className="section-container">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div className="max-w-2xl space-y-4">
-                <span className="section-label">Nexus Portfolio</span>
+                <span className="section-label">Baalvion Operating System (BOS) Portfolio</span>
                 <h2 className="mb-0 text-gray-900 font-bold">Multi-Layered Ecosystem</h2>
                 <p className="text-gray-600 text-lg">Strategically resolving global commerce bottlenecks.</p>
               </div>

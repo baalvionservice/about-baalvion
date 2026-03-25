@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link";
@@ -16,7 +15,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import {
   Accordion,
@@ -37,7 +35,7 @@ const newsItems = [
 ];
 
 const aboutItems = [
-  { name: 'What We Do', href: '/company', desc: 'Baalvion ecosystem & platform layers', icon: Target },
+  { name: 'What We Do', href: '/company', desc: 'Baalvion Operating System (BOS) & platform layers', icon: Target },
   { name: 'Working at Baalvion', href: '/careers', desc: 'Careers, team stories, & culture', icon: Sparkles },
   { name: 'Leadership & Founders', href: '/leadership', desc: 'Vision, timeline, & leadership', icon: UserCheck },
   { name: 'Investor Letters', href: '/investors', desc: 'Shareholder updates & reports', icon: Mail },
@@ -130,7 +128,7 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-80 p-2 bg-white border-gray-100 shadow-xl rounded-md animate-in fade-in zoom-in-95">
               <div className="p-3 mb-2 bg-gray-50/50 rounded-sm">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Corporate Nexus</p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Corporate Baalvion Operating System (BOS)</p>
               </div>
               <div className="grid grid-cols-1 gap-1">
                 {aboutItems.map((item) => (
@@ -182,7 +180,7 @@ export function Navbar() {
           </div>
 
           <Button asChild className="h-10 px-6 btn-primary rounded-sm font-bold">
-            <Link href="/contact">Initiate Nexus</Link>
+            <Link href="/contact">Initiate Baalvion Operating System (BOS) Link</Link>
           </Button>
         </div>
 
@@ -320,7 +318,7 @@ export function Navbar() {
         <div className="p-6 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] relative z-[95]">
           <Button asChild className="w-full h-16 btn-primary rounded-xl text-lg font-bold shadow-xl shadow-primary/20 group">
             <Link href="/contact" className="flex items-center justify-center gap-3">
-              Initiate Nexus Link
+              Initiate Baalvion Operating System (BOS) Link
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>

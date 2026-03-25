@@ -20,7 +20,7 @@ export default function LoginPage() {
     if (password === SECURE_KEY) {
       localStorage.setItem('admin_token', password);
       router.push('/admin');
-      toast({ title: "Access Granted", description: "Welcome to Baalvion Nexus Control." });
+      toast({ title: "Access Granted", description: "Welcome to Baalvion Operating System (BOS) Control." });
     } else {
       toast({ 
         title: "Access Denied", 
@@ -38,7 +38,7 @@ export default function LoginPage() {
             <Globe className="text-white w-8 h-8" />
           </div>
           <div className="space-y-1">
-            <CardTitle className="text-3xl font-bold text-gray-900 tracking-tight">Nexus Admin</CardTitle>
+            <CardTitle className="text-3xl font-bold text-gray-900 tracking-tight">Baalvion Operating System (BOS) Admin</CardTitle>
             <CardDescription className="text-gray-500 font-medium uppercase tracking-widest text-[10px]">Strategic Control Terminal</CardDescription>
           </div>
         </CardHeader>

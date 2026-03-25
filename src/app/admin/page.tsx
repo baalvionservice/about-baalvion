@@ -75,7 +75,7 @@ export default function AdminDashboard() {
       {/* Header & Quick Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Nexus Control Center</h2>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Baalvion Operating System (BOS) Control Center</h2>
           <p className="text-sm text-gray-500">Strategic overview of the Baalvion infrastructure layer.</p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
                   <TrendingUp className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Nexus Performance</p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Baalvion Operating System (BOS) Performance</p>
                   <p className="text-xs text-emerald-600 font-bold uppercase">99.9% Operational</p>
                 </div>
               </div>

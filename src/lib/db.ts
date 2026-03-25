@@ -225,7 +225,7 @@ let operationalUpdates: OperationalUpdate[] = [
     date: '2024-03-20',
     category: 'Banking',
     title: 'SBI Corporate Account Integration',
-    description: 'Successfully integrated the State Bank of India corporate API for real-time automated clearing across the Indian nexus node.',
+    description: 'Successfully integrated the State Bank of India corporate API for real-time automated clearing across the Indian Baalvion Operating System (BOS) node.',
     responsiblePerson: 'Finance Team / Dev Ops',
     reference: 'https://sbi.co.in/corporate',
     status: 'Completed',

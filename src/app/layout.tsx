@@ -10,11 +10,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Baalvion Nexus | Global Trade Infrastructure',
+    default: 'Baalvion Operating System (BOS) | Global Trade Infrastructure',
     template: '%s | Baalvion Industries'
   },
-  description: 'Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single nexus.',
-  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'nexus'],
+  description: 'Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single Baalvion Operating System (BOS).',
+  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'Baalvion Operating System (BOS)'],
   authors: [{ name: 'Baalvion Industries' }],
   metadataBase: new URL('https://baalvion.nexus'),
   alternates: {
@@ -24,21 +24,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://baalvion.nexus',
-    siteName: 'Baalvion Nexus',
-    title: 'Baalvion Nexus | Unified Global Trade',
+    siteName: 'Baalvion Operating System (BOS)',
+    title: 'Baalvion Operating System (BOS) | Unified Global Trade',
     description: 'The foundational layer for the next century of international commerce.',
     images: [
       {
         url: 'https://picsum.photos/seed/baalvion-og/1200/630',
         width: 1200,
         height: 630,
-        alt: 'Baalvion Nexus Global Infrastructure',
+        alt: 'Baalvion Operating System (BOS) Global Infrastructure',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Baalvion Nexus | Unified Global Trade',
+    title: 'Baalvion Operating System (BOS) | Unified Global Trade',
     description: 'The foundational layer for the next century of international commerce.',
     images: ['https://picsum.photos/seed/baalvion-og/1200/630'],
   },

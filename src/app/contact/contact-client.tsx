@@ -32,14 +32,14 @@ export default function ContactClient() {
       if (!res.ok) throw new Error('Network response was not ok');
 
       toast({ 
-        title: "Nexus Link Established", 
+        title: "Baalvion Operating System (BOS) Link Established", 
         description: "Your strategic inquiry has been registered in the secure buffer." 
       });
       (e.target as HTMLFormElement).reset();
     } catch (err) {
       toast({ 
         title: "Link Error", 
-        description: "Could not establish nexus link. Please check your network protocol.", 
+        description: "Could not establish Baalvion Operating System (BOS) link. Please check your network protocol.", 
         variant: "destructive" 
       });
     } finally {
@@ -57,7 +57,7 @@ export default function ContactClient() {
             <div className="space-y-16 animate-fade-in">
               <div className="space-y-6">
                 <span className="section-label">Strategic Communications</span>
-                <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tighter leading-tight">Establish <br/><span className="gradient-text">Nexus Link</span></h1>
+                <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tighter leading-tight">Establish <br/><span className="gradient-text">Baalvion Operating System (BOS) Link</span></h1>
                 <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
                   Initiate a strategic partnership or project briefing. Our global trade specialists are ready to architect your integration.
                 </p>
@@ -92,7 +92,7 @@ export default function ContactClient() {
                     <h4 className="text-white font-bold uppercase tracking-widest text-[10px]">Response Protocol</h4>
                   </div>
                   <p className="text-lg text-muted-foreground leading-relaxed italic font-light">
-                    "Our strategic response team typically reviews all inbound nexus links within 4-6 operational hours. Global trade never sleeps."
+                    "Our strategic response team typically reviews all inbound Baalvion Operating System (BOS) links within 4-6 operational hours. Global trade never sleeps."
                   </p>
                 </div>
               </div>
@@ -128,7 +128,7 @@ export default function ContactClient() {
                     </span>
                   ) : (
                     <span className="flex items-center gap-3">
-                      Establish Nexus Link <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      Establish Baalvion Operating System (BOS) Link <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </span>
                   )}
                 </Button>

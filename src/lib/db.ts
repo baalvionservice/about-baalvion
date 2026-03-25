@@ -55,7 +55,7 @@ export interface Inquiry {
   email: string;
   message: string;
   createdAt: string;
-  status: 'New' | 'Read' | 'Archived';
+  status: 'New' | 'In Progress' | 'Resolved' | 'Archived';
 }
 
 export interface Article {
@@ -91,6 +91,15 @@ export interface OperationalUpdate {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface AuditLog {
+  id: string;
+  userId: string;
+  action: string;
+  module: string;
+  timestamp: string;
+  details: string;
 }
 
 export const projectCategories: ProjectCategory[] = [
@@ -191,66 +200,6 @@ let articles: Article[] = [
 Recent expansions in the Middle East trade corridors have demonstrated a 40% reduction in clearing latency for mid-market partners. Additionally, our satellite production facility has reached a new milestone, with production capacity now at 30 units per week. 
 
 In the UK, the AI compliance scoring system has officially launched, providing real-time risk assessment for cross-border transactions.`
-  },
-  {
-    id: 'art-2',
-    title: 'Baalvion expands logistics network into South East Asia',
-    slug: 'expansion-sea',
-    category: 'updates',
-    date: 'March 22, 2026',
-    image: 'https://picsum.photos/seed/sea/600/400',
-    author: 'Strategy Team',
-    readTime: '4 min read',
-    status: 'Published',
-    content: 'Strategic deployment of the Baalvion Operating System (BOS) in Singapore and Vietnam marks a significant milestone in our Asian expansion strategy.'
-  },
-  {
-    id: 'art-3',
-    title: 'New partnership protocol established with global banking nodes',
-    slug: 'banking-partnership',
-    category: 'updates',
-    date: 'March 20, 2026',
-    image: 'https://picsum.photos/seed/bank/600/400',
-    author: 'Finance Desk',
-    readTime: '3 min read',
-    status: 'Published',
-    content: 'Baalvion has finalized integration protocols with five tier-one global banks to automate the settlement layer of the Baalvion Operating System (BOS).'
-  },
-  {
-    id: 'art-4',
-    title: 'Baalvion Operating System (BOS) Core v2.4 deployment details',
-    slug: 'core-v24',
-    category: 'updates',
-    date: 'March 18, 2026',
-    image: 'https://picsum.photos/seed/tech/600/400',
-    author: 'Engineering',
-    readTime: '5 min read',
-    status: 'Published',
-    content: 'The v2.4 upgrade introduces enhanced encryption layers and optimized node-to-node communication protocols.'
-  },
-  {
-    id: 'art-5',
-    title: 'Impact of AI on real-time trade compliance scoring',
-    slug: 'ai-compliance',
-    category: 'insights',
-    date: 'March 23, 2026',
-    image: 'https://picsum.photos/seed/ai/600/400',
-    author: 'Intelligence Lab',
-    readTime: '6 min read',
-    status: 'Published',
-    content: 'Our latest research highlights how AI models are revolutionizing the way global trade compliance is verified in the Baalvion Operating System (BOS).'
-  },
-  {
-    id: 'art-6',
-    title: 'The future of decentralized trade finance in 2026',
-    slug: 'future-trade-finance',
-    category: 'insights',
-    date: 'March 21, 2026',
-    image: 'https://picsum.photos/seed/finance/600/400',
-    author: 'Analyst Group',
-    readTime: '8 min read',
-    status: 'Published',
-    content: 'Decentralized protocols are becoming the backbone of high-velocity trade settlements across international markets.'
   }
 ];
 
@@ -336,38 +285,6 @@ let operationalUpdates: OperationalUpdate[] = [
     tags: ['banking', 'india', 'automation'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'u-2',
-    updateId: 'U002',
-    date: '2024-03-22',
-    category: 'Payment Gateway',
-    title: 'PayU Enterprise Gateway Deployment',
-    description: 'Live deployment of PayU gateway to facilitate multi-currency trade settlements for South Asian partners.',
-    responsiblePerson: 'Payments Engineering',
-    reference: 'https://payu.in',
-    status: 'Completed',
-    impactLevel: 'High',
-    followUpActions: 'Reconcile weekly settlement buffers.',
-    tags: ['payments', 'gateway', 'fintech'],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'u-3',
-    updateId: 'U003',
-    date: '2024-03-24',
-    category: 'Partner',
-    title: 'New Strategic Vendor Onboarded',
-    description: 'Onboarding of a major logistics partner to expand the European trade corridor. Requires final scoring and verification.',
-    responsiblePerson: 'Partnership Strategy',
-    reference: 'https://docs.baalvion.nexus/partners/v-092',
-    status: 'Pending',
-    impactLevel: 'Medium',
-    followUpActions: 'Complete compliance scoring and verification protocol.',
-    tags: ['partner', 'logistics', 'europe'],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -446,7 +363,8 @@ export const db = {
     },
     updateStatus: (id: string, status: Inquiry['status']) => {
       inquiries = inquiries.map(item => item.id === id ? { ...item, status } : item);
-    }
+    },
+    delete: (id: string) => { inquiries = inquiries.filter(i => i.id !== id); }
   },
   operationalUpdates: {
     getAll: () => operationalUpdates,

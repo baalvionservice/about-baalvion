@@ -1,10 +1,11 @@
+
 "use client"
 
 import { useEffect, useState } from "react";
 import { Inquiry } from "@/lib/db";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Mail, CheckCircle, Clock, Trash2, User, Send } from "lucide-react";
+import { Loader2, Mail, CheckCircle, Clock, Trash2, User, Send, ListTodo, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,21 @@ export default function AdminInquiries() {
     }
   };
 
+  const deleteInquiry = async (id: string) => {
+    if (!confirm('Dismantle this inquiry record? Permanent action.')) return;
+    try {
+      const res = await fetch(`/api/inquiry?id=${id}`, { 
+        method: 'DELETE',
+        headers: getAdminHeaders()
+      });
+      if (!res.ok) throw new Error('Unauthorized');
+      setInquiries(inquiries.filter(i => i.id !== id));
+      toast({ title: "Link Purged", description: "Record removed from strategic buffer." });
+    } catch (err) {
+      toast({ title: "Error", description: "Purge protocol denied.", variant: "destructive" });
+    }
+  };
+
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
@@ -55,8 +71,8 @@ export default function AdminInquiries() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Strategic Intelligence</h2>
-          <p className="text-sm text-gray-500">Review and manage inbound nexus link inquiries.</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Strategic Intelligence Management</h2>
+          <p className="text-sm text-gray-500">Review and orchestrate response protocols for inbound link inquiries.</p>
         </div>
       </div>
 
@@ -87,7 +103,10 @@ export default function AdminInquiries() {
                   <div className="flex flex-col items-end gap-2">
                     <Badge variant={inquiry.status === 'New' ? 'default' : 'secondary'} className={cn(
                       "px-3 py-1 text-[9px] uppercase tracking-widest font-bold",
-                      inquiry.status === 'New' ? "bg-primary text-white" : "bg-gray-100 text-gray-500"
+                      inquiry.status === 'New' ? "bg-primary text-white" : 
+                      inquiry.status === 'In Progress' ? "bg-amber-500 text-white" :
+                      inquiry.status === 'Resolved' ? "bg-emerald-500 text-white" :
+                      "bg-gray-100 text-gray-500"
                     )}>
                       {inquiry.status}
                     </Badge>
@@ -103,10 +122,15 @@ export default function AdminInquiries() {
                   </p>
                 </div>
               </div>
-              <div className="bg-gray-50 p-6 flex md:flex-col justify-center gap-3 border-t md:border-t-0 md:border-l border-gray-100 min-w-[200px]">
+              <div className="bg-gray-50 p-6 flex md:flex-col justify-center gap-3 border-t md:border-t-0 md:border-l border-gray-100 min-w-[220px]">
                 {inquiry.status === 'New' && (
-                  <Button size="sm" onClick={() => updateStatus(inquiry.id, 'Read')} className="btn-primary w-full h-10 font-bold rounded-lg">
-                    <CheckCircle className="w-4 h-4 mr-2" /> Mark Read
+                  <Button size="sm" onClick={() => updateStatus(inquiry.id, 'In Progress')} className="w-full h-10 font-bold rounded-lg border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100">
+                    <ListTodo className="w-4 h-4 mr-2" /> Start Protocol
+                  </Button>
+                )}
+                {inquiry.status === 'In Progress' && (
+                  <Button size="sm" onClick={() => updateStatus(inquiry.id, 'Resolved')} className="w-full h-10 font-bold rounded-lg border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100">
+                    <CheckCircle2 className="w-4 h-4 mr-2" /> Resolve Link
                   </Button>
                 )}
                 {inquiry.status !== 'Archived' && (
@@ -114,8 +138,8 @@ export default function AdminInquiries() {
                     Archive Link
                   </Button>
                 )}
-                <Button size="sm" variant="ghost" className="w-full h-10 text-red-500 hover:bg-red-50 font-bold rounded-lg">
-                  <Trash2 className="w-4 h-4 mr-2" /> Delete
+                <Button size="sm" variant="ghost" onClick={() => deleteInquiry(inquiry.id)} className="w-full h-10 text-red-500 hover:bg-red-50 font-bold rounded-lg">
+                  <Trash2 className="w-4 h-4 mr-2" /> Purge
                 </Button>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
@@ -22,5 +23,13 @@ export async function PATCH(req: Request) {
   if (!isAuthorized(req)) return NextResponse.json({ error: 'Access denied' }, { status: 403 });
   const data = await req.json();
   db.inquiries.updateStatus(data.id, data.status);
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(req: Request) {
+  if (!isAuthorized(req)) return NextResponse.json({ error: 'Access denied' }, { status: 403 });
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
+  if (id) db.inquiries.delete(id);
   return NextResponse.json({ success: true });
 }

@@ -2,15 +2,23 @@
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Share2, Globe, ArrowRight, ChevronRight, ChevronLeft, Loader2 } from 'lucide-react';
+import { Share2, Globe, ArrowRight, ChevronRight, ChevronLeft, Loader2, Link2, Twitter, Facebook, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Article } from '@/lib/db';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useToast } from '@/hooks/use-toast';
 
 export default function TodayNewsPage() {
   const [moreNews, setMoreNews] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetch('/api/news?category=updates')
@@ -21,6 +29,16 @@ export default function TodayNewsPage() {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  const handleCopyLink = () => {
+    if (typeof window !== 'undefined') {
+      navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Strategic Link Copied",
+        description: "The article destination has been stored in your clipboard buffer.",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -37,11 +55,38 @@ export default function TodayNewsPage() {
             </p>
           </div>
 
-          {/* Share Button */}
+          {/* Share Button with Dropdown */}
           <div className="flex justify-end mb-8">
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-sm hover:bg-gray-50 transition-colors text-xs font-bold text-gray-700">
-              <Share2 className="w-3 h-3 text-[#FF9900]" /> Share
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-sm hover:bg-gray-50 transition-colors text-xs font-bold text-gray-700 outline-none">
+                  <Share2 className="w-3 h-3 text-[#FF9900]" /> Share
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 bg-white border-gray-100 shadow-2xl rounded-md p-1 animate-in fade-in zoom-in-95">
+                <DropdownMenuItem onClick={handleCopyLink} className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-50 transition-colors rounded-sm">
+                  <Link2 className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm font-bold text-gray-700">Copy Link</span>
+                </DropdownMenuItem>
+                <div className="h-px bg-gray-50 my-1" />
+                <DropdownMenuItem className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-50 transition-colors rounded-sm">
+                  <Twitter className="w-4 h-4 text-[#1DA1F2]" />
+                  <span className="text-sm font-bold text-gray-700">Twitter / X</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-50 transition-colors rounded-sm">
+                  <Facebook className="w-4 h-4 text-[#4267B2]" />
+                  <span className="text-sm font-bold text-gray-700">Facebook</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-50 transition-colors rounded-sm">
+                  <Linkedin className="w-4 h-4 text-[#0077B5]" />
+                  <span className="text-sm font-bold text-gray-700">LinkedIn</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-50 transition-colors rounded-sm">
+                  <Mail className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm font-bold text-gray-700">Email Article</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Author & Timestamp Section */}
@@ -70,7 +115,7 @@ export default function TodayNewsPage() {
                 Baalvion Trade Corridors expanded in Middle East
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                We are working closely with local authorities and prioritizing the safety of our personnel throughout our recovery efforts. We continue to support affected customers, helping them to migrate to alternate Baalvion Nexus Nodes, with a large number already successfully operating their applications from other parts of the world.
+                We are working closely with local authorities and prioritizing the safety of our personnel throughout our recovery efforts. We continue to support affected customers, helping them to migrate to alternate Baalvion Operating System (BOS) Nodes, with a large number already successfully operating their applications from other parts of the world.
               </p>
             </div>
 
@@ -80,7 +125,7 @@ export default function TodayNewsPage() {
                 Baalvion satellite production to accelerate launch cadence
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Baalvion is accelerating satellite deployment with over 200 Nexus satellites now operational. The company has completed 11 launches in year one and plans to more than double its pace to 20+ missions in year two. Production capacity reaches 30 satellites weekly at the strategic facility, with hundreds flight-ready and six payloads stacked in Singapore totaling 200+ satellites.
+                Baalvion is accelerating satellite deployment with over 200 Baalvion Operating System (BOS) satellites now operational. The company has completed 11 launches in year one and plans to more than double its pace to 20+ missions in year two. Production capacity reaches 30 satellites weekly at the strategic facility, with hundreds flight-ready and six payloads stacked in Singapore totaling 200+ satellites.
               </p>
             </div>
 
@@ -136,7 +181,7 @@ export default function TodayNewsPage() {
               {[
                 "Baalvion's new automated customs clearance node goes live in Singapore",
                 "How AI is transforming trade finance for mid-market exporters",
-                "Everything you need to know about the Baalvion Nexus Core upgrade",
+                "Everything you need to know about the Baalvion Operating System (BOS) Core upgrade",
                 "Baalvion establishes new strategic trade corridor with Brazil",
                 "Baalvion increases investment in green energy for industrial logistics"
               ].map((story, i) => (

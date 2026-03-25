@@ -95,7 +95,7 @@ export default function EcosystemAdmin() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
-      <p className="text-muted-foreground text-sm font-medium">Syncing Ecosystem Registry...</p>
+      <p className="text-gray-500 text-sm font-medium">Syncing Ecosystem Registry...</p>
     </div>
   );
 
@@ -103,8 +103,8 @@ export default function EcosystemAdmin() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Ecosystem Registry</h2>
-          <p className="text-sm text-muted-foreground">Manage operational layers and infrastructure nodes.</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Ecosystem Registry</h2>
+          <p className="text-sm text-gray-500">Manage operational layers and infrastructure nodes.</p>
         </div>
         <Button onClick={() => setEditing({ layer: 'Infrastructure', name: '', description: '', domain: '' })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> Add Registry Item
@@ -113,63 +113,63 @@ export default function EcosystemAdmin() {
 
       <div className="flex items-center gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input 
             placeholder="Search registry nodes..." 
-            className="pl-12 h-12 bg-white/5 border-white/10"
+            className="pl-12 h-12 bg-white border-gray-200 shadow-sm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           {searchQuery && (
             <button onClick={() => setSearchQuery("")} className="absolute right-4 top-1/2 -translate-y-1/2">
-              <X className="w-4 h-4 text-muted-foreground hover:text-white" />
+              <X className="w-4 h-4 text-gray-400 hover:text-gray-900" />
             </button>
           )}
         </div>
       </div>
 
-      <Card className="glass-card border-white/5 p-0 overflow-hidden">
+      <Card className="bg-white border-gray-200 p-0 overflow-hidden shadow-sm">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5 hover:bg-transparent">
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-8">Layer Protocol</TableHead>
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Item Designation</TableHead>
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Nexus Domain</TableHead>
-              <TableHead className="text-right pr-8 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Actions</TableHead>
+          <TableHeader className="bg-gray-50">
+            <TableRow className="border-gray-200">
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-8">Layer Protocol</TableHead>
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Item Designation</TableHead>
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Nexus Domain</TableHead>
+              <TableHead className="text-right pr-8 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredItems.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="py-24 text-center">
-                  <div className="flex flex-col items-center gap-2 opacity-20">
-                    <Database className="w-10 h-10 text-muted-foreground" />
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">No matching nodes found</p>
+                  <div className="flex flex-col items-center gap-2 opacity-10">
+                    <Database className="w-10 h-10 text-gray-900" />
+                    <p className="text-xs font-bold text-gray-900 uppercase tracking-widest">No matching nodes found</p>
                   </div>
                 </TableCell>
               </TableRow>
             ) : filteredItems.map(item => (
-              <TableRow key={item.id} className="border-white/5 hover:bg-white/5 transition-colors group">
+              <TableRow key={item.id} className="border-gray-100 hover:bg-gray-50 transition-colors group">
                 <TableCell className="pl-8">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
                       <Layers className="w-4 h-4" />
                     </div>
-                    <span className="font-bold text-white text-xs uppercase tracking-wider">{item.layer}</span>
+                    <span className="font-bold text-gray-900 text-xs uppercase tracking-wider">{item.layer}</span>
                   </div>
                 </TableCell>
-                <TableCell className="font-medium text-white text-sm">{item.name}</TableCell>
+                <TableCell className="font-medium text-gray-900 text-sm">{item.name}</TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground group-hover:text-accent transition-colors">
+                  <div className="flex items-center gap-2 text-xs font-mono text-gray-500 group-hover:text-primary transition-colors">
                     <Globe className="w-3.5 h-3.5" />
                     {item.domain || 'internal.nexus'}
                   </div>
                 </TableCell>
                 <TableCell className="text-right pr-8 space-x-1">
-                  <Button variant="ghost" size="icon" onClick={() => setEditing(item)} className="w-9 h-9 hover:bg-white/10 rounded-lg">
-                    <Pencil className="w-4 h-4 text-muted-foreground" />
+                  <Button variant="ghost" size="icon" onClick={() => setEditing(item)} className="w-9 h-9 hover:bg-gray-100 rounded-lg">
+                    <Pencil className="w-4 h-4 text-gray-400" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)} className="w-9 h-9 hover:bg-destructive/10 text-destructive rounded-lg">
+                  <Button variant="ghost" size="icon" onClick={() => handleDelete(item.id)} className="w-9 h-9 hover:bg-red-50 text-red-500 rounded-lg">
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </TableCell>
@@ -180,9 +180,9 @@ export default function EcosystemAdmin() {
       </Card>
 
       <Dialog open={!!editing} onOpenChange={() => setEditing(null)}>
-        <DialogContent className="glass-card border-white/10 p-0 max-w-lg overflow-hidden">
-          <DialogHeader className="p-8 border-b border-white/5">
-            <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
+        <DialogContent className="bg-white border-gray-200 p-0 max-w-lg overflow-hidden shadow-2xl">
+          <DialogHeader className="p-8 border-b border-gray-50 bg-gray-50/50">
+            <DialogTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
               <Database className="w-5 h-5 text-primary" />
               {editing?.id ? 'Edit Registry Node' : 'New Ecosystem Node'}
             </DialogTitle>
@@ -190,9 +190,9 @@ export default function EcosystemAdmin() {
           <form onSubmit={handleSave} className="p-8 space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Layer Protocol *</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Layer Protocol *</label>
                 <Select value={editing?.layer} onValueChange={(val) => setEditing({ ...editing!, layer: val as any })}>
-                  <SelectTrigger className="bg-white/5 border-white/10 h-12">
+                  <SelectTrigger className="bg-gray-50 border-gray-200 h-12">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -201,34 +201,34 @@ export default function EcosystemAdmin() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Item Designation *</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Item Designation *</label>
                 <Input 
                   required
                   value={editing?.name || ''} 
                   onChange={(e) => setEditing({ ...editing!, name: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12"
+                  className="bg-gray-50 border-gray-200 h-12"
                   placeholder="e.g. Nexus Settlement"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Operational Brief *</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Operational Brief *</label>
               <Textarea 
                 required
                 value={editing?.description || ''} 
                 onChange={(e) => setEditing({ ...editing!, description: e.target.value })} 
-                className="bg-white/5 border-white/10 min-h-[120px] py-4 resize-none"
+                className="bg-gray-50 border-gray-200 min-h-[120px] py-4 resize-none"
                 placeholder="Core functionality and purpose in the nexus..."
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Primary Domain</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Primary Domain</label>
               <div className="relative">
-                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input 
                   value={editing?.domain || ''} 
                   onChange={(e) => setEditing({ ...editing!, domain: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12 pl-12"
+                  className="bg-gray-50 border-gray-200 h-12 pl-12"
                   placeholder="node.baalvion.nexus"
                 />
               </div>

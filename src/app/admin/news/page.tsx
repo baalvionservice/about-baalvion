@@ -98,7 +98,7 @@ export default function AdminNews() {
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <Loader2 className="animate-spin text-primary w-10 h-10" />
-      <p className="text-muted-foreground text-sm font-medium">Syncing Intelligence Buffer...</p>
+      <p className="text-gray-500 text-sm font-medium">Syncing Intelligence Buffer...</p>
     </div>
   );
 
@@ -106,8 +106,8 @@ export default function AdminNews() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Intelligence Nexus</h2>
-          <p className="text-sm text-muted-foreground">Manage strategic communications and global trade news.</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Intelligence Nexus</h2>
+          <p className="text-sm text-gray-500">Manage strategic communications and global trade news.</p>
         </div>
         <Button onClick={() => setEditing({ title: '', slug: '', category: 'updates', author: 'Baalvion Staff', readTime: '2 min read', status: 'Published', date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Strategic Brief
@@ -115,43 +115,43 @@ export default function AdminNews() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <Input 
           placeholder="Search brief archives..." 
-          className="pl-12 h-12 bg-white/5 border-white/10"
+          className="pl-12 h-12 bg-white border-gray-200"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      <Card className="glass-card border-white/5 overflow-hidden">
+      <Card className="bg-white border-gray-200 overflow-hidden shadow-sm">
         <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/5">
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest pl-8">Article Designation</TableHead>
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Category Protocol</TableHead>
-              <TableHead className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Author</TableHead>
-              <TableHead className="text-right pr-8 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Actions</TableHead>
+          <TableHeader className="bg-gray-50">
+            <TableRow className="border-gray-200">
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-8">Article Designation</TableHead>
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Category Protocol</TableHead>
+              <TableHead className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Author</TableHead>
+              <TableHead className="text-right pr-8 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filtered.map(article => (
-              <TableRow key={article.id} className="border-white/5 hover:bg-white/5 transition-colors group">
+              <TableRow key={article.id} className="border-gray-100 hover:bg-gray-50 transition-colors group">
                 <TableCell className="pl-8">
                   <div className="flex items-center gap-3">
                     <Newspaper className="w-4 h-4 text-primary" />
-                    <span className="font-bold text-white text-sm">{article.title}</span>
+                    <span className="font-bold text-gray-900 text-sm">{article.title}</span>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-[10px] font-bold text-accent uppercase tracking-widest">{article.category}</span>
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">{article.category}</span>
                 </TableCell>
-                <TableCell className="text-sm text-muted-foreground">{article.author}</TableCell>
+                <TableCell className="text-sm text-gray-600">{article.author}</TableCell>
                 <TableCell className="text-right pr-8 space-x-1">
-                  <Button variant="ghost" size="icon" onClick={() => setEditing(article)} className="w-9 h-9 hover:bg-white/10 rounded-lg">
-                    <Pencil className="w-4 h-4 text-muted-foreground" />
+                  <Button variant="ghost" size="icon" onClick={() => setEditing(article)} className="w-9 h-9 hover:bg-gray-100 rounded-lg">
+                    <Pencil className="w-4 h-4 text-gray-400" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => handleDelete(article.id)} className="w-9 h-9 hover:bg-destructive/10 text-destructive rounded-lg">
+                  <Button variant="ghost" size="icon" onClick={() => handleDelete(article.id)} className="w-9 h-9 hover:bg-red-50 text-red-500 rounded-lg">
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </TableCell>
@@ -162,37 +162,37 @@ export default function AdminNews() {
       </Card>
 
       <Dialog open={!!editing} onOpenChange={() => setEditing(null)}>
-        <DialogContent className="glass-card border-white/10 max-w-2xl p-0 overflow-hidden">
-          <DialogHeader className="p-8 border-b border-white/5">
-            <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
+        <DialogContent className="bg-white border-gray-200 max-w-2xl p-0 overflow-hidden shadow-2xl">
+          <DialogHeader className="p-8 border-b border-gray-50 bg-gray-50/50">
+            <DialogTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
               <FileText className="w-5 h-5 text-primary" />
               {editing?.id ? 'Modify Strategic Brief' : 'Deploy New Brief'}
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSave} className="p-8 space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Headline Protocol *</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Headline Protocol *</label>
               <Input 
                 required
                 value={editing?.title || ''} 
                 onChange={(e) => setEditing({ ...editing!, title: e.target.value })} 
-                className="bg-white/5 border-white/10 h-12"
+                className="bg-gray-50 border-gray-200 h-12"
               />
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">URL Slug *</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">URL Slug *</label>
                 <Input 
                   required
                   value={editing?.slug || ''} 
                   onChange={(e) => setEditing({ ...editing!, slug: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12"
+                  className="bg-gray-50 border-gray-200 h-12"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Nexus Category *</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nexus Category *</label>
                 <Select value={editing?.category} onValueChange={(val) => setEditing({ ...editing!, category: val })}>
-                  <SelectTrigger className="bg-white/5 border-white/10 h-12">
+                  <SelectTrigger className="bg-gray-50 border-gray-200 h-12">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -203,19 +203,19 @@ export default function AdminNews() {
             </div>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Strategic Author</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Strategic Author</label>
                 <Input 
                   value={editing?.author || ''} 
                   onChange={(e) => setEditing({ ...editing!, author: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12"
+                  className="bg-gray-50 border-gray-200 h-12"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Read Duration</label>
+                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Read Duration</label>
                 <Input 
                   value={editing?.readTime || ''} 
                   onChange={(e) => setEditing({ ...editing!, readTime: e.target.value })} 
-                  className="bg-white/5 border-white/10 h-12"
+                  className="bg-gray-50 border-gray-200 h-12"
                 />
               </div>
             </div>

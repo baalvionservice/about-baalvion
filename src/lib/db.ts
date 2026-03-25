@@ -67,6 +67,7 @@ export interface Article {
   image: string;
   author: string;
   readTime: string;
+  content?: string;
   status: 'Published' | 'Draft';
   isTrending?: boolean;
 }
@@ -184,7 +185,12 @@ let articles: Article[] = [
     author: 'Baalvion Staff',
     readTime: '2 min read',
     status: 'Published',
-    isTrending: true
+    isTrending: true,
+    content: `Baalvion is accelerating the deployment of the Baalvion Operating System (BOS) across multiple global nodes. 
+
+Recent expansions in the Middle East trade corridors have demonstrated a 40% reduction in clearing latency for mid-market partners. Additionally, our satellite production facility has reached a new milestone, with production capacity now at 30 units per week. 
+
+In the UK, the AI compliance scoring system has officially launched, providing real-time risk assessment for cross-border transactions.`
   },
   {
     id: 'art-2',
@@ -195,7 +201,8 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/sea/600/400',
     author: 'Strategy Team',
     readTime: '4 min read',
-    status: 'Published'
+    status: 'Published',
+    content: 'Strategic deployment of the Baalvion Operating System (BOS) in Singapore and Vietnam marks a significant milestone in our Asian expansion strategy.'
   },
   {
     id: 'art-3',
@@ -206,7 +213,8 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/bank/600/400',
     author: 'Finance Desk',
     readTime: '3 min read',
-    status: 'Published'
+    status: 'Published',
+    content: 'Baalvion has finalized integration protocols with five tier-one global banks to automate the settlement layer of the Baalvion Operating System (BOS).'
   },
   {
     id: 'art-4',
@@ -217,7 +225,8 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/tech/600/400',
     author: 'Engineering',
     readTime: '5 min read',
-    status: 'Published'
+    status: 'Published',
+    content: 'The v2.4 upgrade introduces enhanced encryption layers and optimized node-to-node communication protocols.'
   },
   {
     id: 'art-5',
@@ -228,7 +237,8 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/ai/600/400',
     author: 'Intelligence Lab',
     readTime: '6 min read',
-    status: 'Published'
+    status: 'Published',
+    content: 'Our latest research highlights how AI models are revolutionizing the way global trade compliance is verified in the Baalvion Operating System (BOS).'
   },
   {
     id: 'art-6',
@@ -239,7 +249,8 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/finance/600/400',
     author: 'Analyst Group',
     readTime: '8 min read',
-    status: 'Published'
+    status: 'Published',
+    content: 'Decentralized protocols are becoming the backbone of high-velocity trade settlements across international markets.'
   }
 ];
 
@@ -258,6 +269,42 @@ let sections: Section[] = [
         { label: "Active Partners", value: "125+" },
         { label: "Transactions", value: "500K+" }
       ]
+    }
+  },
+  {
+    id: 'sec-problem-home',
+    type: 'problem',
+    title: 'The Terminal Fragmentation of Trade',
+    description: 'Legacy commerce systems are siloed, inefficient, and slow. Global trade requires a unified execution layer.',
+    data: {
+      points: [
+        { title: 'Siloed Data', desc: 'Information is locked in disparate systems across jurisdictions.' },
+        { title: 'Clearing Latency', desc: 'Manual compliance and banking checks slow down value movement.' },
+        { title: 'Scaling Friction', desc: 'Businesses struggle to integrate across modular market layers.' }
+      ]
+    }
+  },
+  {
+    id: 'sec-solution-home',
+    type: 'solution',
+    title: 'A Unified Protocol for Global Value',
+    description: 'The Baalvion Operating System (BOS) orchestrates every node of international commerce into one transparent ledger.',
+    data: {
+      features: [
+        { title: 'Real-Time Clearing', desc: 'Automated settlement protocols for cross-border finance.' },
+        { title: 'AI Scoring', desc: 'Intelligent compliance mapping for 180+ countries.' },
+        { title: 'Node Scalability', desc: 'Modular architecture allowing seamless partner integration.' }
+      ]
+    }
+  },
+  {
+    id: 'sec-cta-home',
+    type: 'cta-final',
+    title: 'Join the Future of Infrastructure',
+    description: 'Connect your business to the most advanced trade operating system in the world.',
+    data: {
+      ctaPrimary: 'Get Started',
+      ctaSecondary: 'Contact Strategy Team'
     }
   }
 ];

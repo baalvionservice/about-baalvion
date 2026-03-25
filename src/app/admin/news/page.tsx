@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState, useMemo } from "react";
@@ -5,6 +6,7 @@ import { Article } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -13,7 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 const newsCategories = [
-  { id: 'updates', name: 'Company Updates' },
+  { id: 'updates', name: 'Company News' },
   { id: 'insights', name: 'Global Trade Insights' },
   { id: 'tech', name: 'Technology & AI' },
   { id: 'finance', name: 'Finance & Compliance' },
@@ -67,7 +69,7 @@ export default function AdminNews() {
       setEditing(null);
       fetch('/api/news').then(res => res.json()).then(setArticles);
     } catch (err) {
-      toast({ title: "Auth Failed", description: "Nexus update protocol rejected.", variant: "destructive" });
+      toast({ title: "Auth Failed", description: "Baalvion Operating System (BOS) update protocol rejected.", variant: "destructive" });
     } finally {
       setSaving(false);
     }
@@ -109,7 +111,7 @@ export default function AdminNews() {
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Intelligence Nexus</h2>
           <p className="text-sm text-gray-500">Manage strategic communications and global trade news.</p>
         </div>
-        <Button onClick={() => setEditing({ title: '', slug: '', category: 'updates', author: 'Baalvion Staff', readTime: '2 min read', status: 'Published', date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) })} className="btn-primary rounded-xl h-12 px-6">
+        <Button onClick={() => setEditing({ title: '', slug: '', category: 'updates', author: 'Baalvion Staff', readTime: '2 min read', status: 'Published', content: '', date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) })} className="btn-primary rounded-xl h-12 px-6">
           <Plus className="w-4 h-4 mr-2" /> New Strategic Brief
         </Button>
       </div>
@@ -169,7 +171,7 @@ export default function AdminNews() {
               {editing?.id ? 'Modify Strategic Brief' : 'Deploy New Brief'}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSave} className="p-8 space-y-6">
+          <form onSubmit={handleSave} className="p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Headline Protocol *</label>
               <Input 
@@ -218,6 +220,16 @@ export default function AdminNews() {
                   className="bg-gray-50 border-gray-200 h-12"
                 />
               </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Strategic Intelligence Content *</label>
+              <Textarea 
+                required
+                value={editing?.content || ''} 
+                onChange={(e) => setEditing({ ...editing!, content: e.target.value })} 
+                className="bg-gray-50 border-gray-200 min-h-[200px] py-4 resize-none"
+                placeholder="Full briefing content..."
+              />
             </div>
             <DialogFooter className="pt-6">
               <Button type="button" variant="ghost" onClick={() => setEditing(null)} className="h-12 px-6 rounded-xl">Cancel</Button>

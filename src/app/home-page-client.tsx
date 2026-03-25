@@ -11,7 +11,7 @@ import {
   Loader2, Target, ShieldCheck, Activity, BarChart3, 
   Cpu, Zap, Leaf, Mail, Milestone, Users, Star,
   ShieldAlert, Globe2, TrendingUp, Search, Layers,
-  ChevronRight, ExternalLink
+  ChevronRight, ExternalLink, Lock
 } from "lucide-react";
 import Link from "next/link";
 import { Project, EcosystemItem, Page } from "@/lib/db";

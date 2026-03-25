@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Menu, X, Globe, ChevronDown, ChevronRight, Mail, Search,
   Megaphone, BarChart3, BrainCircuit, Scale, Leaf, Users, Globe2, FileText,
-  Target, Sparkles, UserCheck, Activity, Cpu, Layers, Briefcase, ClipboardList, ShieldCheck
+  Target, Sparkles, UserCheck, Activity, Cpu, Layers, Briefcase, ClipboardList, ShieldCheck, Lock
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
@@ -323,6 +323,9 @@ export function Navbar() {
             </Link>
           </Button>
         </div>
+      </div>
+      <div className="hidden">
+        <Lock />
       </div>
     </nav>
   );

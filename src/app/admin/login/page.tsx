@@ -32,23 +32,25 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-background">
-      <Card className="w-full max-w-md glass-card">
-        <CardHeader className="text-center">
-          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Globe className="text-white w-6 h-6" />
+      <Card className="w-full max-w-md glass-card border-gray-100 shadow-xl bg-white">
+        <CardHeader className="text-center space-y-4 pt-10">
+          <div className="w-16 h-16 bg-[#FF9900] rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-[#FF9900]/20">
+            <Globe className="text-white w-8 h-8" />
           </div>
-          <CardTitle className="text-2xl font-bold text-white">Nexus Admin</CardTitle>
-          <CardDescription>Enter secure key to access Baalvion CMS</CardDescription>
+          <div className="space-y-1">
+            <CardTitle className="text-3xl font-bold text-gray-900 tracking-tight">Nexus Admin</CardTitle>
+            <CardDescription className="text-gray-500 font-medium uppercase tracking-widest text-[10px]">Strategic Control Terminal</CardDescription>
+          </div>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleLogin} className="space-y-6">
+        <CardContent className="pb-12 px-10">
+          <form onSubmit={handleLogin} className="space-y-8">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Admin Key</label>
+              <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Secure Authorization Key</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
+                <Lock className="absolute left-4 top-4 w-4 h-4 text-gray-400" />
                 <input 
                   type="password" 
-                  className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 pl-10 text-sm focus:outline-none focus:border-primary transition-colors text-white"
+                  className="flex h-14 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2 pl-12 text-sm focus:outline-none focus:ring-1 focus:ring-[#FF9900] transition-all text-gray-900"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -56,10 +58,12 @@ export default function LoginPage() {
                 />
               </div>
             </div>
-            <Button type="submit" className="w-full btn-primary">Login to Dashboard</Button>
+            <Button type="submit" className="w-full h-14 btn-primary rounded-xl text-lg font-bold">
+              Initiate Access
+            </Button>
           </form>
-          <p className="text-center text-xs text-muted-foreground mt-8">
-            Secured by Baalvion Imperial Governance Systems
+          <p className="text-center text-[9px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-10">
+            Secured by Baalvion Imperial Governance
           </p>
         </CardContent>
       </Card>

@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { Globe, Facebook, Instagram, Linkedin, Youtube, Mail, ChevronUp } from "lucide-react";
+import { Globe, Facebook, Instagram, Linkedin, Youtube, Mail, ChevronUp, Lock } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -81,14 +83,19 @@ export function Footer() {
 
         {/* Social & Bottom Bar */}
         <div className="mt-20 pt-10 border-t border-gray-800 flex flex-col gap-10">
-          <div className="flex gap-8">
-            <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook className="w-5 h-5" /></Link>
-            <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram className="w-5 h-5" /></Link>
-            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-8">
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook className="w-5 h-5" /></Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram className="w-5 h-5" /></Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Youtube className="w-5 h-5" /></Link>
+            </div>
+            <Link href="/admin/login" className="flex items-center gap-2 text-[10px] font-bold text-gray-500 hover:text-[#FF9900] uppercase tracking-widest transition-colors">
+              <Lock className="w-3 h-3" /> Administrative Portal
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></Link>
-            <Link href="#" className="text-gray-400 hover:text-white transition-colors"><Youtube className="w-5 h-5" /></Link>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-[10px] text-gray-500 font-bold uppercase tracking-widest">

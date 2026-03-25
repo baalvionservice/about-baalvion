@@ -64,9 +64,9 @@ export default function HomePageClient() {
   }, []);
 
   if (loading || !homePageData) return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
+    <div className="min-h-screen bg-white flex items-center justify-center" aria-busy="true" aria-live="polite">
       <div className="flex flex-col items-center gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+        <Loader2 className="w-10 h-10 animate-spin text-primary" aria-hidden="true" />
         <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">Syncing Baalvion Operating System (BOS)...</p>
       </div>
     </div>
@@ -82,14 +82,14 @@ export default function HomePageClient() {
     <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
       
-      <main className="flex-1">
+      <main className="flex-1" id="main-content">
         {/* HERO SECTION */}
         {heroSection && (
-          <section className="relative pt-40 pb-20 border-b border-gray-100 bg-white overflow-hidden">
+          <section className="relative pt-40 pb-20 border-b border-gray-100 bg-white overflow-hidden" aria-labelledby="hero-title">
             <div className="section-container relative z-10 animate-fade-in">
               <div className="max-w-4xl">
                 <span className="section-label">{heroSection.data?.label}</span>
-                <h1 className="text-gray-900 mb-6 font-bold leading-[1.1] tracking-tight">
+                <h1 id="hero-title" className="text-gray-900 mb-6 font-bold leading-[1.1] tracking-tight">
                   {heroSection.title}
                 </h1>
                 <p className="mb-10 text-gray-600 text-lg md:text-xl max-w-2xl font-medium">
@@ -97,10 +97,10 @@ export default function HomePageClient() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-                  <Button size="lg" asChild className="h-12 px-10 btn-primary w-full sm:w-auto">
-                    <Link href="/platform" className="flex items-center">{heroSection.data?.ctaPrimary} <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                  <Button size="lg" asChild className="h-12 px-10 btn-primary w-full sm:w-auto" aria-label="Explore our global platform">
+                    <Link href="/platform" className="flex items-center">{heroSection.data?.ctaPrimary} <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" /></Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="h-12 px-10 btn-outline w-full sm:w-auto">
+                  <Button size="lg" variant="outline" asChild className="h-12 px-10 btn-outline w-full sm:w-auto" aria-label="Partner with Baalvion">
                     <Link href="/contact">{heroSection.data?.ctaSecondary}</Link>
                   </Button>
                 </div>
@@ -116,24 +116,24 @@ export default function HomePageClient() {
                 </div>
               </div>
             </div>
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-gray-50/50 -z-10 hidden lg:block" />
+            <div className="absolute top-0 right-0 w-1/3 h-full bg-gray-50/50 -z-10 hidden lg:block" aria-hidden="true" />
           </section>
         )}
 
         {/* PROBLEM SECTION */}
         {problemSection && (
-          <section className="section-vertical-padding bg-gray-50 border-b border-gray-100">
+          <section className="section-vertical-padding bg-gray-50 border-b border-gray-100" aria-labelledby="problem-title">
             <div className="section-container">
               <div className="max-w-3xl mb-16">
                 <span className="section-label">The Challenge</span>
-                <h2 className="text-gray-900 mb-4 font-bold">{problemSection.title}</h2>
+                <h2 id="problem-title" className="text-gray-900 mb-4 font-bold">{problemSection.title}</h2>
                 <p className="text-gray-600 text-lg leading-relaxed">{problemSection.description}</p>
               </div>
               
               <div className="grid md:grid-cols-3 gap-8">
                 {problemSection.data?.points?.map((point: any, i: number) => (
                   <Card key={i} className="bg-white p-8 shadow-sm border border-gray-100 rounded-lg hover:shadow-md transition-shadow">
-                    <div className="w-12 h-12 rounded-sm bg-primary/5 flex items-center justify-center text-primary mb-6">
+                    <div className="w-12 h-12 rounded-sm bg-primary/5 flex items-center justify-center text-primary mb-6" aria-hidden="true">
                       {i === 0 ? <Workflow className="w-6 h-6" /> : i === 1 ? <ShieldCheck className="w-6 h-6" /> : <BarChart3 className="w-6 h-6" />}
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{point.title}</h3>
@@ -147,19 +147,19 @@ export default function HomePageClient() {
 
         {/* SOLUTION SECTION */}
         {solutionSection && (
-          <section className="section-vertical-padding bg-white border-b border-gray-100">
+          <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="solution-title">
             <div className="section-container">
               <div className="grid lg:grid-cols-2 gap-20 items-center">
                 <div className="space-y-10">
                   <div className="space-y-4">
                     <span className="section-label">Baalvion Operating System (BOS)</span>
-                    <h2 className="text-gray-900 font-bold">{solutionSection.title}</h2>
+                    <h2 id="solution-title" className="text-gray-900 font-bold">{solutionSection.title}</h2>
                     <p className="text-gray-600 text-lg leading-relaxed">{solutionSection.description}</p>
                   </div>
                   <div className="space-y-6">
                     {solutionSection.data?.features?.map((feat: any, i: number) => (
                       <div key={i} className="flex gap-4 items-start">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0" aria-hidden="true">
                           <CheckCircle2 className="w-4 h-4" />
                         </div>
                         <div className="space-y-1">
@@ -171,10 +171,10 @@ export default function HomePageClient() {
                   </div>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-10 lg:p-16 text-center space-y-8 border border-gray-100">
-                  <Globe className="w-16 h-16 text-primary mx-auto" />
+                  <Globe className="w-16 h-16 text-primary mx-auto" aria-hidden="true" />
                   <h3 className="text-2xl font-bold text-gray-900">Unified Infrastructure Layer</h3>
                   <p className="text-gray-600 italic font-medium">"A single protocol connecting every node of the global trade Baalvion Operating System (BOS)."</p>
-                  <Button asChild className="w-full h-12 btn-primary font-bold">
+                  <Button asChild className="w-full h-12 btn-primary font-bold" aria-label="Explore the architecture of the BOS platform">
                     <Link href="/platform">Explore Platform Architecture</Link>
                   </Button>
                 </div>
@@ -184,16 +184,16 @@ export default function HomePageClient() {
         )}
 
         {/* ECOSYSTEM PREVIEW */}
-        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100">
+        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100" aria-labelledby="ecosystem-title">
           <div className="section-container">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div className="max-w-2xl space-y-4">
                 <span className="section-label">Baalvion Operating System (BOS) Portfolio</span>
-                <h2 className="mb-0 text-gray-900 font-bold">Multi-Layered Ecosystem</h2>
+                <h2 id="ecosystem-title" className="mb-0 text-gray-900 font-bold">Multi-Layered Ecosystem</h2>
                 <p className="text-gray-600 text-lg">Strategically resolving global commerce bottlenecks.</p>
               </div>
-              <Button asChild variant="outline" className="btn-outline h-12 px-8">
-                <Link href="/ecosystem">Explore All Layers <ArrowRight className="ml-2 w-4 h-4" /></Link>
+              <Button asChild variant="outline" className="btn-outline h-12 px-8" aria-label="Explore all ecosystem layers">
+                <Link href="/ecosystem">Explore All Layers <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" /></Link>
               </Button>
             </div>
             
@@ -201,7 +201,7 @@ export default function HomePageClient() {
               {ecoItems.slice(0, 4).map((item, i) => (
                 <Card key={item.id} className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all rounded-lg group">
                   <div className="p-8 space-y-6 flex flex-col h-full">
-                    <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                    <div className="w-12 h-12 bg-primary/5 rounded-sm flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all" aria-hidden="true">
                       {i === 0 ? <Database className="w-6 h-6" /> : i === 1 ? <Target className="w-6 h-6" /> : i === 2 ? <ShieldCheck className="w-6 h-6" /> : <Globe className="w-6 h-6" />}
                     </div>
                     <div className="space-y-2 flex-1">
@@ -219,11 +219,11 @@ export default function HomePageClient() {
         </section>
 
         {/* PROJECTS PREVIEW */}
-        <section className="section-vertical-padding bg-white border-b border-gray-100">
+        <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="projects-title">
           <div className="section-container">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
               <span className="section-label">Execution Layer</span>
-              <h2 className="text-gray-900 font-bold">What We're Building</h2>
+              <h2 id="projects-title" className="text-gray-900 font-bold">What We're Building</h2>
               <p className="text-gray-600 text-lg">Every initiative contributes to a unified global trade infrastructure.</p>
             </div>
             
@@ -232,7 +232,7 @@ export default function HomePageClient() {
                 <Card key={project.id} className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all rounded-lg group">
                   <CardContent className="p-8 space-y-6">
                     <div className="flex justify-between items-start">
-                      <div className="w-10 h-10 bg-gray-50 rounded-sm flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors">
+                      <div className="w-10 h-10 bg-gray-50 rounded-sm flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors" aria-hidden="true">
                         <Activity className="w-5 h-5" />
                       </div>
                       <Badge className={cn(
@@ -250,8 +250,8 @@ export default function HomePageClient() {
                     </div>
                     <div className="pt-6 border-t border-gray-50 flex justify-between items-center">
                       <span className="text-[11px] font-bold text-primary uppercase tracking-widest">{project.category}</span>
-                      <Link href={`/projects/${project.id}`} className="text-primary hover:translate-x-1 transition-transform">
-                        <ArrowRight className="w-5 h-5" />
+                      <Link href={`/projects/${project.id}`} className="text-primary hover:translate-x-1 transition-transform" aria-label={`View details for project ${project.name}`}>
+                        <ArrowRight className="w-5 h-5" aria-hidden="true" />
                       </Link>
                     </div>
                   </CardContent>
@@ -260,15 +260,15 @@ export default function HomePageClient() {
             </div>
             
             <div className="text-center mt-12">
-              <Button asChild variant="outline" className="btn-outline h-12 px-10">
+              <Button asChild variant="outline" className="btn-outline h-12 px-10" aria-label="View the full strategic project portfolio">
                 <Link href="/projects">View Strategic Portfolio</Link>
               </Button>
             </div>
           </div>
         </section>
 
-        {/* AI & TECHNOLOGY HIGHLIGHTS - ENHANCED */}
-        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative overflow-hidden">
+        {/* AI & TECHNOLOGY HIGHLIGHTS */}
+        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative overflow-hidden" aria-labelledby="ai-highlights-title">
           <div className="section-container relative z-10">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
               <div className="relative order-2 lg:order-1">
@@ -280,21 +280,21 @@ export default function HomePageClient() {
                     { icon: BarChart3, title: "Predictive Intel", desc: "Machine learning demand forecasting for global hubs.", stat: "Real-time Feed" }
                   ].map((item, i) => (
                     <div key={i} className="p-8 bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 group relative">
-                      <div className="absolute top-6 right-8 text-[9px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute top-6 right-8 text-[9px] font-bold text-primary uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">
                         {item.stat}
                       </div>
-                      <item.icon className="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform" />
+                      <item.icon className="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform" aria-hidden="true" />
                       <h4 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h4>
                       <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
-                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
+                <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[120px] animate-pulse" aria-hidden="true" />
               </div>
               <div className="space-y-10 order-1 lg:order-2">
                 <div>
                   <span className="section-label">Intelligence Layer</span>
-                  <h2 className="text-gray-900 font-bold leading-tight text-4xl md:text-5xl">Advanced AI Orchestration</h2>
+                  <h2 id="ai-highlights-title" className="text-gray-900 font-bold leading-tight text-4xl md:text-5xl">Advanced AI Orchestration</h2>
                 </div>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   The Baalvion Operating System (BOS) leverages custom machine learning models to eliminate friction in international commerce, automating compliance and risk scoring in real-time.
@@ -306,7 +306,7 @@ export default function HomePageClient() {
                     "Localized intelligence for 198 markets"
                   ].map((text, i) => (
                     <div key={i} className="flex items-center gap-4 text-sm font-bold text-gray-700 p-4 rounded-xl bg-white border border-gray-100 hover:border-primary/20 transition-all">
-                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0"><CheckCircle2 className="w-4 h-4" /></div>
+                      <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0" aria-hidden="true"><CheckCircle2 className="w-4 h-4" /></div>
                       {text}
                     </div>
                   ))}
@@ -316,21 +316,19 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* INTERACTIVE GLOBAL TRADE MAP - ENHANCED */}
-        <section className="section-vertical-padding bg-white border-b border-gray-100 overflow-hidden">
+        {/* INTERACTIVE GLOBAL TRADE MAP */}
+        <section className="section-vertical-padding bg-white border-b border-gray-100 overflow-hidden" aria-labelledby="global-map-title">
           <div className="section-container">
             <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
               <span className="section-label">Global Presence</span>
-              <h2 className="text-gray-900 font-bold text-4xl md:text-5xl">One System. Infinite Connectivity.</h2>
+              <h2 id="global-map-title" className="text-gray-900 font-bold text-4xl md:text-5xl">One System. Infinite Connectivity.</h2>
               <p className="text-gray-600 text-lg">Explore the connectivity of the Baalvion BOS network across international trade hubs.</p>
             </div>
 
             <div className="relative aspect-[21/9] bg-[#151B24] rounded-[3rem] border border-gray-800 p-8 flex items-center justify-center group overflow-hidden shadow-2xl shadow-black/20">
-              {/* Dynamic Map Visualization Background */}
-              <div className="absolute inset-0 opacity-20 bg-[url('https://picsum.photos/seed/darkmap/1200/800')] bg-cover bg-center grayscale brightness-50" />
+              <div className="absolute inset-0 opacity-20 bg-[url('https://picsum.photos/seed/darkmap/1200/800')] bg-cover bg-center grayscale brightness-50" aria-hidden="true" />
               
-              {/* Pulsing Nodes Animation Effect */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 z-0" aria-hidden="true">
                 <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full animate-ping" />
                 <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full animate-ping delay-300" />
                 <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-primary rounded-full animate-ping delay-700" />
@@ -344,8 +342,8 @@ export default function HomePageClient() {
                   { region: "APAC", partners: "85+", nodes: "32", status: "Active", volume: "$4.8B" },
                   { region: "Global Nodes", partners: "125+", nodes: "68", status: "Unified", volume: "$8.4B" }
                 ].map((reg, i) => (
-                  <div key={i} className="space-y-6 p-8 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-primary/20 transition-all cursor-default group/item">
-                    <Globe2 className="w-10 h-10 text-primary mx-auto mb-2 group-hover/item:rotate-12 transition-transform duration-500" />
+                  <div key={i} className="space-y-6 p-8 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-primary/20 transition-all cursor-default group/item" role="group" aria-label={`${reg.region} region metrics`}>
+                    <Globe2 className="w-10 h-10 text-primary mx-auto mb-2 group-hover/item:rotate-12 transition-transform duration-500" aria-hidden="true" />
                     <div>
                       <h4 className="text-xl font-bold text-white mb-1">{reg.region}</h4>
                       <p className="text-[10px] text-primary font-bold uppercase tracking-[0.2em]">{reg.volume} Annual Clearing</p>
@@ -355,7 +353,7 @@ export default function HomePageClient() {
                         <span>Connectivity</span>
                         <span className="text-white">{reg.nodes} Nodes</span>
                       </div>
-                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden" aria-hidden="true">
                         <div className="h-full bg-primary" style={{ width: i === 0 ? '60%' : i === 1 ? '75%' : i === 2 ? '90%' : '100%' }} />
                       </div>
                     </div>
@@ -364,10 +362,9 @@ export default function HomePageClient() {
                 ))}
               </div>
               
-              {/* Technical Telemetry */}
               <div className="absolute bottom-10 inset-x-10 flex flex-wrap items-center justify-between gap-6 border-t border-white/5 pt-8">
                 <div className="flex items-center gap-4 text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live System Health: 99.99% Operational
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" /> Live System Health: 99.99% Operational
                 </div>
                 <div className="flex items-center gap-8">
                   <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
@@ -382,17 +379,17 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* PROJECT PIPELINE / ROADMAP - ENHANCED */}
-        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative">
+        {/* PROJECT PIPELINE / ROADMAP */}
+        <section className="section-vertical-padding bg-gray-50 border-b border-gray-100 relative" aria-labelledby="roadmap-title">
           <div className="section-container">
             <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20">
               <div className="max-w-2xl space-y-4">
                 <span className="section-label">Execution Roadmap</span>
-                <h2 className="mb-0 text-gray-900 font-bold text-4xl md:text-5xl">Strategic Milestones</h2>
+                <h2 id="roadmap-title" className="mb-0 text-gray-900 font-bold text-4xl md:text-5xl">Strategic Milestones</h2>
                 <p className="text-gray-600 text-lg">Next-gen technical deployments scheduled for the BOS ecosystem.</p>
               </div>
               <div className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-full text-xs font-bold text-gray-500 uppercase tracking-[0.2em] shadow-sm">
-                <Milestone className="w-4 h-4 text-primary" /> Q1 - Q4 • 2026 Registry
+                <Milestone className="w-4 h-4 text-primary" aria-hidden="true" /> Q1 - Q4 • 2026 Registry
               </div>
             </div>
 
@@ -420,7 +417,7 @@ export default function HomePageClient() {
                       <span>System Ready</span>
                       <span className="text-primary">{step.progress}%</span>
                     </div>
-                    <div className="h-1.5 w-full bg-gray-50 rounded-full overflow-hidden">
+                    <div className="h-1.5 w-full bg-gray-50 rounded-full overflow-hidden" aria-hidden="true">
                       <div className="h-full bg-primary transition-all duration-1000 group-hover:animate-pulse" style={{ width: `${step.progress}%` }} />
                     </div>
                   </div>
@@ -430,16 +427,16 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* SUSTAINABILITY & ESG - ENHANCED */}
-        <section className="section-vertical-padding bg-white border-b border-gray-100">
+        {/* SUSTAINABILITY & ESG */}
+        <section className="section-vertical-padding bg-white border-b border-gray-100" aria-labelledby="esg-title">
           <div className="section-container">
             <div className="bg-[#151B24] rounded-[4rem] p-12 lg:p-24 overflow-hidden relative group shadow-2xl shadow-black/20">
-              <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 -skew-x-12 translate-x-1/4 transition-transform duration-1000 group-hover:translate-x-1/3" />
+              <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 -skew-x-12 translate-x-1/4 transition-transform duration-1000 group-hover:translate-x-1/3" aria-hidden="true" />
               <div className="relative z-10 grid lg:grid-cols-2 gap-24 items-center">
                 <div className="space-y-10">
                   <div>
                     <span className="text-[10px] font-bold text-primary uppercase tracking-[0.5em] mb-6 block">ESG & Global Responsibility</span>
-                    <h2 className="text-white font-bold leading-tight text-4xl md:text-6xl mb-0">Architecting Green Trade</h2>
+                    <h2 id="esg-title" className="text-white font-bold leading-tight text-4xl md:text-6xl mb-0">Architecting Green Trade</h2>
                   </div>
                   <p className="text-gray-400 text-xl leading-relaxed">
                     Baalvion is committed to carbon-neutral trade routes and ethical vendor scoring. Our platform ensures every node follows global sustainability protocols.
@@ -465,7 +462,7 @@ export default function HomePageClient() {
                     { icon: ShieldAlert, title: "Ethical Sourcing AI", desc: "Real-time monitoring of labor laws and safety compliance across all supplier tiers." }
                   ].map((item, i) => (
                     <div key={i} className="p-12 rounded-3xl bg-white/5 border border-white/10 flex gap-10 items-center group/card hover:bg-white hover:border-white transition-all duration-700 hover:shadow-2xl">
-                      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover/card:bg-primary group-hover/card:text-white transition-all duration-500">
+                      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover/card:bg-primary group-hover/card:text-white transition-all duration-500" aria-hidden="true">
                         <item.icon className="w-10 h-10" />
                       </div>
                       <div className="space-y-3">
@@ -480,12 +477,12 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* FEATURED PARTNERS - CAROUSEL ENHANCED */}
-        <section className="py-32 bg-white border-b border-gray-100 overflow-hidden">
+        {/* FEATURED PARTNERS CAROUSEL */}
+        <section className="py-32 bg-white border-b border-gray-100 overflow-hidden" aria-labelledby="partners-title">
           <div className="section-container">
             <div className="text-center mb-20 space-y-4">
               <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.6em]">Institutional Integration</span>
-              <h2 className="text-gray-900 font-bold text-3xl">Trusted by Industry Nodes</h2>
+              <h2 id="partners-title" className="text-gray-900 font-bold text-3xl">Trusted by Industry Nodes</h2>
             </div>
             
             <Carousel
@@ -500,7 +497,7 @@ export default function HomePageClient() {
                   <CarouselItem key={i} className="pl-4 md:basis-1/3 lg:basis-1/5">
                     <div className="p-8 h-32 bg-gray-50/50 border border-gray-100 rounded-2xl flex items-center justify-center grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all group cursor-default">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gray-200 group-hover:bg-primary/20 transition-colors" />
+                        <div className="w-8 h-8 rounded-full bg-gray-200 group-hover:bg-primary/20 transition-colors" aria-hidden="true" />
                         <span className="text-sm font-black tracking-tighter text-gray-900 uppercase italic whitespace-nowrap">{name}</span>
                       </div>
                     </div>
@@ -508,80 +505,83 @@ export default function HomePageClient() {
                 ))}
               </CarouselContent>
               <div className="flex justify-center gap-4 mt-12">
-                <CarouselPrevious className="relative inset-0 translate-y-0" />
-                <CarouselNext className="relative inset-0 translate-y-0" />
+                <CarouselPrevious className="relative inset-0 translate-y-0" aria-label="Previous partner logos" />
+                <CarouselNext className="relative inset-0 translate-y-0" aria-label="Next partner logos" />
               </div>
             </Carousel>
           </div>
         </section>
 
-        {/* NEWSLETTER / UPDATES SIGNUP - ENHANCED */}
-        <section className="section-vertical-padding bg-gray-50">
+        {/* NEWSLETTER SIGNUP */}
+        <section className="section-vertical-padding bg-gray-50" aria-labelledby="newsletter-title">
           <div className="section-container">
             <div className="max-w-5xl mx-auto bg-white p-12 lg:p-24 rounded-[4rem] border border-gray-100 shadow-sm text-center space-y-12 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-orange-600" />
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-orange-600" aria-hidden="true" />
               <div className="space-y-6">
-                <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mx-auto text-primary">
+                <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center mx-auto text-primary" aria-hidden="true">
                   <Mail className="w-10 h-10" />
                 </div>
-                <h2 className="text-gray-900 font-bold text-4xl md:text-5xl mb-0">Stay Integrated</h2>
+                <h2 id="newsletter-title" className="text-gray-900 font-bold text-4xl md:text-5xl mb-0">Stay Integrated</h2>
                 <p className="text-gray-600 text-xl max-w-2xl mx-auto">
                   Receive weekly strategic briefs, technical milestones, and BOS system logs directly to your institutional buffer.
                 </p>
               </div>
-              <form className="max-w-lg mx-auto relative group">
+              <form className="max-w-lg mx-auto relative group" onSubmit={(e) => e.preventDefault()}>
                 <div className="relative">
+                  <label htmlFor="institutional-email" className="sr-only">Institutional email address</label>
                   <input 
+                    id="institutional-email"
                     type="email" 
+                    required
                     placeholder="Enter institutional email" 
                     className="w-full h-20 bg-gray-50 border border-gray-200 rounded-full px-10 pr-48 text-xl outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all shadow-sm"
                   />
-                  <button className="absolute right-3 top-3 h-14 px-10 bg-primary hover:bg-primary/90 text-white rounded-full font-bold text-lg transition-all shadow-xl active:scale-95 flex items-center gap-3">
-                    Subscribe <ChevronRight className="w-5 h-5" />
+                  <button type="submit" className="absolute right-3 top-3 h-14 px-10 bg-primary hover:bg-primary/90 text-white rounded-full font-bold text-lg transition-all shadow-xl active:scale-95 flex items-center gap-3">
+                    Subscribe <ChevronRight className="w-5 h-5" aria-hidden="true" />
                   </button>
                 </div>
               </form>
               <div className="flex flex-wrap justify-center items-center gap-8 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" /> Compliance Verified</div>
-                <div className="flex items-center gap-2"><Lock className="w-4 h-4 text-primary" /> End-to-End Encrypted</div>
-                <div className="flex items-center gap-2"><Search className="w-4 h-4 text-gray-400" /> Global Search Enabled</div>
+                <div className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-emerald-500" aria-hidden="true" /> Compliance Verified</div>
+                <div className="flex items-center gap-2"><Lock className="w-4 h-4 text-primary" aria-hidden="true" /> End-to-End Encrypted</div>
+                <div className="flex items-center gap-2"><Search className="w-4 h-4 text-gray-400" aria-hidden="true" /> Global Search Enabled</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* FINAL CTA - ENHANCED */}
+        {/* FINAL CTA */}
         {ctaSection && (
-          <section className="section-vertical-padding bg-white relative overflow-hidden">
+          <section className="section-vertical-padding bg-white relative overflow-hidden" aria-labelledby="final-cta-title">
             <div className="section-container relative z-10">
               <div className="bg-[#151B24] p-16 md:p-24 text-center rounded-[4rem] shadow-2xl border border-gray-800 max-w-6xl mx-auto group">
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" aria-hidden="true">
                   <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#FF9900_0%,transparent_70%)]" />
                 </div>
                 
                 <div className="max-w-4xl mx-auto space-y-12 relative z-10">
-                  <h2 className="text-white leading-tight mb-0 font-bold text-4xl md:text-7xl tracking-tighter">
+                  <h2 id="final-cta-title" className="text-white leading-tight mb-0 font-bold text-4xl md:text-7xl tracking-tighter">
                     {ctaSection.title}
                   </h2>
                   <p className="text-gray-400 text-xl md:text-2xl font-medium max-w-2xl mx-auto">
                     {ctaSection.description}
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-                    <Button size="lg" asChild className="h-16 px-14 btn-primary text-xl rounded-full shadow-2xl shadow-primary/30 group/btn">
+                    <Button size="lg" asChild className="h-16 px-14 btn-primary text-xl rounded-full shadow-2xl shadow-primary/30 group/btn" aria-label="Explore the full BOS platform">
                       <Link href="/platform" className="flex items-center gap-3">
-                        {ctaSection.data?.ctaPrimary} <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
+                        {ctaSection.data?.ctaPrimary} <ArrowRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" aria-hidden="true" />
                       </Link>
                     </Button>
-                    <Button size="lg" variant="outline" asChild className="h-16 px-14 border-white/10 bg-white/5 hover:bg-white/10 text-white text-xl rounded-full transition-all group/btn2">
+                    <Button size="lg" variant="outline" asChild className="h-16 px-14 border-white/10 bg-white/5 hover:bg-white/10 text-white text-xl rounded-full transition-all group/btn2" aria-label="Contact our strategy team">
                       <Link href="/contact" className="flex items-center gap-3">
-                        {ctaSection.data?.ctaSecondary} <ExternalLink className="w-5 h-5 opacity-50 group-hover/btn2:opacity-100 transition-opacity" />
+                        {ctaSection.data?.ctaSecondary} <ExternalLink className="w-5 h-5 opacity-50 group-hover/btn2:opacity-100 transition-opacity" aria-hidden="true" />
                       </Link>
                     </Button>
                   </div>
                   
                   <div className="pt-12 flex justify-center">
-                    <button className="flex items-center gap-3 text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] hover:text-white transition-colors">
-                      <Layers className="w-4 h-4 text-primary" /> Architecture Whitepaper
+                    <button className="flex items-center gap-3 text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] hover:text-white transition-colors" aria-label="Download the BOS Architecture Whitepaper">
+                      <Layers className="w-4 h-4 text-primary" aria-hidden="true" /> Architecture Whitepaper
                     </button>
                   </div>
                 </div>

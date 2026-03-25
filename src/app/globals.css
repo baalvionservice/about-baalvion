@@ -33,6 +33,9 @@
   }
   body {
     @apply bg-background text-foreground font-body antialiased overflow-x-hidden selection:bg-primary/30;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h1 {
     @apply text-[40px] md:text-[52px] font-bold tracking-tight text-gray-900 leading-[1.1] mb-8;
@@ -45,6 +48,11 @@
   }
   p {
     @apply text-[16px] md:text-[18px] text-gray-600 font-normal leading-relaxed;
+  }
+
+  /* Improved focus ring for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
   }
 }
 
@@ -78,6 +86,16 @@
   }
 }
 
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -99,6 +117,7 @@
 
 .animate-fade-in {
   animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 /* Staggered entry classes for high-fidelity animations */
@@ -106,3 +125,10 @@
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full;
+}

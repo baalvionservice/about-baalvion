@@ -6,6 +6,7 @@ export const viewport: Viewport = {
   themeColor: '#FF9900',
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s | Baalvion Industries'
   },
   description: 'Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single Baalvion Operating System (BOS).',
-  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'Baalvion Operating System (BOS)'],
+  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'Baalvion Operating System (BOS)', 'BOS Core'],
   authors: [{ name: 'Baalvion Industries' }],
   metadataBase: new URL('https://baalvion.nexus'),
   alternates: {
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
         url: 'https://picsum.photos/seed/baalvion-og/1200/630',
         width: 1200,
         height: 630,
-        alt: 'Baalvion Operating System (BOS) Global Infrastructure',
+        alt: 'Baalvion Operating System (BOS) Global Infrastructure Visualization',
       },
     ],
   },
@@ -41,6 +42,18 @@ export const metadata: Metadata = {
     title: 'Baalvion Operating System (BOS) | Unified Global Trade',
     description: 'The foundational layer for the next century of international commerce.',
     images: ['https://picsum.photos/seed/baalvion-og/1200/630'],
+    creator: '@BaalvionIndustries',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Megaphone, Mail, Calendar, Send, Sparkles, MessageSquare, ListTodo, CheckCircle2 } from "lucide-react";
+import { Megaphone, Mail, Calendar, Send, Sparkles, MessageSquare, ListTodo, CheckCircle2, Activity } from "lucide-react";
 
 export default function EngagementAdmin() {
   return (

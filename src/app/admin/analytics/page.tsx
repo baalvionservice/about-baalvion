@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Activity, Users, Zap, Briefcase, ArrowUpRight, Globe, TrendingUp, Cpu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 /**
  * @module AnalyticsAdmin

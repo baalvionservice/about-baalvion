@@ -7,7 +7,7 @@ import { Project } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, ArrowLeft, Target, Globe, Star, CheckCircle2, Clock, Calendar, ShieldCheck, Activity, Layers } from "lucide-react";
+import { Loader2, ArrowLeft, Target, Globe, Star, CheckCircle2, Clock, Calendar, ShieldCheck, Activity, Layers, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 

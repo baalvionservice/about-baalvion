@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Users, UserCheck, Briefcase, Activity, Search, Plus, Mail, ShieldAlert } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ManagementAdmin() {
   const [search, setSearch] = useState("");

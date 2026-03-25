@@ -48,15 +48,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <div className="min-h-screen bg-[#0F1318] flex">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-white/5 bg-[#151B24] hidden lg:flex flex-col fixed inset-y-0">
+      <aside className="w-64 border-r border-gray-200 bg-white hidden lg:flex flex-col fixed inset-y-0">
         <div className="p-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#FF9900] flex items-center justify-center rounded-lg shadow-lg shadow-primary/20">
+            <div className="w-8 h-8 bg-[#FF9900] flex items-center justify-center rounded-sm">
               <Globe className="text-white w-5 h-5" />
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">BAALVION</span>
+            <span className="text-lg font-bold text-gray-900 tracking-tight">BAALVION</span>
           </Link>
         </div>
 
@@ -66,10 +66,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               key={link.href}
               href={link.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
+                "flex items-center gap-3 px-4 py-3 rounded-md text-sm font-bold transition-all",
                 pathname === link.href 
-                  ? "bg-[#FF9900] text-white" 
-                  : "text-muted-foreground hover:bg-white/5 hover:text-white"
+                  ? "bg-[#FF9900] text-white shadow-md shadow-orange-100" 
+                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
               )}
             >
               <link.icon className="w-5 h-5" />
@@ -78,12 +78,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           ))}
         </nav>
 
-        <div className="p-4 border-t border-white/5 space-y-1">
-          <button className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-white">
+        <div className="p-4 border-t border-gray-100 space-y-1">
+          <button className="flex w-full items-center gap-3 px-4 py-3 rounded-md text-sm font-bold text-gray-500 hover:bg-gray-50 hover:text-gray-900">
             <Settings className="w-5 h-5" />
             Settings
           </button>
-          <button onClick={handleLogout} className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/10">
+          <button onClick={handleLogout} className="flex w-full items-center gap-3 px-4 py-3 rounded-md text-sm font-bold text-destructive hover:bg-destructive/5">
             <LogOut className="w-5 h-5" />
             Sign Out
           </button>
@@ -92,16 +92,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
-        <header className="h-20 border-b border-white/5 bg-[#151B24]/50 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-40">
-          <h1 className="text-xl font-bold text-white uppercase tracking-widest text-sm">
-            {adminLinks.find(l => l.href === pathname)?.name || 'Admin'}
+        <header className="h-16 border-b border-gray-200 bg-white/80 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-40">
+          <h1 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-0">
+            {adminLinks.find(l => l.href === pathname)?.name || 'Nexus Admin'}
           </h1>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-medium text-white">Administrative Portal</p>
+              <p className="text-sm font-bold text-gray-900">Administrative Portal</p>
               <p className="text-[10px] text-[#FF9900] font-bold uppercase tracking-wider">Super Administrator</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-[#FF9900]/20 border border-[#FF9900]/20 flex items-center justify-center text-[#FF9900] font-bold">B</div>
+            <div className="w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-[#FF9900] font-bold">B</div>
           </div>
         </header>
         <div className="p-8 max-w-7xl mx-auto">

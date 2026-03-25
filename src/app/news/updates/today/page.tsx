@@ -2,15 +2,47 @@
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Share2, Globe, ArrowRight, ChevronRight } from 'lucide-react';
+import { Share2, Globe, ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+
+const moreNews = [
+  {
+    id: 3,
+    title: "Get a behind-the-scenes look at Baalvion's innovations with the 'Nexus' podcast",
+    date: 'March 17, 2026',
+    image: 'https://picsum.photos/seed/news3/600/400',
+    category: 'Company news',
+  },
+  {
+    id: 5,
+    title: 'Baalvion is investing $750 million in a global trade hub in Singapore',
+    date: 'March 10, 2026',
+    image: 'https://picsum.photos/seed/news5/600/400',
+    category: 'Company news',
+  },
+  {
+    id: 6,
+    title: 'Baalvion increases investment in Europe to expand data center infrastructure',
+    date: 'March 2, 2026',
+    image: 'https://picsum.photos/seed/news6/600/400',
+    category: 'Company news',
+  },
+  {
+    id: 7,
+    title: 'Baalvion to invest $12 billion in first strategic trade corridor in the Middle East',
+    date: 'February 23, 2026',
+    image: 'https://picsum.photos/seed/news7/600/400',
+    category: 'Company news',
+  },
+];
 
 export default function TodayNewsPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="pt-48 pb-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <main className="pt-48 pb-0">
+        <div className="max-w-4xl mx-auto px-6 mb-24">
           {/* Main Headline */}
           <div className="space-y-4 mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-[#111111] leading-tight tracking-tight">
@@ -79,7 +111,7 @@ export default function TodayNewsPage() {
             </div>
           </div>
 
-          {/* NEW: Newsletter Signup Section (Amazon Style) */}
+          {/* Newsletter Signup Section */}
           <div className="mt-20 pt-10 border-t border-gray-100">
             <div className="relative bg-white border border-gray-200 p-8 shadow-sm">
               <div className="absolute top-0 left-0 w-full h-1 bg-[#FF9900]" />
@@ -110,7 +142,7 @@ export default function TodayNewsPage() {
             </div>
           </div>
 
-          {/* NEW: Trending News Section */}
+          {/* Trending News Section */}
           <div className="mt-20">
             <div className="border-b border-gray-200 pb-3 mb-8">
               <h3 className="text-xl font-bold text-[#111111]">Trending news and stories</h3>
@@ -134,6 +166,57 @@ export default function TodayNewsPage() {
             </ul>
           </div>
         </div>
+
+        {/* More Baalvion News Section (Amazon Style) */}
+        <section className="bg-[#F2F2F2] py-20">
+          <div className="max-w-[1200px] mx-auto px-6">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-bold text-[#111111]">More Baalvion News</h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5">
+                  <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-400 cursor-not-allowed">
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-xs font-bold text-gray-400 px-2 uppercase tracking-widest">1 / 2</span>
+                  <button className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 hover:border-[#FF9900] hover:text-[#FF9900] transition-all">
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {moreNews.map((news) => (
+                <Link key={news.id} href={`/news/updates/${news.id}`} className="group bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col h-full overflow-hidden transition-transform hover:-translate-y-1">
+                  <div className="aspect-[16/10] relative overflow-hidden bg-gray-50">
+                    <Image
+                      src={news.image}
+                      alt={news.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      data-ai-hint="news coverage"
+                    />
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div className="space-y-3">
+                      <h4 className="text-sm font-bold leading-tight text-gray-900 group-hover:text-[#007185] transition-colors line-clamp-3">
+                        {news.title}
+                      </h4>
+                      <p className="text-[11px] text-gray-400 font-medium">
+                        {news.date}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <span className="inline-block px-2.5 py-1 bg-gray-100 border border-gray-200 rounded text-[9px] font-bold text-gray-500 uppercase tracking-widest">
+                        {news.category}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

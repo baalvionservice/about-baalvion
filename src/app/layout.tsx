@@ -70,6 +70,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased min-h-screen bg-background text-foreground selection:bg-primary/20">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:bg-primary focus:text-white focus:p-4 focus:rounded-b-lg">
+          Skip to main content
+        </a>
         {children}
         <Toaster />
       </body>

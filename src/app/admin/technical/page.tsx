@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -7,7 +6,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Cpu, Zap, Database, Globe, RefreshCcw, HardDrive, FileArchive, Server, ShieldCheck } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Cpu, Zap, Database, Globe, RefreshCcw, HardDrive, FileArchive, Server, ShieldCheck, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function TechnicalAdmin() {
@@ -18,8 +18,8 @@ export default function TechnicalAdmin() {
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">System Infrastructure & Integration</h2>
           <p className="text-sm text-gray-500">Monitor BOS nodes, API integrations, and digital asset registries.</p>
         </div>
-        <Button variant="outline" className="h-11 px-6 rounded-xl font-bold border-gray-200 bg-white">
-          <RefreshCcw className="w-4 h-4 mr-2" /> Global Sync
+        <Button variant="outline" className="h-11 px-6 rounded-xl font-bold border-gray-200 bg-white group">
+          <RefreshCcw className="w-4 h-4 mr-2 group-hover:rotate-180 transition-transform duration-500" /> Global Sync
         </Button>
       </div>
 
@@ -34,7 +34,9 @@ export default function TechnicalAdmin() {
           <CardContent className="space-y-6">
             <div className="flex items-end gap-2">
               <span className="text-4xl font-bold">99.998%</span>
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1.5">Operational</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1.5 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Operational
+              </span>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase">
@@ -42,7 +44,7 @@ export default function TechnicalAdmin() {
                 <span className="text-primary">Nominal</span>
               </div>
               <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                <div className="h-full bg-primary w-[99.9%]" />
+                <div className="h-full bg-primary w-[99.9%] transition-all duration-1000" />
               </div>
             </div>
           </CardContent>
@@ -142,7 +144,16 @@ export default function TechnicalAdmin() {
                       </div>
                     </TableCell>
                     <TableCell className="text-right pr-8">
-                      <Button variant="ghost" size="sm" className="text-[10px] font-bold text-primary uppercase">Direct Link</Button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size="sm" className="text-[10px] font-bold text-primary uppercase">Direct Link</Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-[10px] font-bold">Establish Secure Tunnel to {node.id}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -157,7 +168,10 @@ export default function TechnicalAdmin() {
             { name: 'PayU Enterprise Link', type: 'Webhook', latency: '240ms', security: 'HMAC-SHA256', logo: Zap },
             { name: 'HSBC Settlement Engine', type: 'SWIFT/ISO', latency: '1.2s', security: 'End-to-End', logo: RefreshCcw },
           ].map((int, i) => (
-            <Card key={i} className="bg-white border-gray-200 p-6 space-y-6 hover:shadow-md transition-shadow">
+            <Card key={i} className="bg-white border-gray-200 p-6 space-y-6 hover:shadow-md transition-shadow relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
+                <Info className="w-3.5 h-3.5 text-gray-400" />
+              </div>
               <div className="flex items-start justify-between">
                 <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-primary">
                   <int.logo className="w-6 h-6" />
@@ -184,7 +198,9 @@ export default function TechnicalAdmin() {
 
         <TabsContent value="assets" className="space-y-6">
           <div className="flex items-center gap-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <FileArchive className="w-8 h-8 text-primary" />
+            <div className="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center">
+              <FileArchive className="w-6 h-6 text-primary" />
+            </div>
             <div className="flex-1">
               <h4 className="font-bold text-gray-900">Global Asset Buffer</h4>
               <p className="text-xs text-gray-500">Centralized storage for technical reports, audit certifications, and media nodes.</p>
@@ -199,8 +215,8 @@ export default function TechnicalAdmin() {
               { name: 'Partner_Agreement_SBI.docx', size: '420 KB', type: 'Doc' },
               { name: 'System_Logs_Oct24.log', size: '12 MB', type: 'Log' },
             ].map((file, i) => (
-              <Card key={i} className="bg-white border-gray-200 p-4 text-center space-y-3 hover:border-primary/20 transition-all cursor-pointer">
-                <div className="w-10 h-10 bg-gray-50 rounded-lg mx-auto flex items-center justify-center text-gray-400">
+              <Card key={i} className="bg-white border-gray-200 p-4 text-center space-y-3 hover:border-primary/20 transition-all cursor-pointer group">
+                <div className="w-10 h-10 bg-gray-50 rounded-lg mx-auto flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white transition-all">
                   <Database className="w-5 h-5" />
                 </div>
                 <div className="space-y-1">

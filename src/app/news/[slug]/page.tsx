@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -6,18 +7,19 @@ import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { ChevronLeft, ChevronRight, Loader2, Newspaper } from 'lucide-react';
 import { Article } from '@/lib/db';
+import { SubPageHero } from '@/components/sub-page-hero';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const newsCategories: Record<string, { title: string; category: string }> = {
-  updates: { title: 'Company news', category: 'Company news' },
-  insights: { title: 'Global trade insights', category: 'Insights' },
-  tech: { title: 'Technology & AI', category: 'Innovation' },
-  finance: { title: 'Finance & Compliance', category: 'Markets' },
-  sustainability: { title: 'Sustainability & ESG', category: 'Governance' },
-  community: { title: 'Community & Partnerships', category: 'Nexus' },
-  markets: { title: 'International Markets', category: 'Global expansion' },
-  reports: { title: 'Featured Reports', category: 'Strategic' },
+const newsCategories: Record<string, { title: string; category: string; label: string }> = {
+  updates: { title: 'Company News', category: 'Company news', label: 'Updates' },
+  insights: { title: 'Global Trade Insights', category: 'Insights', label: 'Intelligence' },
+  tech: { title: 'Technology & AI', category: 'Innovation', label: 'Innovation' },
+  finance: { title: 'Finance & Compliance', category: 'Markets', label: 'Capital' },
+  sustainability: { title: 'Sustainability & ESG', category: 'Governance', label: 'Impact' },
+  community: { title: 'Community & Partnerships', category: 'Nexus', label: 'Ecosystem' },
+  markets: { title: 'International Markets', category: 'Global expansion', label: 'Growth' },
+  reports: { title: 'Featured Reports', category: 'Strategic', label: 'Metrics' },
 };
 
 export default function NewsSubPage() {
@@ -26,7 +28,7 @@ export default function NewsSubPage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const item = newsCategories[slug] || { title: 'News', category: 'Baalvion' };
+  const item = newsCategories[slug] || { title: 'News', category: 'Baalvion', label: 'Nexus' };
 
   useEffect(() => {
     fetch(`/api/news?category=${slug}`)
@@ -50,25 +52,20 @@ export default function NewsSubPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="pt-40 pb-24">
-        <div className="section-container">
-          {/* Page Title */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-0">
-              {item.title}
-            </h1>
-          </div>
-
+      <main>
+        <SubPageHero category={item.label} title={item.title} />
+        
+        <div className="section-container py-24">
           {/* Results Header */}
-          <div className="flex justify-between items-center mb-10 border-b border-gray-100 pb-4">
-            <p className="text-sm font-medium text-gray-600">
-              {articles.length} results - showing results 1 - {articles.length}
+          <div className="flex justify-between items-center mb-12 border-b border-gray-100 pb-6">
+            <p className="text-sm font-medium text-gray-500">
+              Showing {articles.length} strategic results from the {item.category} nexus
             </p>
-            <div className="flex items-center gap-4 text-sm font-bold text-gray-900">
-              <button className="flex items-center gap-1 opacity-40 cursor-not-allowed">
+            <div className="flex items-center gap-6 text-[10px] font-bold text-gray-900 uppercase tracking-widest">
+              <button className="flex items-center gap-1.5 opacity-40 cursor-not-allowed">
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
-              <button className="flex items-center gap-1 hover:text-primary transition-colors">
+              <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
                 Next <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -81,28 +78,29 @@ export default function NewsSubPage() {
               <p className="text-gray-500 font-medium">No strategic updates found in this category nexus.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
               {articles.map((news) => (
-                <Link key={news.id} href={`/news/${slug}/${news.slug}`} className="group flex flex-col gap-4">
-                  <div className="aspect-[16/10] relative rounded-xl overflow-hidden bg-gray-100">
+                <Link key={news.id} href={`/news/${slug}/${news.slug}`} className="group flex flex-col gap-5">
+                  <div className="aspect-[16/10] relative rounded-xl overflow-hidden bg-gray-100 shadow-sm">
                     <Image
                       src={news.image}
                       alt={news.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       data-ai-hint="news coverage"
                     />
                   </div>
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-bold leading-tight text-gray-900 group-hover:text-[#007185] transition-colors line-clamp-3">
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-bold leading-snug text-gray-900 group-hover:text-primary transition-colors line-clamp-3">
                       {news.title}
                     </h3>
-                    <p className="text-sm text-gray-500 font-medium">
-                      {news.date}
-                    </p>
-                    <div className="pt-2">
-                      <span className="inline-block px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-md text-[10px] font-bold text-gray-700 uppercase tracking-wider">
-                        {item.category}
+                    <div className="flex items-center gap-3">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        {news.date}
+                      </span>
+                      <span className="w-1 h-1 bg-gray-200 rounded-full" />
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
+                        {item.label}
                       </span>
                     </div>
                   </div>
@@ -113,15 +111,15 @@ export default function NewsSubPage() {
 
           {/* Bottom Pagination */}
           {articles.length > 0 && (
-            <div className="mt-20 pt-8 border-t border-gray-100 flex justify-center">
-               <div className="flex items-center gap-6 text-sm font-bold text-gray-900">
-                <button className="flex items-center gap-1 opacity-40 cursor-not-allowed">
+            <div className="mt-24 pt-10 border-t border-gray-100 flex justify-center">
+               <div className="flex items-center gap-8 text-[11px] font-bold text-gray-900 uppercase tracking-widest">
+                <button className="flex items-center gap-1.5 opacity-40 cursor-not-allowed">
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
-                <div className="flex items-center gap-4">
-                  <span className="text-primary">1</span>
+                <div className="flex items-center gap-6">
+                  <span className="text-primary border-b-2 border-primary pb-1">01</span>
                 </div>
-                <button className="flex items-center gap-1 opacity-40 cursor-not-allowed">
+                <button className="flex items-center gap-1.5 opacity-40 cursor-not-allowed">
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
               </div>

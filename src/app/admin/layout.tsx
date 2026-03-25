@@ -1,3 +1,4 @@
+
 "use client"
 
 import { usePathname, useRouter } from "next/navigation";
@@ -19,7 +20,8 @@ import {
   Megaphone,
   ShieldCheck,
   Cpu,
-  Bell
+  Bell,
+  Search
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -34,6 +36,7 @@ const adminLinks = [
   { name: 'Management', href: '/admin/management', icon: Users },
   { name: 'Engagement', href: '/admin/engagement', icon: Megaphone },
   { name: 'Governance', href: '/admin/governance', icon: ShieldCheck },
+  { name: 'SEO & Sitemap', href: '/admin/seo', icon: Search },
   { name: 'News & Intel', href: '/admin/news', icon: Newspaper },
   { name: 'Technical', href: '/admin/technical', icon: Cpu },
   { name: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },

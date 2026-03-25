@@ -1,6 +1,14 @@
 
 export type ProjectStatus = 'Active' | 'In Development' | 'Planned';
 
+export interface SEOMetadata {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  keywords?: string[];
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -17,6 +25,7 @@ export interface Project {
   priority: number;
   createdAt: string;
   updatedAt: string;
+  seo?: SEOMetadata;
 }
 
 export interface ProjectCategory {
@@ -47,6 +56,7 @@ export interface Page {
   slug: string;
   title: string;
   sections: string[];
+  seo?: SEOMetadata;
 }
 
 export interface Inquiry {
@@ -70,6 +80,7 @@ export interface Article {
   content?: string;
   status: 'Published' | 'Draft';
   isTrending?: boolean;
+  seo?: SEOMetadata;
 }
 
 export type UpdateCategory = 'Finance' | 'Banking' | 'Platform' | 'System' | 'Legal' | 'Partner' | 'Payment Gateway' | 'HR' | 'Other';
@@ -91,6 +102,7 @@ export interface OperationalUpdate {
   tags: string[];
   createdAt: string;
   updatedAt: string;
+  seo?: SEOMetadata;
 }
 
 export interface AuditLog {
@@ -153,7 +165,11 @@ let projects: Project[] = [
     priority: 1,
     domain: 'baalvionstack.com',
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
+    seo: {
+      title: 'Global Trade Platform | Baalvion Operating System',
+      description: 'The primary SaaS infrastructure for international commerce connectivity.'
+    }
   },
   { 
     id: 'p2', 
@@ -199,7 +215,11 @@ let articles: Article[] = [
 
 Recent expansions in the Middle East trade corridors have demonstrated a 40% reduction in clearing latency for mid-market partners. Additionally, our satellite production facility has reached a new milestone, with production capacity now at 30 units per week. 
 
-In the UK, the AI compliance scoring system has officially launched, providing real-time risk assessment for cross-border transactions.`
+In the UK, the AI compliance scoring system has officially launched, providing real-time risk assessment for cross-border transactions.`,
+    seo: {
+      title: 'Daily Update: March 24, 2026 | Baalvion News',
+      description: 'Latest headlines from the Baalvion Operating System expansion and global trade corridors.'
+    }
   }
 ];
 
@@ -259,8 +279,26 @@ let sections: Section[] = [
 ];
 
 let pages: Page[] = [
-  { id: 'pg-home', slug: 'home', title: 'Baalvion — Global Trade Infrastructure Platform', sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-cta-home'] },
-  { id: 'pg-platform', slug: 'platform', title: 'Baalvion Platform | How It Works', sections: ['sec-platform-features'] }
+  { 
+    id: 'pg-home', 
+    slug: 'home', 
+    title: 'Baalvion — Global Trade Infrastructure Platform', 
+    sections: ['sec-hero-home', 'sec-problem-home', 'sec-solution-home', 'sec-cta-home'],
+    seo: {
+      title: 'Baalvion Operating System (BOS) | Global Trade Infrastructure',
+      description: 'The unified operating system for international commerce, finance, and compliance.'
+    }
+  },
+  { 
+    id: 'pg-platform', 
+    slug: 'platform', 
+    title: 'Baalvion Platform | How It Works', 
+    sections: ['sec-platform-features'],
+    seo: {
+      title: 'How It Works | Baalvion Platform Architecture',
+      description: 'Explore the modular layers of the Baalvion Operating System.'
+    }
+  }
 ];
 
 let ecosystem: EcosystemItem[] = [

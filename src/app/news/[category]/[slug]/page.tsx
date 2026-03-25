@@ -69,13 +69,30 @@ export default function ArticleDetailPage() {
   if (!article) return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center text-center p-8">
       <h1 className="text-4xl font-bold mb-4 text-gray-900">404: Brief Missing</h1>
-      <p className="text-gray-500 mb-8">The requested intelligence brief does not exist in the nexus registry.</p>
+      <p className="text-gray-500 mb-8">The requested intelligence brief does not exist in the registry node.</p>
       <Link href="/news/updates" className="text-primary font-bold hover:underline">Return to News Nexus</Link>
     </div>
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.seo?.title || article.title,
+    "image": [article.image],
+    "datePublished": article.date,
+    "author": [{
+      "@type": "Person",
+      "name": article.author,
+      "url": "https://baalvion.nexus"
+    }]
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="pt-48 pb-0">
         <div className="max-w-4xl mx-auto px-6 mb-24">
@@ -148,6 +165,7 @@ export default function ArticleDetailPage() {
               alt={article.title} 
               fill 
               className="object-cover"
+              priority
             />
           </div>
 

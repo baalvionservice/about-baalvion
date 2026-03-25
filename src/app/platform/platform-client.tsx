@@ -36,10 +36,11 @@ export default function PlatformClient() {
     </div>
   );
 
-  const sections = pageData.sectionData || [];
+  // Safe access to sectionData with fallback to empty array
+  const sections = pageData?.sectionData || [];
   const featuresSection = sections.find(s => s.type === 'cards');
 
-  const getIcon = (title: string) => {
+  const getIcon = (title: string = "") => {
     const t = title.toLowerCase();
     if (t.includes('ledger') || t.includes('infrastructure')) return <Database className="w-8 h-8" />;
     if (t.includes('compliance') || t.includes('security')) return <Shield className="w-8 h-8" />;

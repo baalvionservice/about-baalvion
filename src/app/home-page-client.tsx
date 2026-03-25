@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Globe, Database, Workflow, CheckCircle2, Loader2, Target, ShieldCheck, Activity, BarChart3, Star } from "lucide-react";
+import { ArrowRight, Globe, Database, Workflow, CheckCircle2, Loader2, Target, ShieldCheck, Activity, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { Project, EcosystemItem, Page } from "@/lib/db";
 import { cn } from "@/lib/utils";
@@ -59,7 +59,7 @@ export default function HomePageClient() {
     </div>
   );
 
-  const sections = page.sectionData || [];
+  const sections = page?.sectionData || [];
   const heroSection = sections.find(s => s.type === 'hero');
   const problemSection = sections.find(s => s.type === 'problem');
   const solutionSection = sections.find(s => s.type === 'solution');
@@ -75,7 +75,7 @@ export default function HomePageClient() {
           <section className="relative pt-40 pb-20 border-b border-gray-100 bg-white overflow-hidden">
             <div className="section-container relative z-10 animate-fade-in">
               <div className="max-w-4xl">
-                <span className="section-label">{heroSection.data.label}</span>
+                <span className="section-label">{heroSection.data?.label}</span>
                 <h1 className="text-gray-900 mb-6 font-bold leading-[1.1] tracking-tight">
                   {heroSection.title}
                 </h1>
@@ -85,16 +85,16 @@ export default function HomePageClient() {
                 
                 <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
                   <Button size="lg" asChild className="h-12 px-10 btn-primary w-full sm:w-auto">
-                    <Link href="/platform" className="flex items-center">{heroSection.data.ctaPrimary} <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                    <Link href="/platform" className="flex items-center">{heroSection.data?.ctaPrimary} <ArrowRight className="ml-2 w-4 h-4" /></Link>
                   </Button>
                   <Button size="lg" variant="outline" asChild className="h-12 px-10 btn-outline w-full sm:w-auto">
-                    <Link href="/contact">{heroSection.data.ctaSecondary}</Link>
+                    <Link href="/contact">{heroSection.data?.ctaSecondary}</Link>
                   </Button>
                 </div>
 
                 {/* STATS TICKER */}
                 <div className="flex flex-wrap gap-12 pt-10 border-t border-gray-100">
-                  {heroSection.data.stats.map((stat: any, i: number) => (
+                  {heroSection.data?.stats?.map((stat: any, i: number) => (
                     <div key={i} className="space-y-1">
                       <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
                       <p className="text-[11px] font-bold text-primary uppercase tracking-widest">{stat.label}</p>
@@ -118,7 +118,7 @@ export default function HomePageClient() {
               </div>
               
               <div className="grid md:grid-cols-3 gap-8">
-                {problemSection.data.points.map((point: any, i: number) => (
+                {problemSection.data?.points?.map((point: any, i: number) => (
                   <Card key={i} className="bg-white p-8 shadow-sm border border-gray-100 rounded-lg hover:shadow-md transition-shadow">
                     <div className="w-12 h-12 rounded-sm bg-primary/5 flex items-center justify-center text-primary mb-6">
                       {i === 0 ? <Workflow className="w-6 h-6" /> : i === 1 ? <ShieldCheck className="w-6 h-6" /> : <BarChart3 className="w-6 h-6" />}
@@ -144,7 +144,7 @@ export default function HomePageClient() {
                     <p className="text-gray-600 text-lg leading-relaxed">{solutionSection.description}</p>
                   </div>
                   <div className="space-y-6">
-                    {solutionSection.data.features.map((feat: any, i: number) => (
+                    {solutionSection.data?.features?.map((feat: any, i: number) => (
                       <div key={i} className="flex gap-4 items-start">
                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
                           <CheckCircle2 className="w-4 h-4" />
@@ -268,10 +268,10 @@ export default function HomePageClient() {
                   </p>
                   <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <Button size="lg" asChild className="h-12 px-12 btn-primary">
-                      <Link href="/platform">{ctaSection.data.ctaPrimary}</Link>
+                      <Link href="/platform">{ctaSection.data?.ctaPrimary}</Link>
                     </Button>
                     <Button size="lg" variant="outline" asChild className="h-12 px-12 btn-outline">
-                      <Link href="/contact">{ctaSection.data.ctaSecondary}</Link>
+                      <Link href="/contact">{ctaSection.data?.ctaSecondary}</Link>
                     </Button>
                   </div>
                 </div>

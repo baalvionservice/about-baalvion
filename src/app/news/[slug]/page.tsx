@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useParams } from 'next/navigation';
@@ -86,7 +85,7 @@ export default function NewsSubPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="pt-32 pb-24">
+      <main className="pt-40 pb-24">
         <div className="section-container">
           {/* Page Title */}
           <div className="text-center mb-16">
@@ -113,7 +112,7 @@ export default function NewsSubPage() {
           {/* News Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
             {mockNews.map((news) => (
-              <Link key={news.id} href={`/news/${slug}/${news.id}`} className="group flex flex-col gap-4">
+              <Link key={news.id} href={news.id === 1 ? '/news/updates/today' : `/news/${slug}/${news.id}`} className="group flex flex-col gap-4">
                 <div className="aspect-[16/10] relative rounded-xl overflow-hidden bg-gray-100">
                   <Image
                     src={news.image}
@@ -124,7 +123,7 @@ export default function NewsSubPage() {
                   />
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-lg font-bold leading-tight text-gray-900 group-hover:text-primary transition-colors line-clamp-3">
+                  <h3 className="text-lg font-bold leading-tight text-gray-900 group-hover:text-[#007185] transition-colors line-clamp-3">
                     {news.title}
                   </h3>
                   <p className="text-sm text-gray-500 font-medium">

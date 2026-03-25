@@ -91,8 +91,7 @@ export default function HomePageClient() {
   const ctaSection = sections.find(s => s.type === 'cta-final');
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
+    <div className="min-h-screen max-w-7xl mx-auto bg-white flex flex-col">
       
       <main className="flex-1" id="main-content">
         {/* HERO SECTION - Primary Value Proposition */}

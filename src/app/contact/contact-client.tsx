@@ -57,7 +57,7 @@ export default function ContactClient() {
             <div className="space-y-16 animate-fade-in">
               <div className="space-y-6">
                 <span className="section-label">Strategic Communications</span>
-                <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tighter leading-tight">Establish <br/><span className="gradient-text">Baalvion Operating System (BOS) Link</span></h1>
+                <h1 className="text-5xl md:text-7xl font-bold text-primay tracking-tighter leading-tight">Establish <br/><span className="gradient-text">Baalvion Operating System (BOS) Link</span></h1>
                 <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
                   Initiate a strategic partnership or project briefing. Our global trade specialists are ready to architect your integration.
                 </p>

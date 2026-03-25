@@ -37,6 +37,7 @@ const mainLinks = [
   { name: 'Platform', href: '/platform' },
   { name: 'Ecosystem', href: '/ecosystem' },
   { name: 'Projects', href: '/projects' },
+  { name: 'Updates Log', href: '/updates' },
   { name: 'Trust', href: '/trust' },
 ];
 

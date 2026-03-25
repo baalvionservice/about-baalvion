@@ -249,6 +249,22 @@ let operationalUpdates: OperationalUpdate[] = [
     tags: ['payments', 'gateway', 'fintech'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'u-3',
+    updateId: 'U003',
+    date: '2024-03-24',
+    category: 'Partner',
+    title: 'New Strategic Vendor Onboarded',
+    description: 'Onboarding of a major logistics partner to expand the European trade corridor. Requires final scoring and verification.',
+    responsiblePerson: 'Partnership Strategy',
+    reference: 'https://docs.baalvion.nexus/partners/v-092',
+    status: 'Pending',
+    impactLevel: 'Medium',
+    followUpActions: 'Complete compliance scoring and verification protocol.',
+    tags: ['partner', 'logistics', 'europe'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ];
 

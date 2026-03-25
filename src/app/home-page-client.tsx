@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState } from "react";
@@ -260,7 +259,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: AI & TECHNOLOGY HIGHLIGHTS --- */}
+        {/* AI & TECHNOLOGY HIGHLIGHTS */}
         <section className="section-vertical-padding bg-gray-50 border-b border-gray-100">
           <div className="section-container">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -306,7 +305,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: INTERACTIVE GLOBAL TRADE MAP --- */}
+        {/* INTERACTIVE GLOBAL TRADE MAP */}
         <section className="section-vertical-padding bg-white border-b border-gray-100 overflow-hidden">
           <div className="section-container">
             <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
@@ -316,7 +315,6 @@ export default function HomePageClient() {
             </div>
 
             <div className="relative aspect-[21/9] bg-gray-50 rounded-[2.5rem] border border-gray-100 p-8 flex items-center justify-center group overflow-hidden">
-              {/* STYLIZED MAP REPRESENTATION */}
               <div className="absolute inset-0 opacity-10 bg-[url('https://picsum.photos/seed/map/1200/800')] bg-cover bg-center grayscale" />
               <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
                 {[
@@ -343,7 +341,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: PROJECT PIPELINE / ROADMAP --- */}
+        {/* PROJECT PIPELINE / ROADMAP */}
         <section className="section-vertical-padding bg-gray-50 border-b border-gray-100">
           <div className="section-container">
             <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
@@ -385,7 +383,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: SUSTAINABILITY & ESG --- */}
+        {/* SUSTAINABILITY & ESG */}
         <section className="section-vertical-padding bg-white border-b border-gray-100">
           <div className="section-container">
             <div className="bg-[#151B24] rounded-[3rem] p-12 lg:p-24 overflow-hidden relative group">
@@ -433,7 +431,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: FEATURED PARTNERS --- */}
+        {/* FEATURED PARTNERS */}
         <section className="py-20 bg-white border-b border-gray-100 overflow-hidden">
           <div className="section-container">
             <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-[0.5em] mb-12">Institutional Partners & Trust</p>
@@ -448,7 +446,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* --- NEW SECTION: NEWSLETTER / UPDATES SIGNUP --- */}
+        {/* NEWSLETTER / UPDATES SIGNUP */}
         <section className="section-vertical-padding bg-gray-50">
           <div className="section-container">
             <div className="max-w-4xl mx-auto bg-white p-12 lg:p-20 rounded-[2.5rem] border border-gray-100 shadow-sm text-center space-y-10">
@@ -478,7 +476,7 @@ export default function HomePageClient() {
           </div>
         </section>
 
-        {/* FINAL CTA (PRESERVED & INTEGRATED) */}
+        {/* FINAL CTA */}
         {ctaSection && (
           <section className="section-vertical-padding bg-white">
             <div className="section-container">

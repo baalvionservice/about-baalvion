@@ -185,6 +185,61 @@ let articles: Article[] = [
     readTime: '2 min read',
     status: 'Published',
     isTrending: true
+  },
+  {
+    id: 'art-2',
+    title: 'Baalvion expands logistics network into South East Asia',
+    slug: 'expansion-sea',
+    category: 'updates',
+    date: 'March 22, 2026',
+    image: 'https://picsum.photos/seed/sea/600/400',
+    author: 'Strategy Team',
+    readTime: '4 min read',
+    status: 'Published'
+  },
+  {
+    id: 'art-3',
+    title: 'New partnership protocol established with global banking nodes',
+    slug: 'banking-partnership',
+    category: 'updates',
+    date: 'March 20, 2026',
+    image: 'https://picsum.photos/seed/bank/600/400',
+    author: 'Finance Desk',
+    readTime: '3 min read',
+    status: 'Published'
+  },
+  {
+    id: 'art-4',
+    title: 'Baalvion Operating System (BOS) Core v2.4 deployment details',
+    slug: 'core-v24',
+    category: 'updates',
+    date: 'March 18, 2026',
+    image: 'https://picsum.photos/seed/tech/600/400',
+    author: 'Engineering',
+    readTime: '5 min read',
+    status: 'Published'
+  },
+  {
+    id: 'art-5',
+    title: 'Impact of AI on real-time trade compliance scoring',
+    slug: 'ai-compliance',
+    category: 'insights',
+    date: 'March 23, 2026',
+    image: 'https://picsum.photos/seed/ai/600/400',
+    author: 'Intelligence Lab',
+    readTime: '6 min read',
+    status: 'Published'
+  },
+  {
+    id: 'art-6',
+    title: 'The future of decentralized trade finance in 2026',
+    slug: 'future-trade-finance',
+    category: 'insights',
+    date: 'March 21, 2026',
+    image: 'https://picsum.photos/seed/finance/600/400',
+    author: 'Analyst Group',
+    readTime: '8 min read',
+    status: 'Published'
   }
 ];
 

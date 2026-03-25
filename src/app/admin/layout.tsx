@@ -12,12 +12,14 @@ import {
   LogOut,
   Globe,
   Settings,
-  Newspaper
+  Newspaper,
+  ClipboardList
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const adminLinks = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'Updates Log', href: '/admin/updates', icon: ClipboardList },
   { name: 'Pages', href: '/admin/pages', icon: FileText },
   { name: 'Projects', href: '/admin/projects', icon: Briefcase },
   { name: 'Ecosystem', href: '/admin/ecosystem', icon: Layers },
@@ -56,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="w-8 h-8 bg-[#FF9900] flex items-center justify-center rounded-sm">
               <Globe className="text-white w-5 h-5" />
             </div>
-            <span className="text-lg font-bold text-gray-900 tracking-tight">BAALVION</span>
+            <span className="text-lg font-bold text-gray-900 tracking-tight text-[11px] uppercase tracking-widest leading-none">BAALVION</span>
           </Link>
         </div>
 

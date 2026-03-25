@@ -70,6 +70,27 @@ export interface Article {
   isTrending?: boolean;
 }
 
+export type UpdateCategory = 'Finance' | 'Banking' | 'Platform' | 'System' | 'Legal' | 'Partner' | 'Payment Gateway' | 'HR' | 'Other';
+export type UpdateStatus = 'Pending' | 'Completed' | 'In Progress';
+export type ImpactLevel = 'Low' | 'Medium' | 'High';
+
+export interface OperationalUpdate {
+  id: string;
+  updateId: string;
+  date: string;
+  category: UpdateCategory;
+  title: string;
+  description: string;
+  responsiblePerson: string;
+  reference?: string;
+  status: UpdateStatus;
+  impactLevel: ImpactLevel;
+  followUpActions?: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const projectCategories: ProjectCategory[] = [
   { 
     id: 'cat-core', 
@@ -148,32 +169,6 @@ let projects: Project[] = [
     domain: 'app.baalvionstack.com',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p4', 
-    name: 'Intelligence Hub', 
-    category: 'Intelligence', 
-    type: 'Research Portal',
-    description: 'Unified portal for research, data analytics, and market sentiment insights.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 4,
-    domain: 'imperialpedia.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  { 
-    id: 'p5', 
-    name: 'Legal Compliance System', 
-    category: 'Governance', 
-    type: 'Policy System',
-    description: 'Centralized compliance and governance protocols for global trade nodes.', 
-    status: 'Active',
-    isFeatured: false,
-    priority: 5,
-    domain: 'lawelitenetwork.com',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -187,29 +182,6 @@ let articles: Article[] = [
     image: 'https://picsum.photos/seed/news1/600/400',
     author: 'Baalvion Staff',
     readTime: '2 min read',
-    status: 'Published',
-    isTrending: true
-  },
-  {
-    id: 'art-2',
-    title: "Setting the record straight on Baalvion's global logistics partnership",
-    slug: 'logistics-partnership',
-    category: 'updates',
-    date: 'March 18, 2026',
-    image: 'https://picsum.photos/seed/news2/600/400',
-    author: 'Baalvion Staff',
-    readTime: '4 min read',
-    status: 'Published'
-  },
-  {
-    id: 'art-3',
-    title: "Baalvion is investing $750 million in a global trade hub in Singapore",
-    slug: 'singapore-hub',
-    category: 'updates',
-    date: 'March 10, 2026',
-    image: 'https://picsum.photos/seed/news5/600/400',
-    author: 'Baalvion Staff',
-    readTime: '3 min read',
     status: 'Published',
     isTrending: true
   }
@@ -231,52 +203,6 @@ let sections: Section[] = [
         { label: "Transactions", value: "500K+" }
       ]
     }
-  },
-  {
-    id: 'sec-problem-home',
-    type: 'problem',
-    title: 'The Global Trade Challenge',
-    description: 'Fragmented supply chains, opaque financing, slow compliance, and lack of trust hinder global business expansion. Companies struggle to scale efficiently.',
-    data: {
-      points: [
-        { title: "Fragmented Trade", desc: "Disconnected systems lead to terminal data silos." },
-        { title: "Compliance Gaps", desc: "Complex jurisdictional laws create regulatory friction." },
-        { title: "Finance Barriers", desc: "Legacy clearing systems slow down global value transfer." }
-      ]
-    }
-  },
-  {
-    id: 'sec-solution-home',
-    type: 'solution',
-    title: 'Baalvion: The Operating System for Trade',
-    description: 'Baalvion unifies trade, finance, compliance, and intelligence into a single, scalable infrastructure. Every transaction, every partner, every process — connected, secure, and efficient.',
-    data: {
-      features: [
-        { title: "Unified OS", desc: "A single execution layer for all global operations." },
-        { title: "Secure Nexus", desc: "Enterprise-grade security across all nodes." },
-        { title: "Global Scale", desc: "Architected for 180+ jurisdictions." }
-      ]
-    }
-  },
-  {
-    id: 'sec-cta-home',
-    type: 'cta-final',
-    title: 'Join the Future of Global Trade',
-    description: 'Whether you are a partner, investor, or supplier, Baalvion provides a secure, scalable platform to connect and grow globally.',
-    data: { ctaPrimary: 'Explore Platform', ctaSecondary: 'Contact Us' }
-  },
-  {
-    id: 'sec-platform-features',
-    type: 'cards',
-    title: 'Nexus Core Architecture',
-    description: 'Our proprietary trade engine is built on four core pillars of enterprise reliability and global connectivity.',
-    data: {
-      features: [
-        { title: "Distributed Ledger", desc: "Transparent, immutable tracking of every cargo and capital movement within the nexus." },
-        { title: "Compliance AI", desc: "Automated legal mapping and risk assessment across 180+ global jurisdictions." },
-        { title: "Clearing Nexus", desc: "Instant value settlement between fragmented banking corridors using automated protocols." }
-      ]
-    }
   }
 ];
 
@@ -286,13 +212,45 @@ let pages: Page[] = [
 ];
 
 let ecosystem: EcosystemItem[] = [
-  { id: 'eco-1', layer: 'Infrastructure', name: 'Infrastructure Layer', description: 'The backbone for global business operations.', domain: 'baalvionstack.com' },
-  { id: 'eco-2', layer: 'Intelligence', name: 'Intelligence Layer', description: 'AI-driven insights for smarter decisions.', domain: 'imperialpedia.com' },
-  { id: 'eco-3', layer: 'Governance', name: 'Governance Layer', description: 'Compliance, contracts, and risk management at enterprise scale.', domain: 'lawelitenetwork.com' },
-  { id: 'eco-4', layer: 'Commerce', name: 'Commerce Layer', description: 'Luxury, premium, and verified trade commerce.', domain: 'amarisemaisonavenue.com' }
+  { id: 'eco-1', layer: 'Infrastructure', name: 'Infrastructure Layer', description: 'The backbone for global business operations.', domain: 'baalvionstack.com' }
 ];
 
 let inquiries: Inquiry[] = [];
+
+let operationalUpdates: OperationalUpdate[] = [
+  {
+    id: 'u-1',
+    updateId: 'U001',
+    date: '2024-03-20',
+    category: 'Banking',
+    title: 'SBI Corporate Account Integration',
+    description: 'Successfully integrated the State Bank of India corporate API for real-time automated clearing across the Indian nexus node.',
+    responsiblePerson: 'Finance Team / Dev Ops',
+    reference: 'https://sbi.co.in/corporate',
+    status: 'Completed',
+    impactLevel: 'High',
+    followUpActions: 'Monitor transaction latency for the first 48 hours.',
+    tags: ['banking', 'india', 'automation'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'u-2',
+    updateId: 'U002',
+    date: '2024-03-22',
+    category: 'Payment Gateway',
+    title: 'PayU Enterprise Gateway Deployment',
+    description: 'Live deployment of PayU gateway to facilitate multi-currency trade settlements for South Asian partners.',
+    responsiblePerson: 'Payments Engineering',
+    reference: 'https://payu.in',
+    status: 'Completed',
+    impactLevel: 'High',
+    followUpActions: 'Reconcile weekly settlement buffers.',
+    tags: ['payments', 'gateway', 'fintech'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+];
 
 export const db = {
   projects: {
@@ -370,5 +328,24 @@ export const db = {
     updateStatus: (id: string, status: Inquiry['status']) => {
       inquiries = inquiries.map(item => item.id === id ? { ...item, status } : item);
     }
+  },
+  operationalUpdates: {
+    getAll: () => operationalUpdates,
+    getById: (id: string) => operationalUpdates.find(u => u.id === id),
+    add: (u: any) => {
+      const newU: OperationalUpdate = { 
+        ...u, 
+        id: `u-${Math.random().toString(36).substring(2, 7)}`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      operationalUpdates.push(newU);
+      return newU;
+    },
+    update: (id: string, u: any) => {
+      operationalUpdates = operationalUpdates.map(item => item.id === id ? { ...item, ...u, updatedAt: new Date().toISOString() } : item);
+      return operationalUpdates.find(item => item.id === id);
+    },
+    delete: (id: string) => { operationalUpdates = operationalUpdates.filter(u => u.id !== id); }
   }
 };

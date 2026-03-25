@@ -1,3 +1,4 @@
+
 export type ProjectStatus = 'Active' | 'In Development' | 'Planned';
 
 export interface Project {
@@ -196,7 +197,7 @@ let sections: Section[] = [
     data: { 
       ctaPrimary: 'Explore Our Platform', 
       ctaSecondary: 'Partner With Us', 
-      label: 'NEXUS OPERATING SYSTEM',
+      label: 'Baalvion Operating System (BOS)',
       stats: [
         { label: "Markets", value: "198" },
         { label: "Active Partners", value: "125+" },

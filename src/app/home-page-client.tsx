@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react";
@@ -139,7 +140,7 @@ export default function HomePageClient() {
               <div className="grid lg:grid-cols-2 gap-20 items-center">
                 <div className="space-y-10">
                   <div className="space-y-4">
-                    <span className="section-label">The Operating System</span>
+                    <span className="section-label">Baalvion Operating System (BOS)</span>
                     <h2 className="text-gray-900 font-bold">{solutionSection.title}</h2>
                     <p className="text-gray-600 text-lg leading-relaxed">{solutionSection.description}</p>
                   </div>

@@ -1,48 +1,61 @@
-import type { Metadata, Viewport } from 'next';
-import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import { Navbar } from "@/components/navbar";
 
 export const viewport: Viewport = {
-  themeColor: '#FF9900',
-  width: 'device-width',
+  themeColor: "#FF9900",
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
 
 export const metadata: Metadata = {
   title: {
-    default: 'Baalvion Operating System (BOS) | Global Trade Infrastructure',
-    template: '%s | Baalvion Industries'
+    default: "Baalvion Operating System (BOS) | Global Trade Infrastructure",
+    template: "%s | Baalvion Industries",
   },
-  description: 'Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single Baalvion Operating System (BOS).',
-  keywords: ['global trade', 'infrastructure', 'logistics', 'compliance AI', 'trade finance', 'Baalvion', 'Baalvion Operating System (BOS)', 'BOS Core'],
-  authors: [{ name: 'Baalvion Industries' }],
-  metadataBase: new URL('https://baalvion.nexus'),
+  description:
+    "Baalvion Industries builds the unified global trade infrastructure connecting businesses, finance, compliance, and intelligence systems into a single Baalvion Operating System (BOS).",
+  keywords: [
+    "global trade",
+    "infrastructure",
+    "logistics",
+    "compliance AI",
+    "trade finance",
+    "Baalvion",
+    "Baalvion Operating System (BOS)",
+    "BOS Core",
+  ],
+  authors: [{ name: "Baalvion Industries" }],
+  metadataBase: new URL("https://baalvion.nexus"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://baalvion.nexus',
-    siteName: 'Baalvion Operating System (BOS)',
-    title: 'Baalvion Operating System (BOS) | Unified Global Trade',
-    description: 'The foundational layer for the next century of international commerce.',
+    type: "website",
+    locale: "en_US",
+    url: "https://baalvion.nexus",
+    siteName: "Baalvion Operating System (BOS)",
+    title: "Baalvion Operating System (BOS) | Unified Global Trade",
+    description:
+      "The foundational layer for the next century of international commerce.",
     images: [
       {
-        url: 'https://picsum.photos/seed/baalvion-og/1200/630',
+        url: "https://picsum.photos/seed/baalvion-og/1200/630",
         width: 1200,
         height: 630,
-        alt: 'Baalvion Operating System (BOS) Global Infrastructure Visualization',
+        alt: "Baalvion Operating System (BOS) Global Infrastructure Visualization",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Baalvion Operating System (BOS) | Unified Global Trade',
-    description: 'The foundational layer for the next century of international commerce.',
-    images: ['https://picsum.photos/seed/baalvion-og/1200/630'],
-    creator: '@BaalvionIndustries',
+    card: "summary_large_image",
+    title: "Baalvion Operating System (BOS) | Unified Global Trade",
+    description:
+      "The foundational layer for the next century of international commerce.",
+    images: ["https://picsum.photos/seed/baalvion-og/1200/630"],
+    creator: "@BaalvionIndustries",
   },
   robots: {
     index: true,
@@ -50,9 +63,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -66,13 +79,25 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className="font-body antialiased min-h-screen bg-background text-foreground selection:bg-primary/20">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:bg-primary focus:text-white focus:p-4 focus:rounded-b-lg">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:bg-primary focus:text-white focus:p-4 focus:rounded-b-lg"
+        >
           Skip to main content
         </a>
+        <Navbar />
+
         {children}
         <Toaster />
       </body>

@@ -2,7 +2,8 @@
 
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Share2, Globe } from 'lucide-react';
+import { Share2, Globe, ArrowRight, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function TodayNewsPage() {
   return (
@@ -46,7 +47,7 @@ export default function TodayNewsPage() {
           </div>
 
           {/* Article Content */}
-          <div className="space-y-12">
+          <div className="space-y-12 mb-20">
             {/* Section 1 */}
             <div className="space-y-4">
               <h2 className="text-xl font-bold text-[#007185] hover:underline cursor-pointer">
@@ -63,7 +64,7 @@ export default function TodayNewsPage() {
                 Baalvion satellite production to accelerate launch cadence
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                Baalvion is accelerating satellite deployment with over 200 Nexus satellites now operational. The company has completed 11 launches in year one and plans to more than double its pace to 20+ missions in year two. Production capacity reaches 30 satellites weekly at the strategic facility, with hundreds flight-ready and six payloads stacked in Singapore totaling 200+ satellites. Heavy-lift rockets will carry larger payloads to support both current and next-generation constellations.
+                Baalvion is accelerating satellite deployment with over 200 Nexus satellites now operational. The company has completed 11 launches in year one and plans to more than double its pace to 20+ missions in year two. Production capacity reaches 30 satellites weekly at the strategic facility, with hundreds flight-ready and six payloads stacked in Singapore totaling 200+ satellites.
               </p>
             </div>
 
@@ -73,9 +74,64 @@ export default function TodayNewsPage() {
                 Baalvion AI scoring platform launches in UK
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed">
-                The United Kingdom is the first country in Europe to get Baalvion's next-generation AI scoring system. This platform provides real-time risk assessment and trade compliance intelligence for mid-market businesses, streamlining cross-border operations in a post-fragmentation trade environment.
+                The United Kingdom is the first country in Europe to get Baalvion's next-generation AI scoring system. This platform provides real-time risk assessment and trade compliance intelligence for mid-market businesses.
               </p>
             </div>
+          </div>
+
+          {/* NEW: Newsletter Signup Section (Amazon Style) */}
+          <div className="mt-20 pt-10 border-t border-gray-100">
+            <div className="relative bg-white border border-gray-200 p-8 shadow-sm">
+              <div className="absolute top-0 left-0 w-full h-1 bg-[#FF9900]" />
+              <h3 className="text-2xl font-bold text-[#111111] mb-8">Sign up for the weekly Baalvion newsletter</h3>
+              
+              <div className="max-w-md">
+                <div className="relative flex items-center group">
+                  <input 
+                    type="email" 
+                    placeholder="Enter email" 
+                    className="w-full border-b border-gray-300 py-3 text-lg outline-none focus:border-[#FF9900] transition-colors placeholder:text-gray-400"
+                  />
+                  <button className="absolute right-0 w-10 h-10 bg-[#FF9900] rounded-full flex items-center justify-center text-white transition-transform group-focus-within:scale-105 hover:bg-[#e68a00]">
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                </div>
+                <div className="mt-3 flex gap-4 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+                  <Link href="/privacy" className="hover:text-gray-600 underline">Baalvion Privacy Policy</Link>
+                  <span>Opt out anytime</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <p className="text-lg font-bold text-gray-900">
+                Get more headlines from <Link href="/news/updates" className="text-[#007185] hover:underline">Baalvion News.</Link>
+              </p>
+            </div>
+          </div>
+
+          {/* NEW: Trending News Section */}
+          <div className="mt-20">
+            <div className="border-b border-gray-200 pb-3 mb-8">
+              <h3 className="text-xl font-bold text-[#111111]">Trending news and stories</h3>
+            </div>
+            
+            <ul className="space-y-6">
+              {[
+                "Baalvion's new automated customs clearance node goes live in Singapore",
+                "How AI is transforming trade finance for mid-market exporters",
+                "Everything you need to know about the Baalvion Nexus Core upgrade",
+                "Baalvion establishes new strategic trade corridor with Brazil",
+                "Baalvion increases investment in green energy for industrial logistics"
+              ].map((story, i) => (
+                <li key={i} className="flex gap-4 group">
+                  <div className="mt-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full shrink-0 group-hover:bg-[#FF9900]" />
+                  <Link href="#" className="text-lg font-bold text-gray-700 leading-tight hover:text-[#007185] hover:underline transition-colors">
+                    {story}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </main>

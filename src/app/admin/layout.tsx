@@ -52,7 +52,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-gray-200 bg-white hidden lg:flex flex-col fixed inset-y-0">
+      <aside className="w-64 border-r border-gray-200 bg-white hidden lg:flex flex-col fixed inset-y-0 shadow-sm">
         <div className="p-6">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-[#FF9900] flex items-center justify-center rounded-sm">
@@ -95,7 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <main className="flex-1 lg:ml-64">
         <header className="h-16 border-b border-gray-200 bg-white/80 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-40">
-          <h1 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-0">
+          <h1 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-0">
             {adminLinks.find(l => l.href === pathname)?.name || 'Nexus Admin'}
           </h1>
           <div className="flex items-center gap-4">
@@ -103,7 +103,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <p className="text-sm font-bold text-gray-900">Administrative Portal</p>
               <p className="text-[10px] text-[#FF9900] font-bold uppercase tracking-wider">Super Administrator</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-[#FF9900] font-bold">B</div>
+            <div className="w-10 h-10 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-[#FF9900] font-bold shadow-sm">B</div>
           </div>
         </header>
         <div className="p-8 max-w-7xl mx-auto">

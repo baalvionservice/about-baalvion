@@ -1,8 +1,15 @@
+"use client"
+
 import Link from "next/link";
 import { Globe, Facebook, Instagram, Linkedin, Youtube, Mail, ChevronUp, Lock } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [currentYear, setCurrentYear] = useState(2026);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {

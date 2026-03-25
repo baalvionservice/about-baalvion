@@ -1,11 +1,12 @@
 "use client"
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, useMemo, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Article, Project, db } from "@/lib/db";
+import { Article, Project } from "@/lib/db";
 import { Loader2, Search, Newspaper, Briefcase, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 

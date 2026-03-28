@@ -2,7 +2,7 @@
 import { MetadataRoute } from 'next';
 import { db } from '@/lib/db';
 
-const BASE_URL = 'https://baalvion.nexus';
+const BASE_URL = 'https://about.baalvion.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = db.pages.getAll();

@@ -28,14 +28,10 @@ export const metadata: Metadata = {
     "BOS Core",
   ],
   authors: [{ name: "Baalvion Industries" }],
-  metadataBase: new URL("https://baalvion.nexus"),
-  alternates: {
-    canonical: "/",
-  },
+  metadataBase: new URL("https://about.baalvion.com"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://baalvion.nexus",
     siteName: "Baalvion Operating System (BOS)",
     title: "Baalvion Operating System (BOS) | Unified Global Trade",
     description:

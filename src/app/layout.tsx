@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Navbar } from "@/components/navbar";
+import ClientLayout from "./client-layout";
 
 export const viewport: Viewport = {
   themeColor: "#FF9900",
@@ -92,10 +92,10 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <Navbar />
-
-        {children}
-        <Toaster />
+        <ClientLayout>
+          {children}
+          <Toaster />
+        </ClientLayout>
       </body>
     </html>
   );

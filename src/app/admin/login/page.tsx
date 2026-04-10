@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 const SECURE_KEY = "secure-admin-key";
 
 export default function LoginPage() {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("secure-admin-key");
   const router = useRouter();
   const { toast } = useToast();
 

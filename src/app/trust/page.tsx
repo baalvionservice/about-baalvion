@@ -1,22 +1,24 @@
 import { Metadata } from "next";
-import TrustClient from "./trust-client";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import TrustPageServer from "@/components/trust-page-server";
 
 export const metadata: Metadata = {
-  title: "Trust & Security | Baalvion",
+  title: "Trust & Security | Baalvion Operating System",
   description:
-    "Security, transparency, and international law are at the core of the Baalvion Nexus infrastructure.",
+    "Security, transparency, and international law are at the core of the Baalvion Operating System (BOS) infrastructure. We architect for the highest global standards.",
   openGraph: {
-    title: "Trust & Security | Baalvion",
+    title: "Trust & Security | Baalvion Operating System",
     description:
-      "Security, transparency, and international law are at the core of the Baalvion Nexus infrastructure.",
-    url: "https://baalvion.nexus/trust",
-    siteName: "Baalvion Nexus",
+      "Security, transparency, and international law are at the core of the Baalvion Operating System (BOS) infrastructure. We architect for the highest global standards.",
+    url: "https://about.baalvion.com/trust",
+    siteName: "Baalvion Operating System (BOS)",
     images: [
       {
         url: "https://picsum.photos/seed/baalvion-trust/1200/630",
         width: 1200,
         height: 630,
-        alt: "Baalvion Trust and Governance",
+        alt: "Baalvion Trust & Security",
       },
     ],
     locale: "en_US",
@@ -24,13 +26,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trust & Security | Baalvion",
+    title: "Trust & Security | Baalvion Operating System",
     description:
-      "Security, transparency, and international law are at the core of the Baalvion Nexus infrastructure.",
+      "Security, transparency, and international law are at the core of the Baalvion Operating System (BOS) infrastructure. We architect for the highest global standards.",
     images: ["https://picsum.photos/seed/baalvion-trust/1200/630"],
   },
 };
 
 export default function Page() {
-  return <TrustClient />;
+  return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <TrustPageServer />
+      <Footer />
+    </div>
+  );
 }

@@ -85,18 +85,17 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased min-h-screen bg-background text-foreground selection:bg-primary/20">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-[200] focus:bg-primary focus:text-white focus:p-4 focus:rounded-b-lg"
-        >
-          Skip to main content
-        </a>
-        <ClientLayout>
-          {children}
-          <Toaster />
-        </ClientLayout>
-      </body>
+     <body
+  className="font-body antialiased bg-background text-foreground overflow-x-hidden selection:bg-gold selection:text-white"
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  }}
+>
+  <p>Pay to your Employee</p>
+</body>
     </html>
   );
 }
